@@ -1,0 +1,190 @@
+{
+  "name": "attainia-web-components",
+  "version": "0.0.1",
+  "description": "A collection of Attainia branded web components to be used in an Attainia React.js web application.",
+  "main": "index.js",
+  "engines": {
+    "node": ">=6"
+  },
+  "scripts": {
+    "clean": "node_modules/.bin/rimraf auth common css index.js",
+    "prebuild": "npm run clean",
+    "build:css": "node_modules/.bin/postcss src/**/*.css --base src --dir ./ --env=production --config postcss.config.js",
+    "build:js": "BABEL_ENV=production babel src --out-dir ./ --ignore node_modules/ --copy-files",
+    "build": "npm run build:js && npm run build:css",
+    "prepublish": "npm run build",
+    "postpublish": "npm run clean",
+    "lint": "node_modules/.bin/eslint src/**/*.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab3.attainia.com:attainia-development/attainia-web-components.git"
+  },
+  "keywords": [
+    "attainia",
+    "react",
+    "component"
+  ],
+  "author": "David Nunez <david.nunez@attainia.com>",
+  "dependencies": {
+    "axios": "0.16.2",
+    "object.assign": "4.0.4",
+    "object.entries": "1.0.4",
+    "object.values": "1.0.4",
+    "prop-types": "15.5.10",
+    "ramda": "0.24.1",
+    "react": "15.6.1",
+    "react-localization": "0.1.2",
+    "redux": "3.7.2",
+    "react-redux": "5.0.6",
+    "react-router-dom": "4.2.2",
+    "redux-form": "7.0.3",
+    "uuid": "3.1.0",
+    "validatorjs": "3.13.5"
+  },
+  "devDependencies": {
+    "babel-cli": "6.24.1",
+    "babel-eslint": "7.2.3",
+    "babel-plugin-syntax-async-functions": "6.13.0",
+    "babel-plugin-transform-async-to-generator": "6.24.1",
+    "babel-plugin-transform-object-rest-spread": "6.23.0",
+    "babel-polyfill": "6.23.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-react": "6.24.1",
+    "eslint": "4.4.1",
+    "eslint-config-airbnb": "15.1.0",
+    "eslint-loader": "1.9.0",
+    "eslint-plugin-flowtype": "2.35.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jsx-a11y": "5.1.1",
+    "eslint-plugin-react": "7.2.1",
+    "postcss": "6.0.9",
+    "postcss-cli": "4.1.0",
+    "postcss-cssnext": "3.0.2",
+    "postcss-custom-media": "6.0.0",
+    "postcss-flexbugs-fixes": "3.2.0",
+    "postcss-import": "10.0.0",
+    "postcss-nesting": "4.1.0",
+    "rimraf": "2.6.1"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ],
+    "plugins": [
+      "syntax-async-functions",
+      "transform-async-to-generator",
+      "transform-object-rest-spread"
+    ]
+  },
+  "eslintConfig": {
+    "globals": {
+      "document": true,
+      "window": true
+    },
+    "env": {
+      "browser": true,
+      "es6": true,
+      "jest": true,
+      "node": true
+    },
+    "extends": "airbnb",
+    "plugins": [
+      "react"
+    ],
+    "rules": {
+      "eol-last": "off",
+      "eqeqeq": [
+        "error",
+        "allow-null"
+      ],
+      "comma-dangle": [
+        "error",
+        "never"
+      ],
+      "indent": [
+        "error",
+        4
+      ],
+      "jsx-quotes": [
+        "warn",
+        "prefer-single"
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
+      "max-len": [
+        "error",
+        120,
+        {
+          "ignoreComments": true
+        }
+      ],
+      "new-cap": "error",
+      "newline-before-return": "error",
+      "no-console": "error",
+      "no-eval": "error",
+      "no-trailing-spaces": [
+        "error",
+        {
+          "skipBlankLines": true
+        }
+      ],
+      "no-mixed-spaces-and-tabs": "error",
+      "no-undef": "error",
+      "no-underscore-dangle": "off",
+      "no-unused-vars": "error",
+      "object-curly-spacing": "off",
+      "object-shorthand": [
+        "error",
+        "properties"
+      ],
+      "one-var": "off",
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "react/jsx-filename-extension": "off",
+      "react/jsx-indent": [
+        "error",
+        4
+      ],
+      "react/jsx-indent-props": [
+        "error",
+        4
+      ],
+      "react/no-set-state": "error",
+      "react/jsx-closing-bracket-location": "error",
+      "react/jsx-closing-tag-location": "error",
+      "react/jsx-equals-spacing": [
+        "error",
+        "never"
+      ],
+      "react/jsx-first-prop-new-line": [
+        "error",
+        "multiline"
+      ],
+      "react/jsx-no-duplicate-props": "error",
+      "react/jsx-pascal-case": "error",
+      "react/jsx-wrap-multilines": "off",
+      "react/require-default-props": "off",
+      "semi-spacing": "error",
+      "space-before-function-paren": [
+        "error",
+        {
+          "anonymous": "never",
+          "named": "never",
+          "asyncArrow": "always"
+        }
+      ],
+      "space-before-blocks": [
+        "error",
+        "always"
+      ],
+      "space-infix-ops": "error"
+    }
+  }
+}

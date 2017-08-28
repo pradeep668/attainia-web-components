@@ -1,0 +1,81 @@
+@import '../css/colors.css';
+
+.formGroup {
+    & .formField  {
+        box-sizing: border-box;
+        padding: 5px;
+        line-height: 16px;
+    }
+
+    & input[type=password],
+    & input[type=url],
+    & input[type=number],
+    & input[type=text],
+    & input[type=email] {
+        padding: 8px;
+        width: 100%;
+        line-height: 18px;
+        font-size: 14px;
+        background-color: white;
+    }
+
+    & input[type=password]:focus,
+    & input[type=url]:focus,
+    & input[type=number]:focus,
+    & input[type=text]:focus,
+    & input[type=email]:focus {
+        outline: none;
+    }
+
+    & .fieldError {
+        color: white;
+        background-color: var(--rosso-corsa);
+        font-size: 10px;
+        padding: 7px;
+        text-align: center;
+    }
+}
+
+.squareCheckbox {
+    width: 16px;
+    position: relative;
+
+    & label {
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        cursor: pointer;
+        white-space: nowrap;
+        top: 0;
+        left: 0;
+        background: white;
+
+        & span {
+            padding-left: 22px;
+        }
+    }
+
+    & label:after {
+        content: '';
+        width: 6px;
+        height: 3px;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        border: 3px solid var(--rosso-corsa);
+        border-top: none;
+        border-right: none;
+        background: transparent;
+        opacity: 0;
+        transform: rotate(-45deg);
+    }
+    & label:hover::after {
+        opacity: 0.4;
+    }
+    & input[type=checkbox] {
+        visibility: hidden;
+    }
+    & input[type=checkbox]:checked + label:after {
+        opacity: 1;
+    }    
+}

@@ -1,0 +1,10 @@
+:root {
+    --attainia-logo {
+        width: 150px;
+        height: 39px;
+    }
+}
+
+.attainiaLogo {
+    @apply --attainia-logo;
+}

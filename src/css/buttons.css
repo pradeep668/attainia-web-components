@@ -1,0 +1,17 @@
+@import 'colors.css';
+@import 'fonts.css';
+
+:root {
+    --btn {
+        background-color: var(--rosso-corsa);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-family: var(--font-family);
+        font-size: 15px;
+        font-weight: 700;
+        padding: 18px 0;
+        text-align: center;
+        text-decoration: none;
+    }
+}

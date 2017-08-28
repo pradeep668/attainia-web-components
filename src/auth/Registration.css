@@ -1,0 +1,70 @@
+@import '../css/buttons.css';
+@import '../css/forms.css';
+@import '../css/variables.css';
+
+.registrationForm {
+    @apply --basic-form;
+
+    & > * {
+        @apply --form-item-margin;
+    }
+
+    & .instructions {
+        text-align: center;
+    }
+
+    & .registrationButton {
+        @apply --btn;
+    }
+
+    & .attainiaLogo {
+        margin: 30px auto 15px auto;
+    }
+}
+
+@supports not (display: grid) {
+    .registrationButton, .attainiaLogo, .instructions, .name, .password, .email {
+        max-width: 50em;
+        margin: 0 auto;
+    }
+}
+
+@supports (display: grid) {
+    @media (--desktop) {
+        .registrationForm {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+              "header header"
+              "instructions instructions"
+              "name name"
+              "email email"
+              "password password"
+              "save save";
+
+            & .attainiaLogo {
+                grid-area: header;
+            }
+
+            & .instructions {
+                grid-area: instructions;
+            }
+
+            & .name {
+                grid-area: name;
+            }
+
+            & .password {
+                grid-area: password;
+            }
+
+            & .email {
+                grid-area: email;
+            }
+
+            & .registrationButton {
+                grid-area: save;
+            }
+        }
+    }
+}

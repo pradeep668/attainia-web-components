@@ -1,0 +1,65 @@
+@import '../css/buttons.css';
+@import '../css/forms.css';
+@import '../css/variables.css';
+
+.registerApplication {
+    @apply --basic-form;
+
+    & > * {
+        @apply --form-item-margin;
+    }
+
+    & .instructions {
+        text-align: center;
+    }
+
+    & .registerApplicationButton {
+        @apply --btn;
+    }
+
+    & .attainiaLogo {
+        margin: 30px auto 15px auto;
+    }
+}
+
+@supports not (display: grid) {
+    .registerApplicationButton, .redirect, .attainiaLogo, .instructions, .applicationName {
+        max-width: 50em;
+        margin: 0 auto;
+    }
+}
+
+@supports (display: grid) {
+    @media (--desktop) {
+        .registerApplication {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+              "header header"
+              "instructions instructions"
+              "name name"
+              "redirect redirect"
+              "save save";
+
+            & .attainiaLogo {
+                grid-area: header;
+            }
+
+            & .instructions {
+                grid-area: instructions;
+            }
+
+            & .redirect {
+                grid-area: redirect;
+            }
+
+            & .applicationName {
+                grid-area: name;
+            }
+
+            & .registerApplicationButton {
+                grid-area: save;
+            }
+        }
+    }
+}
