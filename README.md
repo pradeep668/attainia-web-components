@@ -8,7 +8,35 @@ This repository contains modularized JavaScript and CSS meant to be used in an A
 npm install attainia-web-components
 ```
 
-## Importing JS Components
+## Usage 
+
+Many components in this library can be used in two ways. While the actual component is defined in just the JavaScript file after which it is named, there are supplementary files that expand on its functionality which you can choose to use as well.
+
+As an example, the "Login" component consists of a `Login.js`, a `Login.containerjs`. The latter is a component that wraps `Login.js`, mapping properties from a Redux store and wrapping a Redux dispatcher around an action creator object, injecting all of those as properties into the actual `Login.js` component itself. So you are free to import _only_ the `Login.js` _if_ you take care of setting and injecting those properties into the component yourself. However if you choose to use the component from the higher order `Login.container.js` component, you need to integrate the Login components reducer into your application's reducers.
+
+To add the reducer for the auth components into your application, just import the `reducer.js` from this library's `auth/` folder into your `combineReducers()` method. In a typical application you might have a `reducers.js` above your `components/` folder:
+
+```javascript
+import {combineReducers} from 'redux';
+import {reducer as formReducer} from 'redux-form';
+
+/* reducer for the `auth` component(s) from attainia-web-componets library */
+import auth from 'attainia-web-components/auth/reducer';
+
+/* your local reducers */
+import resources from './components/resources/reducer';
+
+/* combine your local reducers with the reducer(s) for the attain web components */
+export default combineReducers({
+    auth,
+    resources,
+    form: formReducer
+});
+```
+
+Now, your `Login.container.js` will have access to the `auth` section of your application's Redux store, which is where the functionality specific to these components take place.
+
+### Importing JS Components
 
 The React web components in this repository are imported just like any normal local web component:
 
@@ -24,26 +52,6 @@ export default (props) =>
 ```
 
 In addition to the basic web component files are stylesheets, types, action creators, container components (which wrap the components themselves and inject properties from the Redux store), and local stores/reducers. So you are free to use the naked component itself and inject the required properties it defines, OR you can use the _container_ component if you plan on letting the component use its own store and follow pre-configured behavior (defined in the action creators and reducers).
-
-This just means you need to _add_ the reducers to your own Redux store:
-
-```javascript
-import {combineReducers} from 'redux';
-import {reducer as formReducer} from 'redux-form';
-
-/* reducer for the `auth` component(s) from this awc library */
-import auth from 'attainia-web-components/auth/reducer';
-
-/* your local reducers */
-import resources from './components/resources/reducer';
-
-/* combine your local reducers with the reducer(s) for the attain web components */
-export default combineReducers({
-    auth,
-    resources,
-    form: formReducer
-});
-```
 
 Using any container component will then work seamlessly, just import the `.container.js` component, _not_ the naked component itself (which you would need to configure yourself if you wanted more control).
 
@@ -75,7 +83,7 @@ export default (
 );
 ```
 
-### Importing non-Transpiled Components
+### Importing non-Transpiled JavaScript Components
 
 In case you wish to import the pre-transpiled components, you can change your import path (for _any_ component) to pull from the `src/` folder rather than the `/` root directory of the project.
 
@@ -84,7 +92,7 @@ In case you wish to import the pre-transpiled components, you can change your im
 import Login from 'attainia-web-components/src/auth/Login';
 ```
 
-## Importing Root CSS Styles
+### Importing Root CSS Styles
 
 This repository leverages some shared, Attainia-branded styles in its components, however you can import them directly. Although you will need to handle the PostCSS/CSSNext compilation yourself, you can look at this project's `postcss.config.js` and/or copy that file directly into your own project's webpack build step(s) for PostCSS.
 
@@ -99,7 +107,7 @@ the `src/css/` folder.
 }
 ```
 
-## Table of Contents
+## Component Table of Contents
 
 Auth Components:
 
