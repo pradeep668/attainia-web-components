@@ -98,3 +98,78 @@ the `src/css/` folder.
     @apply --btn;
 }
 ```
+
+## Table of Contents
+
+Auth Components:
+
+* [Login](#login)
+* [PasswordHelp](#password-help)
+* [Registration](#user-registration)
+* [RegisterApplication](#app-registration)
+
+Common Components:
+
+* [Conditional](#conditional-rendering) 
+* [FormField](#form-field) 
+* [Logo](#attainia-logo)
+
+### Login
+
+Renders the Attainia user authentication component, which expects an email and password to be provided. Additionally it links to [password reset](#password-help) and [user registration](#user-registration) components.
+
+### Password Help
+
+Collects a given user's registered email address, to trigger the password reset process defined in your application.
+
+### User Registration
+
+New users can register with your application using this form. It currently provides name, email and password fields.
+
+### App Registration
+
+Allows administrative users to register an application with an OAuth provider back-end, which should return a client Id and client secret that the new application can use in future interaction with the OAuth provider.
+
+### Conditional Rendering
+
+Based on [mathieuancelin](https://github.com/mathieuancelin) npm module [react-conditional-render](https://www.npmjs.com/package/react-conditional-render), however its lack of attention and upkeep has caused some problems with linting and module bundling tools. Additionally, some functionality has been added here to allow its `condition` property to evaluate a greater range of "truthy" values.
+
+In addition to the standard use:
+
+```javascript
+import {Conditional} from 'attainia-web-components/common/Conditional';
+
+export default (props) =>
+    <Conditional condition={props.isLoggedIn}>
+        <header>
+            <h1>{`Welcome ${props.name}!`}</h1>
+        </header>
+    </Conditional>;
+```
+
+You can import the `renderConditional` function for use outside of JSX (ie, in a higher order component wrapper):
+
+```javascript
+import {connect} from 'react-redux';
+import {renderConditional} from 'attainia-web-components/common/Conditional';
+
+import ResourcesDetail from './ResourcesDetail';
+
+/* set the `condition` property and it will render the component when evaluates to true */
+const mapStateToProps = state => ({
+    condition: state.auth.user.id,
+    resource: state.resources.detail
+});
+
+export default renderConditional(
+    connect(mapStateToProps)(ResourcesDetail)
+);
+```
+
+### Form Field
+
+A wrapper around the `<input />` or `<textarea />` form fields, for use _specifically_ in [redux-forms](http://redux-form.com/). It supports numerous `type='<input type'`, but defaults to a value of `type='text'`. Additionally, it supports `placeholder` and `label`, the latter of which will render a `<label />` element before the actual `<input />` tag (except in the case of `<input type=checkbox />`, where the label renders after). Make sure to set your `id` property if you _are_ setting a `label` property, since the label must refer to the associated `<input />` element by its unique id.
+
+### Attainia Logo
+
+The current Attainia branded logo, in component form.
