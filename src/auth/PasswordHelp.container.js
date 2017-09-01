@@ -1,20 +1,20 @@
-import {connect} from 'react-redux';
-import {reduxForm} from 'redux-form';
-import Validator from 'validatorjs';
+import {connect} from 'react-redux'
+import {reduxForm} from 'redux-form'
+import Validator from 'validatorjs'
 
-import {passwordHelp} from './actions';
-import PasswordHelp from './PasswordHelp';
-import constants from './constants';
+import {passwordHelp} from './actions'
+import PasswordHelp from './PasswordHelp'
+import constants from './constants'
 
-const {passwordHelp: {rules, messages}} = constants;
+const {passwordHelp: {rules, messages}} = constants
 
 const validate = (values) => {
-    const validator = new Validator(values, rules, messages);
+    const validator = new Validator(values, rules, messages)
 
-    validator.passes();
+    validator.passes()
 
-    return validator.errors.all();
-};
+    return validator.errors.all()
+}
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     passwordHelp: values =>
@@ -22,10 +22,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             values,
             () => ownProps.history.push('/login')
         )
-});
+})
 
 export default reduxForm({
     validate,
     fields: ['username'],
     form: 'PasswordHelpForm'
-})(connect(null, mapDispatchToProps)(PasswordHelp));
+})(connect(null, mapDispatchToProps)(PasswordHelp))

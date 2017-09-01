@@ -1,8 +1,8 @@
 /* eslint "max-len": "off" */
 
-import LocalizedStrings from 'react-localization';
+import LocalizedStrings from 'react-localization'
 
-const PASSWORD_PATTERN = new RegExp(/^([A-Z]|[a-z])([a-z]|[0-9]|[!@#$%^&*()[\];:,.<>?*^+=_-]){6,50}$/);
+const PASSWORD_PATTERN = new RegExp(/^([A-Z]|[a-z])([a-z]|[0-9]|[!@#$%^&*()[\];:,.<>?*^+=_-]){6,50}$/)
 
 export default {
     PASSWORD_PATTERN,
@@ -93,4 +93,4 @@ export default {
             email: 'required|email'
         }
     }
-};
+}

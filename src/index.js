@@ -1,4 +1,4 @@
-import auth from './auth';
-import common from './common';
+import auth from './auth'
+import common from './common'
 
-export default {auth, common};
+export default {auth, common}

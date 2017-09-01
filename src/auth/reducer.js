@@ -1,5 +1,5 @@
-import types from './types';
-import initialState from './initialState';
+import types from './types'
+import initialState from './initialState'
 
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -8,17 +8,17 @@ export default (state = initialState, action) => {
         return {
             ...state,
             user: action.data
-        };
+        }
     }
     case types.PASSWORD_HELP:
     case types.LOGOUT: {
         return {
             ...state,
             user: {}
-        };
+        }
     }
     // no default
     }
 
-    return state;
-};
+    return state
+}

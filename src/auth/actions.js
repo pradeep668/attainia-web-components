@@ -1,10 +1,10 @@
-import axios from 'axios';
-import types from './types';
-import constants from './constants';
+import axios from 'axios'
+import types from './types'
+import constants from './constants'
 
-const {API_URL} = constants;
+const {API_URL} = constants
 
-const ax = axios.create({baseURL: `${API_URL}/`});
+const ax = axios.create({baseURL: `${API_URL}/`})
 
 export const passwordHelp = dispatch =>
     async ({email}) => {
@@ -12,10 +12,10 @@ export const passwordHelp = dispatch =>
             url: '/password-help/',
             method: 'post',
             data: {email}
-        });
+        })
 
-        dispatch({data, type: types.PASSWORD_HELP});
-    };
+        dispatch({data, type: types.PASSWORD_HELP})
+    }
 
 export const register = dispatch =>
     async ({name, email, password}) => {
@@ -23,10 +23,10 @@ export const register = dispatch =>
             url: '/register/',
             method: 'post',
             data: {name, email, password}
-        });
+        })
 
-        dispatch({data, type: types.REGISTER});
-    };
+        dispatch({data, type: types.REGISTER})
+    }
 
 export const registerApplication = dispatch =>
     async ({name, redirect, token}) => {
@@ -43,10 +43,10 @@ export const registerApplication = dispatch =>
                 client_type: 'public',
                 skip_authorization: true
             }
-        });
+        })
 
-        dispatch({data, type: types.REGISTER_APP});
-    };
+        dispatch({data, type: types.REGISTER_APP})
+    }
 
 export const login = dispatch =>
     async ({email, password}, callback) => {
@@ -57,12 +57,12 @@ export const login = dispatch =>
                 password,
                 username: email.split('@')[0]
             }
-        });
+        })
 
-        dispatch({data, type: types.LOGIN});
+        dispatch({data, type: types.LOGIN})
 
-        if (callback) callback();
-    };
+        if (callback) callback()
+    }
 
 export const logout = dispatch =>
     async ({token}) => {
@@ -72,8 +72,7 @@ export const logout = dispatch =>
             headers: {
                 Auth: `Bearer ${token}`
             }
-        });
+        })
 
-        dispatch({data, type: types.LOGOUT});
-    };
-
+        dispatch({data, type: types.LOGOUT})
+    }

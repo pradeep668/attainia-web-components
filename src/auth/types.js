@@ -5,4 +5,4 @@ export default {
     REGISTER_APP: 'awc_register_app',
     LOGIN: 'awc_login',
     LOGOUT: 'awc_logout'
-};
+}
