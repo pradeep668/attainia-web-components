@@ -26,6 +26,7 @@
     "react",
     "component"
   ],
+  "license": "Apache-2.0",
   "author": "David Nunez <david.nunez@attainia.com>",
   "dependencies": {
     "axios": "0.16.2",
@@ -172,6 +173,10 @@
       "react/jsx-wrap-multilines": "off",
       "react/require-default-props": "off",
       "semi-spacing": "error",
+      "semi": [
+        "error",
+        "never"
+      ],
       "space-before-function-paren": [
         "error",
         {
