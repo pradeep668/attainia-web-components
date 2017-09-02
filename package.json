@@ -1,6 +1,6 @@
 {
   "name": "attainia-web-components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A collection of Attainia branded web components to be used in an Attainia React.js web application.",
   "main": "index.js",
   "engines": {
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab3.attainia.com:attainia-development/attainia-web-components.git"
+    "url": "git@github.com:Attainia/attainia-web-components.git"
   },
   "keywords": [
     "attainia",
@@ -28,6 +28,12 @@
   ],
   "license": "Apache-2.0",
   "author": "David Nunez <david.nunez@attainia.com>",
+  "contributors": [
+      "Alex <alex.maskovyak@attainia.com>",
+      "Jason <jason.rego@attainia.com>",
+      "Glenn <glenn.siegman@attainia.com>",
+      "Tim <tim.graf@attainia.com>"
+  ],
   "dependencies": {
     "axios": "0.16.2",
     "object.assign": "4.0.4",
