@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 
 import './RegisterApplication.css'
 import Logo from '../common/Logo'
-import FormField from '../common/FormField'
+import ReduxFormField from '../common/FormField'
 
 const RegisterApplication = ({handleSubmit, registerApplication}) =>
     <form className='registerApplication' onSubmit={handleSubmit(registerApplication)}>
         <Logo />
         <p className='instructions'>Register Your Application</p>
-        <FormField className='applicationName' placeholder='name' name='name' />
-        <FormField className='redirect' placeholder='redirects to' name='redirect' type='url' />
+        <ReduxFormField className='applicationName' placeholder='name' name='name' />
+        <ReduxFormField className='redirect' placeholder='redirects to' name='redirect' type='url' />
         <button className='registerApplicationButton' type='submit'>Register</button>
     </form>
 

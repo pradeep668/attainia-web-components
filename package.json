@@ -1,17 +1,18 @@
 {
   "name": "attainia-web-components",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A collection of Attainia branded web components to be used in an Attainia React.js web application.",
   "main": "index.js",
   "engines": {
     "node": ">=6"
   },
   "scripts": {
-    "clean": "node_modules/.bin/rimraf auth common css index.js",
+    "babel": "BABEL_ENV=production babel src --out-dir ./ --ignore node_modules/ --copy-files",
+    "build:css": "node_modules/.bin/postcss src/**/*.css --base src --dir ./ --env=production --config config/postcss.config.js",
+    "build:js": "NODE_ENV=production node config/build.js",
     "prebuild": "npm run clean",
-    "build:css": "node_modules/.bin/postcss src/**/*.css --base src --dir ./ --env=production --config postcss.config.js",
-    "build:js": "BABEL_ENV=production babel src --out-dir ./ --ignore node_modules/ --copy-files",
-    "build": "npm run build:js && npm run build:css",
+    "build": "npm run build:css && npm run build:js",
+    "clean": "node_modules/.bin/rimraf auth common css index.js",
     "prepublish": "npm run build",
     "postpublish": "npm run clean",
     "lint": "node_modules/.bin/eslint src/**/*.js",
@@ -29,23 +30,20 @@
   "license": "Apache-2.0",
   "author": "David Nunez <david.nunez@attainia.com>",
   "contributors": [
-      "Alex <alex.maskovyak@attainia.com>",
-      "Jason <jason.rego@attainia.com>",
-      "Glenn <glenn.siegman@attainia.com>",
-      "Tim <tim.graf@attainia.com>"
+    "Alex <alex.maskovyak@attainia.com>",
+    "Jason <jason.rego@attainia.com>",
+    "Glenn <glenn.siegman@attainia.com>",
+    "Tim <tim.graf@attainia.com>"
   ],
   "dependencies": {
     "axios": "0.16.2",
-    "object.assign": "4.0.4",
-    "object.entries": "1.0.4",
-    "object.values": "1.0.4",
     "prop-types": "15.5.10",
     "ramda": "0.24.1",
     "react": "15.6.1",
     "react-localization": "0.1.2",
-    "redux": "3.7.2",
     "react-redux": "5.0.6",
     "react-router-dom": "4.2.2",
+    "redux": "3.7.2",
     "redux-form": "7.0.3",
     "uuid": "3.1.0",
     "validatorjs": "3.13.5"
@@ -53,19 +51,20 @@
   "devDependencies": {
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
+    "babel-plugin-external-helpers": "6.22.0",
     "babel-plugin-syntax-async-functions": "6.13.0",
-    "babel-plugin-transform-async-to-generator": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.23.0",
     "babel-polyfill": "6.23.0",
     "babel-preset-es2015": "6.24.1",
+    "babel-preset-es2015-rollup": "3.0.0",
     "babel-preset-react": "6.24.1",
     "eslint": "4.4.1",
     "eslint-config-airbnb": "15.1.0",
-    "eslint-loader": "1.9.0",
     "eslint-plugin-flowtype": "2.35.0",
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.2.1",
+    "glob-all": "3.1.0",
     "postcss": "6.0.9",
     "postcss-cli": "4.1.0",
     "postcss-cssnext": "3.0.2",
@@ -73,16 +72,22 @@
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-import": "10.0.0",
     "postcss-nesting": "4.1.0",
-    "rimraf": "2.6.1"
+    "rimraf": "2.6.1",
+    "rollup": "0.49.2",
+    "rollup-plugin-babel": "3.0.2",
+    "rollup-plugin-commonjs": "8.2.0",
+    "rollup-plugin-image": "1.0.2",
+    "rollup-plugin-node-resolve": "3.0.0",
+    "rollup-plugin-postcss": "0.5.4"
   },
   "babel": {
     "presets": [
-      "es2015",
+      "es2015-rollup",
       "react"
     ],
     "plugins": [
+      "external-helpers",
       "syntax-async-functions",
-      "transform-async-to-generator",
       "transform-object-rest-spread"
     ]
   },

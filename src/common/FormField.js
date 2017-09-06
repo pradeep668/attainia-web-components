@@ -1,7 +1,7 @@
 /* Not sure when eslint-plugin-react will fix their issue https://github.com/yannickcr/eslint/eslint-plugin-react/issues/1187 */
 /* eslint "react/jsx-indent-props": "off" */
 
-import {pickBy, isNil} from 'ramda'
+import {pickBy, isNil, complement} from 'ramda'
 import React from 'react'
 import {Field} from 'redux-form'
 import PropTypes from 'prop-types'
@@ -9,10 +9,10 @@ import uuid from 'uuid/v4'
 
 import './FormField.css'
 
-const isNotNil = val => !isNil(val)
 const isCheck = type => /checkbox/i.test(type)
+const isNotNil = complement(isNil)
 
-const InputField = props => (
+export const InputField = props => (
     /textarea/i.test(props.type) ?
         <textarea className='formField' {...props} /> :
         <input checked className='formField' {...props} />
@@ -45,7 +45,7 @@ InputField.defaultProps = {
     type: 'text'
 }
 
-const FormField = ({
+export const FormField = ({
     handlers, input, id, meta: {touched, error}, label, name, placeholder, type, value, className
 }) =>
     <div className={`formGroup ${className}${isCheck(type) ? ' squareCheckbox' : ''}`}>
@@ -87,6 +87,11 @@ FormField.propTypes = {
         PropTypes.number,
         PropTypes.string
     ])
+}
+
+FormField.defaultProps = {
+    meta: {},
+    handlers: {}
 }
 
 const ReduxFormField = props =>
