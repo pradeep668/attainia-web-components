@@ -10,13 +10,13 @@ These components are intended to be used in a React.js web application:
 If you intend to use any of the `.container.js` components it will require the use of:
 * [Redux](https://github.com/reactjs/redux) - Unidirectional data flow in a React application
 * [React-Redux](https://github.com/reactjs/react-redux) - Bridges React to Redux
+* [React-Apollo](https://github.com/apollographql/react-apollo) - Data provider to wrap around components that can run or subscribe to server queries
 * [Redux-Form](https://github.com/erikras/redux-form) - HTML Form helpers and validation that flow into a Redux store
 * [Validatorjs](https://github.com/skaterdav85/validatorjs) - Build validation objects that Redux-Form can easily use
 
 Additionally, certain low-level libraries are also servicing these components:
 * [Ramda](https://www.npmjs.com/package/ramda) - Utils library (similar to Lodash) but more properly geared towards functional programming paradigms
 * [UUID](https://github.com/kelektiv/node-uuid) - Generates guids
-* [Axios](https://www.npmjs.com/package/axios) - HTTP requests from the browser
 
 ## Installing
 

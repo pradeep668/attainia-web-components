@@ -6,7 +6,6 @@ const PASSWORD_PATTERN = new RegExp(/^([A-Z]|[a-z])([a-z]|[0-9]|[!@#$%^&*()[\];:
 
 export default {
     PASSWORD_PATTERN,
-    API_URL: process.env.REACT_APP_AUTH_API_BASE_URL || 'http://localhost',
     passwordHelp: {
         messages: new LocalizedStrings({
             en: {
@@ -63,7 +62,7 @@ export default {
             redirect: 'required'
         }
     },
-    register: {
+    registerUser: {
         messages: new LocalizedStrings({
             en: {
                 'required.name': 'Please enter your name',

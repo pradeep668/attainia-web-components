@@ -1,31 +1,50 @@
+import {path} from 'ramda'
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
+import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
-import {login} from './actions'
 import Login from './Login'
+import {login} from './actions'
 import constants from './constants'
+import {LOGIN_USER} from './mutations'
 
 const {login: {rules, messages}} = constants
 
 const validate = (values) => {
     const validator = new Validator(values, rules, messages)
-
     validator.passes()
-
     return validator.errors.all()
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    login: values =>
-        login(dispatch)(
-            values,
-            () => ownProps.history.push('/home')
-        )
+const mapStateToProps = state => ({
+    email: path(['auth', 'user', 'email'], state),
+    name: path(['auth', 'user', 'name'], state)
 })
 
-export default reduxForm({
+const mapDispatchToProps = dispatch => ({
+    login(user) {
+        return dispatch(login(user))
+    }
+})
+
+const FormedLogin = reduxForm({
     validate,
-    fields: ['email', 'password'],
-    form: 'LoginForm'
-})(connect(null, mapDispatchToProps)(Login))
+    form: 'LoginForm',
+    fields: ['email', 'password']
+})(Login)
+
+const LoginWithData = graphql(
+    LOGIN_USER, {
+    props: ({ownProps, mutate}) => ({
+        async tryLogin(credentials) {
+            const user = await mutate({variables: credentials})
+            return ownProps.login(user)
+        }
+    })
+})(FormedLogin)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginWithData)

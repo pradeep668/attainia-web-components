@@ -5,8 +5,8 @@ import './Registration.css'
 import Logo from '../common/Logo'
 import ReduxFormField from '../common/FormField'
 
-const Registration = ({handleSubmit, register}) =>
-    <form className='registrationForm' onSubmit={handleSubmit(register)}>
+const Registration = ({handleSubmit, tryRegister}) =>
+    <form className='registrationForm' onSubmit={handleSubmit(tryRegister)}>
         <Logo />
         <p className='instructions'>Register Your Account</p>
         <ReduxFormField className='name' placeholder='name' name='name' />
@@ -17,7 +17,7 @@ const Registration = ({handleSubmit, register}) =>
 
 Registration.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    register: PropTypes.func.isRequired
+    tryRegister: PropTypes.func.isRequired
 }
 
 export default Registration
