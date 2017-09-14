@@ -26,8 +26,8 @@ export const PASSWORD_RESET = gql`
     }
 `
 export const REFRESH_TOKEN = gql`
-    mutation refreshToken($token: String!) {
-        refreshToken(token: $token) {
+    mutation refreshUser($token: String!) {
+        refreshUser(token: $token) {
             access_token
             expires_in
             token_type
