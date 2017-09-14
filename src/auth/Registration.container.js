@@ -4,7 +4,7 @@ import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
 import Registration from './Registration'
-import {registerUser} from './actions'
+import {handleError, cancel, registerUser} from './actions'
 import constants from './constants'
 import {REGISTER_USER} from './mutations'
 
@@ -17,6 +17,12 @@ const validate = (values) => {
 }
 
 const mapDispatchToProps = dispatch => ({
+    handleError(error) {
+        return dispatch(handleError(error))
+    },
+    cancel() {
+        return dispatch(cancel())
+    },
     registerUser(user) {
         return dispatch(registerUser(user))
     }
@@ -31,10 +37,14 @@ const FormedRegistration = reduxForm({
 const RegistrationWithData = graphql(REGISTER_USER, {
     props: ({ownProps, mutate}) => ({
         async tryRegister(user) {
-            const success = await mutate({variables: user})
-            if (success) {
-                ownProps.registerUser(user)
-                ownProps.history.push('/login')
+            try {
+                const {data: {error, registerUser}} = await mutate({variables: user})
+                if (error) {
+                    throw new Error(error)
+                }
+                if (registerUser) ownProps.registerUser(user)
+            } catch (err) {
+                ownProps.handleError(err)
             }
         }
     })

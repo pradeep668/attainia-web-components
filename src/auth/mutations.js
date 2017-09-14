@@ -7,11 +7,14 @@ export const LOGIN_USER = gql`
             email
             is_active
             last_login
-            access_token
-            expires_in
-            token_type
-            scope
-            redirect_uri
+            roles
+            token {
+                access_token
+                expires_in
+                token_type
+                scope
+                redirect_uri
+            }
         }
     }
 `

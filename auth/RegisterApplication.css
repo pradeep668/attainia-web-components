@@ -1,0 +1,72 @@
+.registerApplication {
+  background: #ebebeb;
+  min-width: 325px;
+  max-width: 325px;
+  margin: 0 auto;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-shadow: 2px 2px 3px #cacaca;
+          box-shadow: 2px 2px 3px #cacaca;
+  padding-bottom: 10px
+}
+.registerApplication > * {
+  margin: 5px 15px;
+}
+.registerApplication .instructions {
+  text-align: center;
+}
+.registerApplication .registerApplicationButton, .registerApplication .cancelButton {
+  background-color: #E10600;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-family: Lato, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 18px 0;
+  text-align: center;
+  text-decoration: none;
+}
+.registerApplication .attainiaLogo {
+  margin: 30px auto 15px auto;
+}
+@supports not (display: grid) {
+    .registerApplicationButton, .redirect, .attainiaLogo, .instructions, .applicationName, .cancelButton {
+        max-width: 50em;
+        margin: 0 auto;
+    }
+}
+@supports (display: grid) {
+    @media screen and (min-width: 992px) {
+        .registerApplication {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+              "header header"
+              "instructions instructions"
+              "name name"
+              "redirect redirect"
+              "save cancel"
+        }
+        .registerApplication .attainiaLogo {
+      grid-area: header;
+    }
+        .registerApplication .instructions {
+      grid-area: instructions;
+    }
+        .registerApplication .redirect {
+      grid-area: redirect;
+    }
+        .registerApplication .applicationName {
+      grid-area: name;
+    }
+        .registerApplication .registerApplicationButton {
+      grid-area: save;
+    }
+        .registerApplication .cancelButton {
+      grid-area: cancel;
+    }
+    }
+}

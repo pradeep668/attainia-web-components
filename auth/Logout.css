@@ -1,0 +1,12 @@
+.loginButton {
+  background-color: #E10600;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-family: Lato, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 18px 0;
+  text-align: center;
+  text-decoration: none}

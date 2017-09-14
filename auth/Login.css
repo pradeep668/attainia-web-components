@@ -1,0 +1,86 @@
+.loginForm {
+  background: #ebebeb;
+  min-width: 325px;
+  max-width: 325px;
+  margin: 0 auto;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-shadow: 2px 2px 3px #cacaca;
+          box-shadow: 2px 2px 3px #cacaca;
+  padding-bottom: 10px
+}
+.loginForm > * {
+  margin: 5px 15px;
+}
+.loginForm a.link,
+    .loginForm a.link:visited,
+    .loginForm a.link:active {
+  font-size: 12px;
+  color: #1F74B2;
+  text-decoration: underline;
+}
+.loginForm .passwordHelp {
+  text-align: right;
+}
+.loginForm .loginButton {
+  background-color: #E10600;
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  font-family: Lato, Helvetica, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 18px 0;
+  text-align: center;
+  text-decoration: none
+}
+.loginForm .register, .loginForm .loginButton {
+  text-align: center;
+}
+.loginForm .attainiaLogo {
+  margin: 30px auto 15px auto;
+}
+@supports not (display: grid) {
+    .attainiaLogo, .email, .password, .register, .rememberMe, .passwordHelp, .loginButton {
+        max-width: 50em;
+        margin: 0 auto;
+    }
+}
+@supports (display: grid) {
+    @media screen and (min-width: 992px) {
+        .loginForm {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+              "header-logo header-logo"
+              "email email"
+              "password password"
+              "remember-me password-help"
+              "login-button login-button"
+              "register register"
+        }
+        .loginForm .attainiaLogo {
+      grid-area: header-logo;
+    }
+        .loginForm .email {
+      grid-area: email;
+    }
+        .loginForm .password {
+      grid-area: password;
+    }
+        .loginForm .rememberMe {
+      grid-area: remember-me;
+    }
+        .loginForm .passwordHelp {
+      grid-area: password-help;
+    }
+        .loginForm .loginButton {
+      grid-area: login-button;
+    }
+        .loginForm .register {
+      grid-area: register;
+    }
+    }
+}

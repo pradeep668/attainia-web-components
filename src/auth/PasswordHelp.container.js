@@ -5,7 +5,7 @@ import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
 import PasswordHelp from './PasswordHelp'
-import {passwordHelp} from './actions'
+import {handleError, cancel, passwordHelp} from './actions'
 import constants from './constants'
 import {PASSWORD_RESET} from './mutations'
 
@@ -22,6 +22,12 @@ const mapStateToProps = store => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+    cancel() {
+        return dispatch(cancel())
+    },
+    handleError(error) {
+        return dispatch(handleError(error))
+    },
     passwordHelp(user) {
         return dispatch(passwordHelp(user))
     }
@@ -36,10 +42,14 @@ const FormedPasswordHelp = reduxForm({
 const PasswordHelpWithData = graphql(PASSWORD_RESET, {
     props: ({mutate, ownProps}) => ({
         async tryPasswordHelp(user) {
-            const success = await mutate({variables: user})
-            if (success) {
-                ownProps.passwordHelp(user)
-                ownProps.history.push('/login')
+            try {
+                const {data: {error, passwordReset}} = await mutate({variables: user})
+                if (error) {
+                    throw new Error(error)
+                }
+                if (passwordReset) ownProps.passwordHelp(user)
+            } catch (err) {
+                ownProps.handleError(err)
             }
         }
 

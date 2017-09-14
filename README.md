@@ -73,7 +73,6 @@ Using any container component will then work seamlessly, just import the `.conta
 
 ```javascript
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
 
 /* attainia web component */
@@ -87,14 +86,9 @@ import ResourcesList from './components/resources/ResourcesList.container';
 
 export default (
     <Provider store={store}>
-        <BrowserRouter>
-            <Switch>
-                <Route exact path='/' component={Login} />
-                <Route exact path='/login' component={Login} />
-                <Route exact path='/home' component={ResourcesList} />
-                <Route exact path='/resources' component={ResourcesList} />
-            </Switch>
-        </BrowserRouter>
+        <Login>
+            <ResourcesList />
+        </Login>
     </Provider>
 );
 ```
@@ -137,6 +131,22 @@ Common Components:
 * [Conditional](#conditional-rendering) 
 * [FormField](#form-field) 
 * [Logo](#attainia-logo)
+
+### AuthProvider
+
+This is the recommended way to use the `auth` components. Rather than grafting together the individual components yourself you can use this high-level component to wrap your application children components. This component will take care of the logic for rendering the `Login` component when un-authenticated and rendering your application's children components (make sure to pass in child components!) whenever users _are_ authenticated.
+
+```javascript
+import {Provider} from 'react-redux'
+import AuthProvider from 'attainia-web-components/auth/AuthProvider'
+
+export default (props) =>
+    <Provider store={store}>
+        <AuthProvider>
+            <!-- render your application components that show only for authenticated users here -->
+        </AuthProvider>
+    </Provider>
+```
 
 ### Login
 

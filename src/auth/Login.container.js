@@ -1,11 +1,11 @@
-import {path} from 'ramda'
+import {path, toPairs, without} from 'ramda'
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
 import Login from './Login'
-import {login} from './actions'
+import {handleError, login, gotoRegistration, gotoPasswordHelp} from './actions'
 import constants from './constants'
 import {LOGIN_USER} from './mutations'
 
@@ -23,8 +23,19 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+    handleError(error) {
+        return dispatch(handleError(error))
+    },
     login(user) {
         return dispatch(login(user))
+    },
+    gotoPasswordHelp(e) {
+        e.preventDefault()
+        return dispatch(gotoPasswordHelp())
+    },
+    gotoRegistration(e) {
+        e.preventDefault()
+        return dispatch(gotoRegistration())
     }
 })
 
@@ -38,8 +49,26 @@ const LoginWithData = graphql(
     LOGIN_USER, {
     props: ({ownProps, mutate}) => ({
         async tryLogin(credentials) {
-            const user = await mutate({variables: credentials})
-            return ownProps.login(user)
+            try {
+                const {data: {error, loginUser}} = await mutate({variables: credentials})
+                if (error) {
+                    throw new Error(error)
+                }
+                if (loginUser) {
+                    ownProps.login(loginUser)
+
+                    const {token} = loginUser
+                    if (token.redirect_uri) {
+                        window.location = `${token.redirect_uri}${
+                            token.redirect_uri.includes('?') ? '&' : '?'
+                        }${
+                            toPairs(without('redirect_uri', token)).map(([key, val]) => `${key}=${val}`).join('&')
+                        }`
+                    }
+                }
+            } catch (err) {
+                ownProps.handleError(err)
+            }
         }
     })
 })(FormedLogin)

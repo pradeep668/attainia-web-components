@@ -13,7 +13,7 @@
         text-align: center;
     }
 
-    & .registrationButton {
+    & .registrationButton, & .cancelButton {
         @apply --btn;
     }
 
@@ -23,7 +23,7 @@
 }
 
 @supports not (display: grid) {
-    .registrationButton, .attainiaLogo, .instructions, .name, .password, .email {
+    .registrationButton, .attainiaLogo, .instructions, .name, .password, .email, .cancelButton {
         max-width: 50em;
         margin: 0 auto;
     }
@@ -40,7 +40,7 @@
               "name name"
               "email email"
               "password password"
-              "save save";
+              "save cancel";
 
             & .attainiaLogo {
                 grid-area: header;
@@ -64,6 +64,10 @@
 
             & .registrationButton {
                 grid-area: save;
+            }
+
+            & .cancelButton {
+                grid-area: cancel;
             }
         }
     }

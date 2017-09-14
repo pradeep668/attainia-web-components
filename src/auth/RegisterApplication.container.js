@@ -4,7 +4,7 @@ import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
 import RegisterApplication from './RegisterApplication'
-import {registerApp} from './actions'
+import {registerApp, cancel} from './actions'
 import constants from './constants'
 import {REGISTER_APP} from './mutations'
 
@@ -17,6 +17,9 @@ const validate = (values) => {
 }
 
 const mapDispatchToProps = dispatch => ({
+    cancel() {
+        return dispatch(cancel())
+    },
     registerApplication(app) {
         return dispatch(registerApp(app))
     }
@@ -32,10 +35,7 @@ const RegisterApplicationWithData = graphql(REGISTER_APP, {
     props: ({mutate, ownProps}) => ({
         async tryRegisterApp(app) {
             const success = await mutate({variables: app})
-            if (success) {
-                ownProps.registerApplication(app)
-                ownProps.history.push('/home')
-            }
+            if (success) ownProps.registerApplication(app)
         }
     })
 })(FormedApplication)

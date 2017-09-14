@@ -1,5 +1,15 @@
 import types from './types'
 
+export const cancel = () =>
+    ({type: types.CANCEL})
+export const handleError = (error) =>
+    ({error, type: types.ERROR})
+export const gotoPasswordHelp = () =>
+    ({type: types.GOTO_PASSWORD_HELP})
+export const gotoRegistration = () =>
+    ({type: types.GOTO_REGISTRATION})
+export const gotoAppRegistration = () =>
+    ({type: types.GOTO_APP_REGISTRATION})
 export const passwordHelp = email =>
     ({email, type: types.PASSWORD_HELP})
 export const registerUser = user =>

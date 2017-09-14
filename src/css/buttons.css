@@ -5,6 +5,7 @@
     --btn {
         background-color: var(--rosso-corsa);
         color: white;
+        cursor: pointer;
         border: none;
         border-radius: 5px;
         font-family: var(--font-family);
