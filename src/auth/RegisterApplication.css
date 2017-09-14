@@ -13,7 +13,7 @@
         text-align: center;
     }
 
-    & .registerApplicationButton {
+    & .registerApplicationButton, & .cancelButton {
         @apply --btn;
     }
 
@@ -23,7 +23,7 @@
 }
 
 @supports not (display: grid) {
-    .registerApplicationButton, .redirect, .attainiaLogo, .instructions, .applicationName {
+    .registerApplicationButton, .redirect, .attainiaLogo, .instructions, .applicationName, .cancelButton {
         max-width: 50em;
         margin: 0 auto;
     }
@@ -39,7 +39,7 @@
               "instructions instructions"
               "name name"
               "redirect redirect"
-              "save save";
+              "save cancel";
 
             & .attainiaLogo {
                 grid-area: header;
@@ -59,6 +59,10 @@
 
             & .registerApplicationButton {
                 grid-area: save;
+            }
+
+            & .cancelButton {
+                grid-area: cancel;
             }
         }
     }

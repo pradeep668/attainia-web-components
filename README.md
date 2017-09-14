@@ -10,13 +10,13 @@ These components are intended to be used in a React.js web application:
 If you intend to use any of the `.container.js` components it will require the use of:
 * [Redux](https://github.com/reactjs/redux) - Unidirectional data flow in a React application
 * [React-Redux](https://github.com/reactjs/react-redux) - Bridges React to Redux
+* [React-Apollo](https://github.com/apollographql/react-apollo) - Data provider to wrap around components that can run or subscribe to server queries
 * [Redux-Form](https://github.com/erikras/redux-form) - HTML Form helpers and validation that flow into a Redux store
 * [Validatorjs](https://github.com/skaterdav85/validatorjs) - Build validation objects that Redux-Form can easily use
 
 Additionally, certain low-level libraries are also servicing these components:
 * [Ramda](https://www.npmjs.com/package/ramda) - Utils library (similar to Lodash) but more properly geared towards functional programming paradigms
 * [UUID](https://github.com/kelektiv/node-uuid) - Generates guids
-* [Axios](https://www.npmjs.com/package/axios) - HTTP requests from the browser
 
 ## Installing
 
@@ -73,7 +73,6 @@ Using any container component will then work seamlessly, just import the `.conta
 
 ```javascript
 import React from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {Provider} from 'react-redux';
 
 /* attainia web component */
@@ -87,14 +86,9 @@ import ResourcesList from './components/resources/ResourcesList.container';
 
 export default (
     <Provider store={store}>
-        <BrowserRouter>
-            <Switch>
-                <Route exact path='/' component={Login} />
-                <Route exact path='/login' component={Login} />
-                <Route exact path='/home' component={ResourcesList} />
-                <Route exact path='/resources' component={ResourcesList} />
-            </Switch>
-        </BrowserRouter>
+        <Login>
+            <ResourcesList />
+        </Login>
     </Provider>
 );
 ```
@@ -137,6 +131,22 @@ Common Components:
 * [Conditional](#conditional-rendering) 
 * [FormField](#form-field) 
 * [Logo](#attainia-logo)
+
+### AuthProvider
+
+This is the recommended way to use the `auth` components. Rather than grafting together the individual components yourself you can use this high-level component to wrap your application children components. This component will take care of the logic for rendering the `Login` component when un-authenticated and rendering your application's children components (make sure to pass in child components!) whenever users _are_ authenticated.
+
+```javascript
+import {Provider} from 'react-redux'
+import AuthProvider from 'attainia-web-components/auth/AuthProvider'
+
+export default (props) =>
+    <Provider store={store}>
+        <AuthProvider>
+            <!-- render your application components that show only for authenticated users here -->
+        </AuthProvider>
+    </Provider>
+```
 
 ### Login
 

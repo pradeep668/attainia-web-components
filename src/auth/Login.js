@@ -1,25 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
 
 import './Login.css'
 import Logo from '../common/Logo'
 import ReduxFormField from '../common/FormField'
 
-const Login = ({handleSubmit, login}) =>
-    <form className='loginForm' onSubmit={handleSubmit(login)}>
+const Login = ({handleSubmit, tryLogin, email, gotoPasswordHelp, gotoRegistration}) =>
+    <form className='loginForm' onSubmit={handleSubmit(tryLogin)}>
         <Logo />
-        <ReduxFormField className='email' placeholder='email' name='email' type='email' />
+        <ReduxFormField className='email' placeholder='email' name='email' type='email' value={email} />
         <ReduxFormField className='password' placeholder='password' type='password' name='password' />
         <ReduxFormField className='rememberMe' label='Remember Me' type='checkbox' name='remember' />
-        <Link className='passwordHelp link' to='/password-help'>Password Help</Link>
+        <a className='passwordHelp link' href='#' onClick={gotoPasswordHelp}>Password Help</a>
         <button className='loginButton' type='submit'>Login</button>
-        <Link className='register link' to='/register'>Need an Account?</Link>
+        <a className='register link' href='#' onClick={gotoRegistration}>Need an Account?</a>
     </form>
 
 Login.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    login: PropTypes.func.isRequired
+    tryLogin: PropTypes.func.isRequired,
+    gotoPasswordHelp: PropTypes.func.isRequired,
+    gotoRegistration: PropTypes.func.isRequired,
+    email: PropTypes.string
 }
 
 export default Login

@@ -1,31 +1,79 @@
+import {path, toPairs, without} from 'ramda'
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
+import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
-import {login} from './actions'
 import Login from './Login'
+import {handleError, login, gotoRegistration, gotoPasswordHelp} from './actions'
 import constants from './constants'
+import {LOGIN_USER} from './mutations'
 
 const {login: {rules, messages}} = constants
 
 const validate = (values) => {
     const validator = new Validator(values, rules, messages)
-
     validator.passes()
-
     return validator.errors.all()
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    login: values =>
-        login(dispatch)(
-            values,
-            () => ownProps.history.push('/home')
-        )
+const mapStateToProps = state => ({
+    email: path(['auth', 'user', 'email'], state),
+    name: path(['auth', 'user', 'name'], state)
 })
 
-export default reduxForm({
+const mapDispatchToProps = dispatch => ({
+    handleError(error) {
+        return dispatch(handleError(error))
+    },
+    login(user) {
+        return dispatch(login(user))
+    },
+    gotoPasswordHelp(e) {
+        e.preventDefault()
+        return dispatch(gotoPasswordHelp())
+    },
+    gotoRegistration(e) {
+        e.preventDefault()
+        return dispatch(gotoRegistration())
+    }
+})
+
+const FormedLogin = reduxForm({
     validate,
-    fields: ['email', 'password'],
-    form: 'LoginForm'
-})(connect(null, mapDispatchToProps)(Login))
+    form: 'LoginForm',
+    fields: ['email', 'password']
+})(Login)
+
+const LoginWithData = graphql(
+    LOGIN_USER, {
+    props: ({ownProps, mutate}) => ({
+        async tryLogin(credentials) {
+            try {
+                const {data: {error, loginUser}} = await mutate({variables: credentials})
+                if (error) {
+                    throw new Error(error)
+                }
+                if (loginUser) {
+                    ownProps.login(loginUser)
+
+                    const {token} = loginUser
+                    if (token.redirect_uri) {
+                        window.location = `${token.redirect_uri}${
+                            token.redirect_uri.includes('?') ? '&' : '?'
+                        }${
+                            toPairs(without('redirect_uri', token)).map(([key, val]) => `${key}=${val}`).join('&')
+                        }`
+                    }
+                }
+            } catch (err) {
+                ownProps.handleError(err)
+            }
+        }
+    })
+})(FormedLogin)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LoginWithData)

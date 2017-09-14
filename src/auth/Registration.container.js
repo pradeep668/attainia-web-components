@@ -1,31 +1,56 @@
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
+import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
-import {register} from './actions'
 import Registration from './Registration'
+import {handleError, cancel, registerUser} from './actions'
 import constants from './constants'
+import {REGISTER_USER} from './mutations'
 
-const {register: {rules, messages}} = constants
+const {registerUser: {rules, messages}} = constants
 
 const validate = (values) => {
     const validator = new Validator(values, rules, messages)
-
     validator.passes()
-
     return validator.errors.all()
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    register: values =>
-        register(dispatch)(
-            values,
-            () => ownProps.history.push('/login')
-        )
+const mapDispatchToProps = dispatch => ({
+    handleError(error) {
+        return dispatch(handleError(error))
+    },
+    cancel() {
+        return dispatch(cancel())
+    },
+    registerUser(user) {
+        return dispatch(registerUser(user))
+    }
 })
 
-export default reduxForm({
+const FormedRegistration = reduxForm({
     validate,
-    fields: ['username', 'password', 'email', 'name'],
+    fields: ['password', 'email', 'name'],
     form: 'RegistrationForm'
-})(connect(null, mapDispatchToProps)(Registration))
+})(Registration)
+
+const RegistrationWithData = graphql(REGISTER_USER, {
+    props: ({ownProps, mutate}) => ({
+        async tryRegister(user) {
+            try {
+                const {data: {error, registerUser}} = await mutate({variables: user})
+                if (error) {
+                    throw new Error(error)
+                }
+                if (registerUser) ownProps.registerUser(user)
+            } catch (err) {
+                ownProps.handleError(err)
+            }
+        }
+    })
+})(FormedRegistration)
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(RegistrationWithData)

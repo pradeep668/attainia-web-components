@@ -1,3 +1,5 @@
 export default {
-    user: {}
+    route: 'login',
+    user: {},
+    app: {}
 }
