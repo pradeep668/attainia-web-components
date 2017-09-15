@@ -23,7 +23,7 @@
 }
 
 @supports not (display: grid) {
-    .registerApplicationButton, .redirect, .attainiaLogo, .instructions, .applicationName, .cancelButton {
+    .registerApplicationButton, .redirect, .attainiaLogo, .instructions, .applicationName, .grantType, .cancelButton {
         max-width: 50em;
         margin: 0 auto;
     }
@@ -38,6 +38,7 @@
               "header header"
               "instructions instructions"
               "name name"
+              "grant grant"
               "redirect redirect"
               "save cancel";
 
@@ -55,6 +56,10 @@
 
             & .applicationName {
                 grid-area: name;
+            }
+
+            & .grantType {
+                grid-area: grant;
             }
 
             & .registerApplicationButton {

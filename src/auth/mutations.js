@@ -13,7 +13,7 @@ export const LOGIN_USER = gql`
                 expires_in
                 token_type
                 scope
-                redirect_uri
+                redirect_uris
             }
         }
     }
@@ -42,7 +42,9 @@ export const REGISTER_APP = gql`
     mutation registerApp($name: String!, $redirectUri: String!) {
         registerApp(name: $name, redirectUri: $redirectUri) {
             name
-            redirect_uri
+            redirect_uris
+            skip_authorization
+            authorization_grant_type
             client_id
             client_secret
         }
@@ -51,10 +53,5 @@ export const REGISTER_APP = gql`
 export const REGISTER_USER = gql`
     mutation registerUser($email: String!, $password: String!, $name: String!) {
         registerUser(email: $email, password: $password, name: $name)
-    }
-`
-export const REGISTER_SUPER_USER = gql`
-    mutation registerSuperUser($email: String!, $password: String!) {
-        registerSuperUser(email: $email, password: $password)
     }
 `

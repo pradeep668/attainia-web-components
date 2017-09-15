@@ -1,1 +1,0 @@
-{"version":3,"file":"initialState.js","sources":["../src/auth/initialState.js"],"sourcesContent":["export default {\n    route: 'login',\n    user: {},\n    app: {}\n}\n"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;AAAA,mBAAe;WACJ,OADI;UAEL,EAFK;SAGN;CAHT;;;;"}

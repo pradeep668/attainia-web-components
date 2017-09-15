@@ -8,7 +8,7 @@ import {registerApp, cancel} from './actions'
 import constants from './constants'
 import {REGISTER_APP} from './mutations'
 
-const {registerApplication: {rules, messages}} = constants
+const {applicationRegistration: {rules, messages}} = constants
 
 const validate = (values) => {
     const validator = new Validator(values, rules, messages)

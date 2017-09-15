@@ -33,7 +33,6 @@ export default (state = initialState, {type, app, email, user, error}) => {
             route: 'password-help'
         }
     }
-    case types.REGISTER_SUPER_USER:
     case types.REGISTER_USER: {
         return {
             ...state,

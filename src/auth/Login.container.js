@@ -47,31 +47,33 @@ const FormedLogin = reduxForm({
 
 const LoginWithData = graphql(
     LOGIN_USER, {
-    props: ({ownProps, mutate}) => ({
-        async tryLogin(credentials) {
-            try {
-                const {data: {error, loginUser}} = await mutate({variables: credentials})
-                if (error) {
-                    throw new Error(error)
-                }
-                if (loginUser) {
-                    ownProps.login(loginUser)
-
-                    const {token} = loginUser
-                    if (token.redirect_uri) {
-                        window.location = `${token.redirect_uri}${
-                            token.redirect_uri.includes('?') ? '&' : '?'
-                        }${
-                            toPairs(without('redirect_uri', token)).map(([key, val]) => `${key}=${val}`).join('&')
-                        }`
+        props: ({ownProps, mutate}) => ({
+            async tryLogin(credentials) {
+                try {
+                    const {data: {error, loginUser}} = await mutate({variables: credentials})
+                    if (error) {
+                        throw new Error(error)
                     }
+                    if (loginUser) {
+                        ownProps.login(loginUser)
+
+                        const {token} = loginUser
+                        if (token.redirect_uris) {
+                            const redirect_uri = token.redirect_uris.split(' ')[0]
+                            window.location = `${redirect_uri}${
+                                redirect_uri.includes('?') ? '&' : '?'
+                            }${
+                                toPairs(without('redirect_uris', token)).map(([key, val]) => `${key}=${val}`).join('&')
+                            }`
+                        }
+                    }
+                } catch (err) {
+                    ownProps.handleError(err)
                 }
-            } catch (err) {
-                ownProps.handleError(err)
             }
-        }
-    })
-})(FormedLogin)
+        })
+    }
+)(FormedLogin)
 
 export default connect(
     mapStateToProps,

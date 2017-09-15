@@ -4,11 +4,11 @@ import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
 import Registration from './Registration'
-import {handleError, cancel, registerUser} from './actions'
+import {handleError, cancel, register} from './actions'
 import constants from './constants'
 import {REGISTER_USER} from './mutations'
 
-const {registerUser: {rules, messages}} = constants
+const {userRegistration: {rules, messages}} = constants
 
 const validate = (values) => {
     const validator = new Validator(values, rules, messages)
@@ -24,13 +24,13 @@ const mapDispatchToProps = dispatch => ({
         return dispatch(cancel())
     },
     registerUser(user) {
-        return dispatch(registerUser(user))
+        return dispatch(register(user))
     }
 })
 
 const FormedRegistration = reduxForm({
     validate,
-    fields: ['password', 'email', 'name'],
+    fields: ['password', 'email', 'name', 'grantType'],
     form: 'RegistrationForm'
 })(Registration)
 

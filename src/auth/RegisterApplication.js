@@ -10,6 +10,7 @@ const RegisterApplication = ({handleSubmit, tryRegisterApp, cancel}) =>
         <Logo />
         <p className='instructions'>Register Your Application</p>
         <ReduxFormField className='applicationName' placeholder='name' name='name' />
+        <ReduxFormField className='grantType' placeholder='grant type' name='grantType' />
         <ReduxFormField className='redirect' placeholder='redirects to' name='redirect' type='url' />
         <button className='registerApplicationButton' type='submit'>Register</button>
         <button className='cancelButton' type='button' onClick={cancel}>Cancel</button>

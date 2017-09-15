@@ -42,7 +42,7 @@ export default {
             password: 'required'
         }
     },
-    registerApplication: {
+    applicationRegistration: {
         messages: new LocalizedStrings({
             en: {
                 'required.name': 'Please enter your name',
@@ -62,7 +62,7 @@ export default {
             redirect: 'required'
         }
     },
-    registerUser: {
+    userRegistration: {
         messages: new LocalizedStrings({
             en: {
                 'required.name': 'Please enter your name',
