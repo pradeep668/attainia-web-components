@@ -4,6 +4,7 @@ import FieldError from './FieldError'
 import Form from './Form'
 import FormField from './FormField'
 import InputField from './InputField'
+import LinkButton from './LinkButton'
 import Logo from './Logo'
 import ReduxFormField from './ReduxFormField'
 
@@ -14,6 +15,7 @@ export default {
     Form,
     FormField,
     InputField,
+    LinkButton,
     Logo,
     ReduxFormField,
     renderConditional
