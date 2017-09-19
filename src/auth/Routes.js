@@ -9,16 +9,16 @@ import RegisterApplication from './RegisterApplication.container'
 const Router = ({route}) => {
     const ROUTE = route.toUpperCase().replace(/\//g, '')
     switch (ROUTE) {
-        case 'LOGIN':
-            return <Login />
-        case 'REGISTRATION':
-            return <Registration />
-        case 'APPLICATION':
-            return <RegisterApplication />
-        case 'PASSWORD-HELP':
-            return <PasswordHelp />
-        default:
-            return <Login />
+    case 'LOGIN':
+        return <Login />
+    case 'REGISTRATION':
+        return <Registration />
+    case 'APPLICATION':
+        return <RegisterApplication />
+    case 'PASSWORD-HELP':
+        return <PasswordHelp />
+    default:
+        return <Login />
     }
 }
 

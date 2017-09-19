@@ -19,7 +19,7 @@ const LogoutWithData = graphql(LOGOUT_USER, {
 })(Logout)
 
 const mapStoreToProps = store => ({
-    token: path(['auth', 'user', 'access_token'], store) 
+    token: path(['auth', 'user', 'access_token'], store)
 })
 
 const mapDispatchToProps = dispatch => ({

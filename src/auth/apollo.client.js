@@ -6,7 +6,7 @@ export default ({
     baseUrl = 'localhost',
     useSubscriptionsToo = true,
     parseTokenFromStorage = true
-} = {}) => { 
+} = {}) => {
     const networkInterface = createNetworkInterface({uri: `http://${baseUrl}/graphql`})
 
     if (parseTokenFromStorage) {

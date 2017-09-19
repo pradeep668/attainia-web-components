@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import './Logout.css'
+import Button from '../common/Button'
 
 const Logout = ({tryLogout}) =>
-    <button onClick={tryLogout} className='logoutButton' type='button'>Logout</button>
+    <Button onClick={tryLogout} type='button'>Logout</Button>
 
 Logout.propTypes = {
     tryLogout: PropTypes.func.isRequired

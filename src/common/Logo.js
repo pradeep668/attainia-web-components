@@ -1,8 +1,13 @@
 import React from 'react'
-import './Logo.css'
+import styled from 'styled-components'
 import logo from './logo.png'
 
+const Img = styled.img`
+    width: 150px;
+    height: 39px;
+`
+
 const Logo = props =>
-    <img className='attainiaLogo' alt='attainia logo' src={logo.src} {...props} />
+    <Img alt='attainia logo' src={logo.src} {...props} />
 
 export default Logo

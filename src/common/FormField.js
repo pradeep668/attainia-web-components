@@ -1,59 +1,34 @@
 /* Not sure when eslint-plugin-react will fix their issue https://github.com/yannickcr/eslint/eslint-plugin-react/issues/1187 */
 /* eslint "react/jsx-indent-props": "off" */
 
-import {pickBy, isNil, complement} from 'ramda'
-import React from 'react'
-import {Field} from 'redux-form'
-import PropTypes from 'prop-types'
 import uuid from 'uuid/v4'
+import {pickBy} from 'ramda'
+import {isNotNil} from 'ramda-adjunct'
 
-import './FormField.css'
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
+import FieldError from './FieldError'
+import InputField from './InputField'
+import CheckboxLabel from './CheckboxLabel'
 
 const isCheck = type => /checkbox/i.test(type)
-const isNotNil = complement(isNil)
 
-export const InputField = props => (
-    /textarea/i.test(props.type) ?
-        <textarea className='formField' {...props} /> :
-        <input checked className='formField' {...props} />
-)
+const FieldWrapper = styled.div`
+    ${props => isCheck(props.type) && 'width: 16px;'} 
+    ${props => isCheck(props.type) && 'position: relative;'} 
+`
 
-InputField.propTypes = {
-    id: PropTypes.string,
-    label: PropTypes.string,
-    type: PropTypes.oneOf([
-        'checkbox',
-        'color',
-        'date',
-        'email',
-        'month',
-        'number',
-        'password',
-        'radio',
-        'reset',
-        'search',
-        'submit',
-        'tel',
-        'text',
-        'textarea',
-        'url',
-        'week'
-    ])
-}
-
-InputField.defaultProps = {
-    type: 'text'
-}
-
-export const FormField = ({
+const FormField = ({
     handlers, input, id, meta: {touched, error}, label, name, placeholder, type, value, className
 }) =>
-    <div className={`formGroup ${className}${isCheck(type) ? ' squareCheckbox' : ''}`}>
-        {label && !isCheck(type) ? <label htmlFor={id}>{label}</label> : null}
+    <FieldWrapper type={type} className={`${className}`}>
+        {isNotNil(label) && !isCheck(type) && <label htmlFor={id}>{label}</label>}
         <InputField {...pickBy(isNotNil, {id, value, type, placeholder, name, ...input, ...handlers})} />
-        {label && isCheck(type) ? <label htmlFor={id}><span>{label}</span></label> : null}
-        {touched && error ? <div className={`${touched && error ? 'fieldError' : ''}`}>{error}</div> : null}
-    </div>
+        {isNotNil(label) && isCheck(type) && <CheckboxLabel htmlFor={id}>{label}</CheckboxLabel>}
+        {touched && error && <FieldError>{error}</FieldError>}
+    </FieldWrapper>
 
 FormField.propTypes = {
     handlers: PropTypes.shape({
@@ -79,7 +54,7 @@ FormField.propTypes = {
     input: PropTypes.element,
     label: PropTypes.string,
     name: PropTypes.string,
-    id: PropTypes.string,
+    id: PropTypes.string.isRequired,
     placeholder: PropTypes.string,
     type: PropTypes.string,
     value: PropTypes.oneOfType([
@@ -91,23 +66,9 @@ FormField.propTypes = {
 
 FormField.defaultProps = {
     meta: {},
-    handlers: {}
+    handlers: {},
+    id: uuid(),
+    className: ''
 }
 
-const ReduxFormField = props =>
-    <Field
-        name={props.name}
-        component={FormField}
-        {...props}
-    />
-
-ReduxFormField.propTypes = {
-    name: PropTypes.string.isRequired,
-    id: PropTypes.string
-}
-
-ReduxFormField.defaultProps = {
-    id: uuid()
-}
-
-export default ReduxFormField
+export default FormField

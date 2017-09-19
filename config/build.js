@@ -1,12 +1,12 @@
 /* eslint "import/no-extraneous-dependencies": "off" */
+/* eslint "global-require": "off" */
 const glob = require('glob-all')
-const rollup = require('rollup')
+const {rollup} = require('rollup')
+const async = require('rollup-plugin-async')
 const babel = require('rollup-plugin-babel')
 const commonjs = require('rollup-plugin-commonjs')
 const nodeResolve = require('rollup-plugin-node-resolve')
-const postcss = require('rollup-plugin-postcss')
 const images = require('rollup-plugin-image')
-const postcssConfig = require('./postcss.config')
 const pkg = require('../package.json')
 
 async function build() {
@@ -17,23 +17,31 @@ async function build() {
             .map(([module, filename]) => ({module, filename}))
 
         await Promise.all(files.map(async ({module, filename}) => {
-            const bundle = await rollup.rollup({
+            const bundle = await rollup({
                 input: `src/${module}/${filename}`,
                 external: Object.keys(pkg.dependencies),
                 plugins: [
                     images(),
-                    postcss({plugins: postcssConfig.plugins}),
                     nodeResolve({
                         jsnext: true,
                         preferBuiltins: false,
                         browser: true
                     }),
                     commonjs(),
+                    async(),
                     babel({
-                        ...pkg.babel,
                         babelrc: false,
                         runtimeHelpers: true,
-                        exclude: 'node_modules/**'
+                        exclude: 'node_modules/**',
+                        presets: [
+                            require('babel-preset-es2015-rollup'),
+                            require('babel-preset-react')
+                        ],
+                        plugins: [
+                            require('babel-plugin-external-helpers'),
+                            require('babel-plugin-syntax-async-functions'),
+                            require('babel-plugin-transform-object-rest-spread')
+                        ]
                     })
                 ]
             })

@@ -5,7 +5,7 @@ import {ApolloProvider} from 'react-apollo'
 import createClient from './apollo.client'
 import Auth from './Auth.container'
 
-const AuthProvider = (props) =>
+const AuthProvider = props =>
     <ApolloProvider client={createClient({...props})} {...props}>
         <Auth {...props} />
     </ApolloProvider>

@@ -1,9 +1,0 @@
-@import 'colors.css';
-
-:root {
-    --link {
-        font-size: 12px;
-        color: var(--blue);
-        text-decoration: underline;
-    }
-}

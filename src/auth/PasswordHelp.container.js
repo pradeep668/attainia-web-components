@@ -57,6 +57,6 @@ const PasswordHelpWithData = graphql(PASSWORD_RESET, {
 })(FormedPasswordHelp)
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(PasswordHelpWithData)
