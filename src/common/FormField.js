@@ -51,7 +51,10 @@ FormField.propTypes = {
         visited: PropTypes.bool
     }),
     className: PropTypes.string,
-    input: PropTypes.element,
+    input: PropTypes.oneOfType([
+        PropTypes.element,
+        PropTypes.object
+    ]),
     label: PropTypes.string,
     name: PropTypes.string,
     id: PropTypes.string.isRequired,
@@ -67,6 +70,7 @@ FormField.propTypes = {
 FormField.defaultProps = {
     meta: {},
     handlers: {},
+    input: {},
     id: uuid(),
     className: ''
 }
