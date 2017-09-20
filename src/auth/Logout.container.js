@@ -12,7 +12,8 @@ const LogoutWithData = graphql(LOGOUT_USER, {
             const success = await mutate({variables: {token: ownProps.token}})
             if (success) {
                 ownProps.logoutUser()
-                ownProps.history.push('/login')
+                sessionStorage.removeItem('token')
+                localStorage.removeItem('token')
             }
         }
     })

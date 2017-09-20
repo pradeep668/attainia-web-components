@@ -13,14 +13,15 @@ const AuthProvider = props =>
 AuthProvider.propTypes = {
     baseUrl: PropTypes.string.isRequired,
     children: PropTypes.node,
-    parseTokenFromStorage: PropTypes.bool.isRequired,
-    useSubscriptionsToo: PropTypes.bool.isRequired
+    onLogin: PropTypes.func,
+    storage: PropTypes.oneOf(['local', 'session', 'none']),
+    useSubscriptions: PropTypes.bool.isRequired
 }
 
 AuthProvider.defaultProps = {
     baseUrl: 'localhost',
-    parseTokenFromStorage: true,
-    useSubscriptionsToo: true
+    storage: 'local',
+    useSubscriptions: true
 }
 
 export default AuthProvider

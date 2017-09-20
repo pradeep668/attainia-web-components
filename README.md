@@ -148,6 +148,29 @@ export default (props) =>
     </Provider>
 ```
 
+Optionally, you may set the `onLogin` property for `AuthProvider` with your own
+callback function. On successful login attempts the callback will be passed a
+single parameter of the `user` object, which you may use to drive your
+application's own logic.
+
+```javascript
+// A "user" object passed into your (optional) onLogin callback
+{
+    id: String,
+    email: String,
+    is_active: Boolean,
+    last_login: String,
+    roles: [String],
+    token: {
+        access_token: String,
+        expires_in: Number,
+        token_type: String,
+        scope: String,
+        redirect_uris: String
+    }
+}
+```
+
 ### Login
 
 Renders the Attainia user authentication component, which expects an email and password to be provided. Additionally it links to [password reset](#password-help) and [user registration](#user-registration) components.

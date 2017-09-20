@@ -4,24 +4,26 @@ import {SubscriptionClient, addGraphQLSubscriptions} from 'subscriptions-transpo
 
 export default ({
     baseUrl = 'localhost',
-    useSubscriptionsToo = true,
-    parseTokenFromStorage = true
+    storage = 'local',
+    useSubscriptions = true
 } = {}) => {
     const networkInterface = createNetworkInterface({uri: `http://${baseUrl}/graphql`})
 
-    if (parseTokenFromStorage) {
+    if (/(local|session)/i.test(storage)) {
         networkInterface.use([{
             applyMiddleware(req, next) {
                 if (!path(['options', 'headers'], req)) {
                     req.options.headers = {}
                 }
-                req.options.headers['x-token'] = localStorage.getItem('token')
+                req.options.headers['x-token'] = (
+                    /local/i.test(storage) ? localStorage : sessionStorage
+                ).getItem('token')
                 next()
             }
         }])
     }
 
-    if (useSubscriptionsToo) {
+    if (useSubscriptions) {
         const wsClient = new SubscriptionClient(`ws://${baseUrl}/subscriptions`, {reconnect: true})
         return new ApolloClient({
             networkInterface: addGraphQLSubscriptions(networkInterface, wsClient)
