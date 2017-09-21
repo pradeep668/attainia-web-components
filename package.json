@@ -1,6 +1,6 @@
 {
   "name": "attainia-web-components",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A collection of Attainia branded web components to be used in an Attainia React.js web application.",
   "main": "index.js",
   "engines": {
@@ -41,7 +41,6 @@
     "react-apollo": "1.4.15",
     "react-localization": "0.1.2",
     "react-redux": "5.0.6",
-    "react-router-dom": "4.2.2",
     "redux": "3.7.2",
     "redux-form": "7.0.3",
     "styled-components": "2.1.2",

@@ -18,6 +18,7 @@ const validate = (values) => {
 }
 
 const mapStateToProps = state => ({
+    hasAuthError: Boolean(state.auth.error),
     email: path(['auth', 'user', 'email'], state),
     name: path(['auth', 'user', 'name'], state)
 })

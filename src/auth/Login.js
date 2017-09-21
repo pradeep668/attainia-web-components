@@ -2,19 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import AuthError from './AuthError.container'
 import Button from '../common/Button'
-import Logo from '../common/Logo'
 import Form from '../common/Form'
 import Link from '../common/Link'
+import Logo from '../common/Logo'
 import ReduxFormField from '../common/ReduxFormField'
-import {breakpoints, forms} from '../common/constants'
+import {forms} from '../common/constants'
 
 const StyledForm = styled(Form)`
     & > * {
         margin: ${forms.formItemMargin}
     }
 
-    & .attainiaLogo {
+    & .loginHeader > * {
         margin: 30px auto 15px auto;
     }
 
@@ -27,63 +28,73 @@ const StyledForm = styled(Form)`
     }
 
     @supports not (display: grid) {
-        .attainiaLogo, .email, .password, .register, .rememberMe, .passwordHelp, .loginButton {
+        .loginHeader,
+        .email,
+        .password,
+        .register,
+        .rememberMe,
+        .passwordHelp,
+        .loginButton {
             max-width: 50em;
             margin: 0 auto;
         }
     }
 
     @supports (display: grid) {
-        @media ${breakpoints.desktop} {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-areas:
-              "header-logo header-logo"
-              "email email"
-              "password password"
-              "remember-me password-help"
-              "login-button login-button"
-              "register register";
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "header header"
+          "email email"
+          "password password"
+          "remember-me password-help"
+          "login-button login-button"
+          ${props => props.showRegistration && '"register register"'};
 
-            & .attainiaLogo {
-                grid-area: header-logo;
-            }
+        & .loginHeader {
+            grid-area: header;
+        }
 
-            & .email {
-                grid-area: email;
-            }
+        & .email {
+            grid-area: email;
+        }
 
-            & .password {
-                grid-area: password;
-            }
+        & .password {
+            grid-area: password;
+        }
 
-            & .rememberMe {
-                grid-area: remember-me;
-            }
+        & .rememberMe {
+            grid-area: remember-me;
+        }
 
-            & .passwordHelp {
-                grid-area: password-help;
-            }
+        & .passwordHelp {
+            grid-area: password-help;
+        }
 
-            & .loginButton {
-                grid-area: login-button;
-            }
+        & .loginButton {
+            grid-area: login-button;
+        }
 
-            & .register {
-                grid-area: register;
-            }
+        & .register {
+            grid-area: register;
         }
     }
 `
-const Login = ({handleSubmit, tryLogin, email, gotoPasswordHelp, gotoRegistration}) =>
+const Login = ({
+    handleSubmit, tryLogin, email, hasAuthError, gotoPasswordHelp, gotoRegistration, showRegistration
+}) =>
     <StyledForm onSubmit={handleSubmit(tryLogin)}>
-        <Logo className='attainiaLogo' />
+        <header className='loginHeader'>
+            {hasAuthError ? <AuthError /> : <Logo />}
+        </header>
         <ReduxFormField className='email' placeholder='email' name='email' type='email' value={email} />
         <ReduxFormField className='password' placeholder='password' type='password' name='password' />
         <ReduxFormField className='rememberMe' label='Remember Me' type='checkbox' name='remember' />
         <Link className='passwordHelp' href='#' onClick={gotoPasswordHelp}>Password Help</Link>
         <Button className='loginButton' type='submit'>Login</Button>
-        <Link className='register' href='#' onClick={gotoRegistration}>Need an Account?</Link>
+        {showRegistration &&
+            <Link className='register' href='#' onClick={gotoRegistration}>Need an Account?</Link>
+        }
     </StyledForm>
 
 Login.propTypes = {
@@ -91,7 +102,14 @@ Login.propTypes = {
     tryLogin: PropTypes.func.isRequired,
     gotoPasswordHelp: PropTypes.func.isRequired,
     gotoRegistration: PropTypes.func.isRequired,
-    email: PropTypes.string
+    email: PropTypes.string,
+    hasAuthError: PropTypes.bool.isRequired,
+    showRegistration: PropTypes.bool.isRequired
+}
+
+Login.defaultProps = {
+    hasAuthError: false,
+    showRegistration: false
 }
 
 export default Login

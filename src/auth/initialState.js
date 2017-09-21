@@ -1,5 +1,7 @@
 export default {
+    app: {},
+    error: '',
     route: 'login',
-    user: {},
-    app: {}
+    status: '',
+    user: {}
 }

@@ -1,5 +1,6 @@
 import Button from './Button'
 import {renderConditional, Conditional} from './Conditional'
+import ErrorMessage from './ErrorMessage'
 import FieldError from './FieldError'
 import Form from './Form'
 import FormField from './FormField'
@@ -11,6 +12,7 @@ import ReduxFormField from './ReduxFormField'
 export default {
     Button,
     Conditional,
+    ErrorMessage,
     FieldError,
     Form,
     FormField,

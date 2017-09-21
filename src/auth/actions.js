@@ -4,6 +4,8 @@ export const cancel = () =>
     ({type: types.CANCEL})
 export const handleError = error =>
     ({error, type: types.ERROR})
+export const clearError = () =>
+    ({type: types.CLEAR_ERROR})
 export const gotoPasswordHelp = () =>
     ({type: types.GOTO_PASSWORD_HELP})
 export const gotoRegistration = () =>

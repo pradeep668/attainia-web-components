@@ -6,19 +6,20 @@ import PasswordHelp from './PasswordHelp.container'
 import Registration from './Registration.container'
 import RegisterApplication from './RegisterApplication.container'
 
-const Router = ({route}) => {
-    const ROUTE = route.toUpperCase().replace(/\//g, '')
+const Router = (props) => {
+    const ROUTE = props.route.toUpperCase().replace(/\//g, '')
+
     switch (ROUTE) {
     case 'LOGIN':
-        return <Login />
+        return <Login {...props} />
     case 'REGISTRATION':
-        return <Registration />
+        return <Registration {...props} />
     case 'APPLICATION':
-        return <RegisterApplication />
+        return <RegisterApplication {...props} />
     case 'PASSWORD-HELP':
-        return <PasswordHelp />
+        return <PasswordHelp {...props} />
     default:
-        return <Login />
+        return <Login {...props} />
     }
 }
 

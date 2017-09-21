@@ -9,7 +9,8 @@ import {LOGOUT_USER} from './mutations'
 const LogoutWithData = graphql(LOGOUT_USER, {
     props: ({mutate, ownProps}) => ({
         async tryLogout() {
-            const success = await mutate({variables: {token: ownProps.token}})
+            const token = ownProps.token || sessionStorage.getItem('token') || localStorage.getItem('token')
+            const success = await mutate({variables: {token}})
             if (success) {
                 ownProps.logoutUser()
                 sessionStorage.removeItem('token')
@@ -24,8 +25,8 @@ const mapStoreToProps = store => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    logoutUser(token) {
-        return dispatch(logout(token))
+    logoutUser() {
+        return dispatch(logout())
     }
 })
 

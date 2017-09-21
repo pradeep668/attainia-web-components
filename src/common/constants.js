@@ -1,5 +1,7 @@
 export const colors = {
     rossoCorsa: '#E10600',
+    candyAppleRed: '#FF0700',
+    eerieBlack: '#1E1E1E',
     blue: '#1F74B2',
     isabellineGray: '#ebebeb',
     pastelGray: '#cacaca',
@@ -10,6 +12,7 @@ export const colors = {
 }
 
 export const fonts = {
+    fontSize: '12px',
     fontFamily: 'Lato, Helvetica, sans-serif'
 }
 
@@ -19,7 +22,7 @@ export const forms = {
 }
 
 export const links = {
-    fontSize: '12px',
+    fontSize: fonts.fontSize,
     color: colors.blue,
     textDecoration: 'underline'
 }
