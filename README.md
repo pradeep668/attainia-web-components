@@ -4,15 +4,24 @@ This repository contains modularized JavaScript and CSS meant to be used in an A
 
 ## Dependencies
 
-These components are intended to be used in a React.js web application:
-* [React](https://github.com/facebook/react)
+These components are intended to be used in a [React](https://github.com/facebook/react) web application.
 
-If you intend to use any of the `.container.js` components it will require the use of:
-* [Redux](https://github.com/reactjs/redux) - Unidirectional data flow in a React application
-* [React-Redux](https://github.com/reactjs/react-redux) - Bridges React to Redux
-* [React-Apollo](https://github.com/apollographql/react-apollo) - Data provider to wrap around components that can run or subscribe to server queries
-* [Redux-Form](https://github.com/erikras/redux-form) - HTML Form helpers and validation that flow into a Redux store
-* [Validatorjs](https://github.com/skaterdav85/validatorjs) - Build validation objects that Redux-Form can easily use
+Many dependencies are used to build this library and because the components in this library are able to be used "piecemeal" (rather than as pieces you pull from one single imported module), bundling all the external dependencies into each component would result in excessively large files. Perhaps in the future some bundling will be performed but for now you can install their dependencies as needed.
+
+This means if you import a component that uses no dependencies it will be as small a file as possible. Optionally, you can import any module from the `src/` sub-folder if you want the non-transpiled component (in which case you need to handle that step in your project's own webpack/babel build process). Because they are being provided to you as ES6 modules you can take advantage of [tree shaking](https://webpack.js.org/guides/tree-shaking/) to arrive at the smallest bundle possible.
+
+In general you can expect to encounter a "missing dependency" error (which you solve by simply running an `npm install <some missing dependency>`) rarely if you are using a normal React/Redux application (these are the primary deps).
+
+Some components are meant to work with [react-apollo](https://github.com/apollographql/react-apollo) (such as the `AuthProvider`) and some components that collect user input are meant to work with [redux-form](https://github.com/erikras/redux-form) and [validatorjs](https://github.com/skaterdav85/validatorjs). Also, this library opts for [ramda](https://www.npmjs.com/package/ramda) [rather than lodash/underscore](https://www.youtube.com/watch?v=ixbJrJTOnF8) for many of the low-level JavaScript tasks.  
+
+These components may or may not implement one or many of the following dependencies (most especially you'll find these used in the `.container` component wrappers):
+* [redux](https://github.com/reactjs/redux) - Unidirectional data flow in a React application
+* [react-redux](https://github.com/reactjs/react-redux) - Bridges React to Redux
+* [react-apollo](https://github.com/apollographql/react-apollo) - Data provider to wrap around components that can run or subscribe to server queries
+* [redux-form](https://github.com/erikras/redux-form) - HTML Form helpers and validation that flow into a Redux store
+* [validatorjs](https://github.com/skaterdav85/validatorjs) - Build validation objects that Redux-Form can easily use
+* [styled-components](https://github.com/styled-components/styled-components) - Possibly the first truly elegant marriage of CSS and JavaScript that can (potentially) please developers who fall on either side of the CSS or JS development
+* [subscriptions-transport-ws](https://github.com/apollographql/subscriptions-transport-ws) - Used by any of these components that leverage GraphQL subscriptions
 
 Additionally, certain low-level libraries are also servicing these components:
 * [Ramda](https://www.npmjs.com/package/ramda) - Utils library (similar to Lodash) but more properly geared towards functional programming paradigms
@@ -102,56 +111,41 @@ In case you wish to import the pre-transpiled components, you can change your im
 import Login from 'attainia-web-components/src/auth/Login';
 ```
 
-### Importing Root CSS Styles
-
-This repository leverages some shared, Attainia-branded styles in its components, however you can import them directly. Although you will need to handle the PostCSS/CSSNext compilation yourself, you can look at this project's `postcss.config.js` and/or copy that file directly into your own project's webpack build step(s) for PostCSS.
-
-To import directly from this repository's modularized CSS you need to reference
-the `src/css/` folder.
-
-```css
-@import "attainia-web-components/src/css/buttons.css";
-
-.myCustomButton {
-    @apply --btn;
-}
-```
-
 ## Component Table of Contents
 
 Auth Components:
 
+* [AuthProvider](#auth-provider)
+* [AuthError](#auth-error)
 * [Login](#login)
+* [Logout](#logout)
 * [PasswordHelp](#password-help)
 * [Registration](#user-registration)
 * [RegisterApplication](#app-registration)
 
 Common Components:
 
+* [Button](#button)
+* [ErrorMessage](#error-message)
+* [FieldError](#field-error)
+* [Form](#form)
+* [FormField](#form-field)
+* [Link](#link)
+* [LinkButton](#link-button)
 * [Conditional](#conditional-rendering) 
-* [FormField](#form-field) 
+* [ReduxFormField](#redux-form-field) 
 * [Logo](#attainia-logo)
 
-### AuthProvider
+### Auth Provider
 
 This is the recommended way to use the `auth` components. Rather than grafting together the individual components yourself you can use this high-level component to wrap your application children components. This component will take care of the logic for rendering the `Login` component when un-authenticated and rendering your application's children components (make sure to pass in child components!) whenever users _are_ authenticated.
 
-```javascript
-import {Provider} from 'react-redux'
-import AuthProvider from 'attainia-web-components/auth/AuthProvider'
+__options__:
 
-export default (props) =>
-    <Provider store={store}>
-        <AuthProvider>
-            <!-- render your application components that show only for authenticated users here -->
-        </AuthProvider>
-    </Provider>
-```
-
-Optionally, you may set the `onLogin` property for `AuthProvider` with your own
-callback function. On successful login attempts the callback will be passed a
-single parameter of the `user` object, which you may use to drive your
-application's own logic.
+* `baseUrl` - [`String`] The most important piece: the URL to your GraphQL server (defaults to `localhost`)
+* `storage` - [`String`] Configures it to write tokens to and read them from browser storage. Current options are `session`, `local` and `none` (defaults to `local`) which leverages [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage), [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) or the in-memory Redux store.
+* `onLogout` - A [`Function`] which fires whenever a Logout action occurs.
+* `onLogin`  - A [`Function`] which passes you the `user` object on successful login attempts.
 
 ```javascript
 // A "user" object passed into your (optional) onLogin callback
@@ -171,9 +165,38 @@ application's own logic.
 }
 ```
 
+__usage__:
+
+```javascript
+import {Provider} from 'react-redux'
+import AuthProvider from 'attainia-web-components/auth/AuthProvider'
+
+export default (props) =>
+    <Provider store={store}>
+        <AuthProvider>
+            <!-- render your application components that show only for authenticated users here -->
+        </AuthProvider>
+    </Provider>
+```
+
+### Auth Error
+
+This wrapper around the [ErrorMessage](#error-message) component places it into an HTML element where users can close out the error by clicking on it. If you use the container component around this one, it will take advantage of Redux to pull in the error from the `auth` section of our the Redux store and to dispatch a `CLEAR_ERROR` action on click.
+
+### Error Message
+
+A very simple company branded (Attainia) styling around a basic `<div>` with error message text inside
 ### Login
 
 Renders the Attainia user authentication component, which expects an email and password to be provided. Additionally it links to [password reset](#password-help) and [user registration](#user-registration) components.
+
+__options__:
+* `email` - [`String`] Optionally you can pre-populate the email field on the Login form
+* `showRegistration` - [`Boolean`] Determines whether to display the Registration link (defaults to `false`)
+
+### Logout
+
+Renders a Link which (on clicked) will log out the user
 
 ### Password Help
 
@@ -223,10 +246,34 @@ export default renderConditional(
 );
 ```
 
+### Button
+
+A simple HTML button which has been styled according to company (Attainia) branding
+
+### Field Error
+
+An error message that attaches near the [FormField](#form-field)
+
+### Form
+
+A simple, small styled HTML `<form>`
+
 ### Form Field
 
-A wrapper around the `<input />` or `<textarea />` form fields, for use _specifically_ in [redux-forms](http://redux-form.com/). It supports numerous `type='<input type'`, but defaults to a value of `type='text'`. Additionally, it supports `placeholder` and `label`, the latter of which will render a `<label />` element before the actual `<input />` tag (except in the case of `<input type=checkbox />`, where the label renders after). Make sure to set your `id` property if you _are_ setting a `label` property, since the label must refer to the associated `<input />` element by its unique id.
+A versatile HTML `<input />` (or `<textarea />`) field with (optional) `<label />` and field-level Error, meant to be used in an HTML form (preferrably alongside [redux-form](http://redux-form.com/)). It is driven by the `label` and `type` properties, with options to attach any standard event handler via the `handlers` property. It supports numerous `type='<input type'`, but defaults to a value of `type='text'`. Additionally, it supports `placeholder` and `label`, the latter of which will render a `<label />` element before the actual `<input />` tag (except in the case of `<input type=checkbox />`, where the label renders after). Make sure to set your `id` property if you _are_ setting a `label` property, since the label must refer to the associated `<input />` element by its unique id. 
+
+### Link
+
+An HTML `<a>` link which has been styled according to company (Attainia) branding
+
+### Link Button
+
+An HTML `<a>` link wrapping the styled Attainia Button
 
 ### Attainia Logo
 
 The current Attainia branded logo, in component form.
+
+### Redux Form Field
+
+A wrapper around [FormField](#form-field), for use _specifically_ in [redux-forms](http://redux-form.com/).
