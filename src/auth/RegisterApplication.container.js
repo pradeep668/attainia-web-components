@@ -10,7 +10,7 @@ import {REGISTER_APP} from './mutations'
 
 const {applicationRegistration: {rules, messages}} = constants
 
-const validate = (values) => {
+const validate = values => {
     const validator = new Validator(values, rules, messages)
     validator.passes()
     return validator.errors.all()
@@ -40,7 +40,4 @@ const RegisterApplicationWithData = graphql(REGISTER_APP, {
     })
 })(FormedApplication)
 
-export default connect(
-    null,
-    mapDispatchToProps
-)(RegisterApplicationWithData)
+export default connect(null, mapDispatchToProps)(RegisterApplicationWithData)

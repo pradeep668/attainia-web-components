@@ -6,10 +6,4 @@ const mapStateToProps = state => ({
     error: state.auth.error
 })
 
-const mapDispatchToProps = dispatch => ({
-    clearError() {
-        return dispatch(clearError())
-    }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthError)
+export default connect(mapStateToProps, {clearError})(AuthError)

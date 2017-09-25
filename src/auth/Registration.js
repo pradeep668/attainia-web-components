@@ -10,7 +10,7 @@ import {breakpoints, forms} from '../common/constants'
 
 const StyledForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin}
+        margin: ${forms.formItemMargin};
     }
 
     & .attainiaLogo {
@@ -38,13 +38,8 @@ const StyledForm = styled(Form)`
         @media ${breakpoints.desktop} {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-areas:
-              "header header"
-              "instructions instructions"
-              "name name"
-              "email email"
-              "password password"
-              "save cancel";
+            grid-template-areas: 'header header' 'instructions instructions' 'name name' 'email email'
+                'password password' 'save cancel';
 
             & .attainiaLogo {
                 grid-area: header;
@@ -78,13 +73,17 @@ const StyledForm = styled(Form)`
 `
 const Registration = ({handleSubmit, tryRegister, cancel}) =>
     <StyledForm onSubmit={handleSubmit(tryRegister)}>
-        <Logo className='attainiaLogo' />
-        <p className='instructions'>Register Your Account</p>
-        <ReduxFormField className='name' placeholder='name' name='name' />
-        <ReduxFormField className='email' placeholder='email' name='email' type='email' />
-        <ReduxFormField className='password' placeholder='password' type='password' name='password' />
-        <Button className='registrationButton' type='submit'>Register</Button>
-        <Button className='cancelButton' type='button' onClick={cancel}>Cancel</Button>
+        <Logo className="attainiaLogo" />
+        <p className="instructions">Register Your Account</p>
+        <ReduxFormField className="name" placeholder="name" name="name" />
+        <ReduxFormField className="email" placeholder="email" name="email" type="email" />
+        <ReduxFormField className="password" placeholder="password" type="password" name="password" />
+        <Button className="registrationButton" type="submit">
+            Register
+        </Button>
+        <Button className="cancelButton" type="button" onClick={cancel}>
+            Cancel
+        </Button>
     </StyledForm>
 
 Registration.propTypes = {

@@ -12,7 +12,7 @@ import {forms} from '../common/constants'
 
 const StyledForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin}
+        margin: ${forms.formItemMargin};
     }
 
     & .loginHeader > * {
@@ -23,7 +23,8 @@ const StyledForm = styled(Form)`
         text-align: right;
     }
 
-    & .register, & .loginButton {
+    & .register,
+    & .loginButton {
         text-align: center;
     }
 
@@ -43,13 +44,8 @@ const StyledForm = styled(Form)`
     @supports (display: grid) {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-areas:
-          "header header"
-          "email email"
-          "password password"
-          "remember-me password-help"
-          "login-button login-button"
-          ${props => props.showRegistration && '"register register"'};
+        grid-template-areas: 'header header' 'email email' 'password password' 'remember-me password-help'
+            'login-button login-button' ${props => props.showRegistration && '"register register"'};
 
         & .loginHeader {
             grid-area: header;
@@ -80,21 +76,23 @@ const StyledForm = styled(Form)`
         }
     }
 `
-const Login = ({
-    handleSubmit, tryLogin, email, hasAuthError, gotoPasswordHelp, gotoRegistration, showRegistration
-}) =>
+const Login = ({handleSubmit, tryLogin, email, hasAuthError, gotoPasswordHelp, gotoRegistration, showRegistration}) =>
     <StyledForm onSubmit={handleSubmit(tryLogin)}>
-        <header className='loginHeader'>
-            {hasAuthError ? <AuthError /> : <Logo />}
-        </header>
-        <ReduxFormField className='email' placeholder='email' name='email' type='email' value={email} />
-        <ReduxFormField className='password' placeholder='password' type='password' name='password' />
-        <ReduxFormField className='rememberMe' label='Remember Me' type='checkbox' name='remember' />
-        <Link className='passwordHelp' href='#' onClick={gotoPasswordHelp}>Password Help</Link>
-        <Button className='loginButton' type='submit'>Login</Button>
-        {showRegistration &&
-            <Link className='register' href='#' onClick={gotoRegistration}>Need an Account?</Link>
-        }
+        <header className="loginHeader">{hasAuthError ? <AuthError /> : <Logo />}</header>
+        <ReduxFormField className="email" placeholder="email" name="email" type="email" value={email} />
+        <ReduxFormField className="password" placeholder="password" type="password" name="password" />
+        <ReduxFormField className="rememberMe" label="Remember Me" type="checkbox" name="remember" />
+        <Link className="passwordHelp" href="#" onClick={gotoPasswordHelp}>
+            Password Help
+        </Link>
+        <Button className="loginButton" type="submit">
+            Login
+        </Button>
+        {showRegistration && (
+            <Link className="register" href="#" onClick={gotoRegistration}>
+                Need an Account?
+            </Link>
+        )}
     </StyledForm>
 
 Login.propTypes = {

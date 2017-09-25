@@ -10,7 +10,7 @@ import {REGISTER_USER} from './mutations'
 
 const {userRegistration: {rules, messages}} = constants
 
-const validate = (values) => {
+const validate = values => {
     const validator = new Validator(values, rules, messages)
     validator.passes()
     return validator.errors.all()
@@ -50,7 +50,4 @@ const RegistrationWithData = graphql(REGISTER_USER, {
     })
 })(FormedRegistration)
 
-export default connect(
-    null,
-    mapDispatchToProps
-)(RegistrationWithData)
+export default connect(null, mapDispatchToProps)(RegistrationWithData)

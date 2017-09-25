@@ -3,5 +3,6 @@ export default {
     error: '',
     route: 'login',
     status: '',
+    refreshStatus: '',
     user: {}
 }

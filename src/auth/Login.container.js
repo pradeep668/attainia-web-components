@@ -5,13 +5,13 @@ import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
 import Login from './Login'
-import {handleError, login, gotoRegistration, gotoPasswordHelp} from './actions'
+import {handleError, login, refresh, gotoRegistration, gotoPasswordHelp} from './actions'
 import constants from './constants'
 import {LOGIN_USER} from './mutations'
 
 const {login: {rules, messages}} = constants
 
-const validate = (values) => {
+const validate = values => {
     const validator = new Validator(values, rules, messages)
     validator.passes()
     return validator.errors.all()
@@ -37,6 +37,9 @@ const mapDispatchToProps = dispatch => ({
     gotoRegistration(e) {
         e.preventDefault()
         return dispatch(gotoRegistration())
+    },
+    refresh() {
+        return dispatch(refresh())
     }
 })
 
@@ -46,37 +49,42 @@ const FormedLogin = reduxForm({
     fields: ['email', 'password']
 })(Login)
 
-const LoginWithData = graphql(
-    LOGIN_USER, {
-        props: ({ownProps, mutate}) => ({
-            async tryLogin(credentials) {
-                try {
-                    const {data: {error, loginUser}} = await mutate({variables: credentials})
-                    if (error) {
-                        throw new Error(error)
-                    }
-                    if (loginUser) {
-                        ownProps.login(loginUser)
-
-                        const {token} = loginUser
-                        if (token.redirect_uris) {
-                            const redirect_uri = token.redirect_uris.split(' ')[0]
-                            window.location = `${redirect_uri}${
-                                redirect_uri.includes('?') ? '&' : '?'
-                            }${
-                                toPairs(without('redirect_uris', token)).map(([key, val]) => `${key}=${val}`).join('&')
-                            }`
-                        }
-                    }
-                } catch (err) {
-                    ownProps.handleError(err)
+const LoginWithData = graphql(LOGIN_USER, {
+    props: ({ownProps, mutate}) => ({
+        async tryLogin(credentials) {
+            try {
+                const {data: {error, loginUser}} = await mutate({variables: credentials})
+                if (error) {
+                    throw new Error(error)
                 }
-            }
-        })
-    }
-)(FormedLogin)
+                if (loginUser) {
+                    const {token} = loginUser
+                    if (ownProps.useRefresh && token) {
+                        const refreshInMs = Math.max((Number(token.expires_in) - 10) * 1000, 0)
+                        ownProps.login({
+                            ...loginUser,
+                            token: {
+                                ...token,
+                                refreshInMs,
+                                refreshAt: new Date(Date.now() + refreshInMs)
+                            }
+                        })
+                    } else {
+                        ownProps.login(loginUser)
+                    }
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(LoginWithData)
+                    if (token.redirect_uris) {
+                        const redirect_uri = token.redirect_uris.split(' ')[0]
+                        window.location = `${redirect_uri}${redirect_uri.includes('?') ? '&' : '?'}${
+                            toPairs(without('redirect_uris', token)).map(([key, val]) => `${key}=${val}`).join('&')
+                        }`
+                    }
+                }
+            } catch (err) {
+                ownProps.handleError(err)
+            }
+        }
+    })
+})(FormedLogin)
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginWithData)

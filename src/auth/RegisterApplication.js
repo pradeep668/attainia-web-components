@@ -10,7 +10,7 @@ import {breakpoints, forms} from '../common/constants'
 
 const StyledForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin}
+        margin: ${forms.formItemMargin};
     }
 
     & .attainiaLogo {
@@ -34,13 +34,8 @@ const StyledForm = styled(Form)`
         @media ${breakpoints.desktop} {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-areas:
-              "header header"
-              "instructions instructions"
-              "name name"
-              "grant grant"
-              "redirect redirect"
-              "save cancel";
+            grid-template-areas: 'header header' 'instructions instructions' 'name name' 'grant grant'
+                'redirect redirect' 'save cancel';
 
             & .attainiaLogo {
                 grid-area: header;
@@ -74,13 +69,17 @@ const StyledForm = styled(Form)`
 `
 const RegisterApplication = ({handleSubmit, tryRegisterApp, cancel}) =>
     <StyledForm onSubmit={handleSubmit(tryRegisterApp)}>
-        <Logo className='attainiaLogo' />
-        <p className='instructions'>Register Your Application</p>
-        <ReduxFormField className='applicationName' placeholder='name' name='name' />
-        <ReduxFormField className='grantType' placeholder='grant type' name='grantType' />
-        <ReduxFormField className='redirect' placeholder='redirects to' name='redirect' type='url' />
-        <Button className='registerApplicationButton' type='submit'>Register</Button>
-        <Button className='cancelButton' type='button' onClick={cancel}>Cancel</Button>
+        <Logo className="attainiaLogo" />
+        <p className="instructions">Register Your Application</p>
+        <ReduxFormField className="applicationName" placeholder="name" name="name" />
+        <ReduxFormField className="grantType" placeholder="grant type" name="grantType" />
+        <ReduxFormField className="redirect" placeholder="redirects to" name="redirect" type="url" />
+        <Button className="registerApplicationButton" type="submit">
+            Register
+        </Button>
+        <Button className="cancelButton" type="button" onClick={cancel}>
+            Cancel
+        </Button>
     </StyledForm>
 
 RegisterApplication.propTypes = {
