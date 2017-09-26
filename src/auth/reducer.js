@@ -1,8 +1,8 @@
-import {is} from 'ramda'
+import {is, toString} from 'ramda'
 import types from './types'
 import initialState from './initialState'
 
-export default (state = initialState, {type, app, email, user, error, refreshTimeout}) => {
+export default (state = initialState, {type, app, email, user, error, token, refreshTimeout}) => {
     switch (type) {
         case types.CANCEL:
             return {
@@ -26,7 +26,7 @@ export default (state = initialState, {type, app, email, user, error, refreshTim
         case types.ERROR:
             return {
                 ...state,
-                error: is(Object, error) ? error.message : error,
+                error: toString(is(Object, error) ? error.message : error),
                 status: ''
             }
         case types.GOTO_APP_REGISTRATION:
@@ -69,7 +69,7 @@ export default (state = initialState, {type, app, email, user, error, refreshTim
         case types.REFRESH:
             return {
                 ...state,
-                refreshTimeout
+                refreshTimeout: clearTimeout(state.refreshTimeout) || refreshTimeout
             }
         case types.REGISTER_APP:
             return {
@@ -86,6 +86,14 @@ export default (state = initialState, {type, app, email, user, error, refreshTim
                 user: {
                     name: user.name,
                     email: user.email
+                }
+            }
+        case types.UPDATED_TOKEN:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    token
                 }
             }
         // no default

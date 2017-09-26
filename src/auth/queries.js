@@ -12,3 +12,16 @@ export const VALIDATE_TOKEN = gql`
         validateToken(token: $token)
     }
 `
+export const GET_TOKEN_INFO = gql`
+    query getTokenInfo($token: String!) {
+        getTokenInfo(token: $token) {
+            active
+            scope
+            exp
+            user {
+                id
+                email
+            }
+        }
+    }
+`

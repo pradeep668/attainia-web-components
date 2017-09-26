@@ -1,6 +1,6 @@
 {
   "name": "attainia-web-components",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "A collection of Attainia branded web components to be used in an Attainia React.js web application.",
   "main": "index.js",
   "engines": {
@@ -89,6 +89,16 @@
       "transform-object-rest-spread"
     ]
   },
+  "prettier": {
+    "bracketSpacing": false,
+    "parser": "babylon",
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 4,
+    "trailingComma": "none",
+    "useTabs": false
+  },
   "eslintConfig": {
     "globals": {
       "document": true,
@@ -105,6 +115,7 @@
       "react"
     ],
     "rules": {
+      "arrow-parens": "off",
       "eol-last": "off",
       "eqeqeq": [
         "error",
@@ -115,10 +126,7 @@
         "error",
         "never"
       ],
-      "indent": [
-        "error",
-        4
-      ],
+      "indent": "off",
       "jsx-quotes": [
         "warn",
         "prefer-single"

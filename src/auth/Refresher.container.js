@@ -5,7 +5,7 @@ import {renderConditional} from '../common/Conditional'
 
 import Refresher from './Refresher'
 import {REFRESH_TOKEN} from './mutations'
-import {handleError, login, refresh, clearRefresh} from './actions'
+import {handleError, updatedToken, refresh, clearRefresh} from './actions'
 
 const mapStateToProps = store => ({
     token: path(['auth', 'user', 'token', 'access_token'], store),
@@ -15,29 +15,20 @@ const mapStateToProps = store => ({
 
 const withMutation = graphql(REFRESH_TOKEN, {
     props: ({ownProps, mutate}) => ({
-        async tryRefresh() {
+        async tryRefresh(token) {
             try {
-                const {data: {error, refreshUser}} = await mutate({variables: ownProps.token})
+                const {data: {error, refreshUser}} = await mutate({variables: {token}})
                 if (error) {
                     throw new Error(error)
                 }
                 if (refreshUser) {
-                    const {token} = refreshUser
-                    if (token) {
-                        const refreshInMs = Math.max((Number(token.expires_in) - 10) * 1000, 0)
-                        ownProps.login({
-                            ...refreshUser,
-                            token: {
-                                ...token,
-                                refreshInMs,
-                                refreshAt: new Date(Date.now() + refreshInMs)
-                            }
-                        })
-                    } else {
-                        ownProps.login(refreshUser)
-                    }
+                    const refreshInMs = Math.max((Number(refreshUser.expires_in) - 10) * 1000, 0)
+                    ownProps.updatedToken({
+                        ...refreshUser,
+                        refreshInMs,
+                        refreshAt: new Date(Date.now() + refreshInMs)
+                    })
                 }
-                ownProps.clearRefresh()
             } catch (err) {
                 ownProps.handleError(err)
             }
@@ -48,7 +39,7 @@ const withMutation = graphql(REFRESH_TOKEN, {
 const withReduxProps = connect(mapStateToProps, {
     clearRefresh,
     handleError,
-    login,
+    updatedToken,
     refresh
 })(withMutation)
 

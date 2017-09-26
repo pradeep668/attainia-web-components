@@ -7,8 +7,9 @@ class Refresher extends Component {
         refresh(setTimeout(() => tryRefresh(token), refreshInMs))
     }
 
-    componentWillUpdate() {
-        const {tryRefresh, refreshInMs, token, refresh} = this.props
+    componentWillUpdate(nextProps) {
+        const {tryRefresh, refresh} = this.props
+        const {refreshInMs, token} = nextProps
         refresh(setTimeout(() => tryRefresh(token), refreshInMs))
     }
 

@@ -1,8 +1,10 @@
+import {is} from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Routes from './Routes.container'
+import AuthStatus from './AuthStatus.container'
 import Refresher from './Refresher.container'
+import Routes from './Routes.container'
 
 const Auth = props => {
     const {isLoggedIn, isLoggedOut, children, onLogin, onLogout, storage, user, useRefresh} = props
@@ -14,10 +16,20 @@ const Auth = props => {
         }
         onLogin(user)
 
-        if (useRefresh) return <Refresher>{children}</Refresher>
+        if (onLogout && useRefresh) {
+            return (
+                <Refresher>
+                    <AuthStatus>{children}</AuthStatus>
+                </Refresher>
+            )
+        } else if (useRefresh) {
+            return <Refresher>{children}</Refresher>
+        } else if (onLogout) {
+            return <AuthStatus>{children}</AuthStatus>
+        }
 
         return children
-    } else if (isLoggedOut) {
+    } else if (isLoggedOut && is(Function, onLogout)) {
         onLogout()
     }
 
@@ -29,15 +41,15 @@ Auth.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
     isLoggedOut: PropTypes.bool.isRequired,
     onLogin: PropTypes.func.isRequired,
-    onLogout: PropTypes.func.isRequired,
+    onLogout: PropTypes.func,
     storage: PropTypes.oneOf(['local', 'session', 'none']),
     useRefresh: PropTypes.bool.isRequired,
     user: PropTypes.shape({
         id: PropTypes.string,
         email: PropTypes.string,
-        token: {
+        token: PropTypes.shape({
             access_token: PropTypes.string
-        }
+        })
     })
 }
 
@@ -46,7 +58,6 @@ Auth.defaultProps = {
     isLoggedIn: false,
     isLoggedOut: false,
     onLogin: () => true,
-    onLogout: () => true,
     storage: 'local',
     useRefresh: true,
     user: {}
