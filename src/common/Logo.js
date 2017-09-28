@@ -5,6 +5,7 @@ import logo from './logo.png'
 const Img = styled.img`
     width: 150px;
     height: 39px;
+    display: block;
 `
 
 const Logo = props =>
