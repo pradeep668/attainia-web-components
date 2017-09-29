@@ -11,14 +11,14 @@ const pkg = require('../package.json')
 
 async function build() {
     try {
-        const files = glob.sync(`${process.cwd()}/src/**/*.js`)
-            .map(path => path.split('src/')[1].split('/'))
+        const files = glob.sync(`${process.cwd()}/src/components/**/*.js`)
+            .map(path => path.split('src/components/')[1].split('/'))
             .filter(([module, filename]) => module && filename)
             .map(([module, filename]) => ({module, filename}))
 
         await Promise.all(files.map(async ({module, filename}) => {
             const bundle = await rollup({
-                input: `src/${module}/${filename}`,
+                input: `src/components/${module}/${filename}`,
                 external: Object.keys(pkg.dependencies),
                 plugins: [
                     images(),

@@ -9,6 +9,10 @@ const Img = styled.img`
 `
 
 const Logo = props =>
-    <Img alt='attainia logo' src={logo.src} {...props} />
+    <Img
+        alt="attainia logo"
+        src={(logo && logo.src) || logo}
+        {...props}
+    />
 
 export default Logo

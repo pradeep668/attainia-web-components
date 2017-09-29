@@ -2,4 +2,8 @@
 .env
 .npmrc
 *.log
-dist/
+/build/
+/auth/
+/common/
+/layout/
+/resources/
