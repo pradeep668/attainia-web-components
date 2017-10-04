@@ -31,7 +31,6 @@ async function build() {
                     async(),
                     babel({
                         babelrc: false,
-                        runtimeHelpers: true,
                         exclude: 'node_modules/**',
                         presets: [
                             require('babel-preset-es2015-rollup'),
