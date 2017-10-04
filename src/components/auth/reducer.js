@@ -1,6 +1,13 @@
-import {is, toString} from 'ramda'
+import {compose, is, toString} from 'ramda'
 import types from './types'
 import initialState from './initialState'
+
+const parseError = compose(
+    ([label, message]) => message || label,
+    str => str.split(/error:/i),
+    toString,
+    err => (is(Object, err) ? err.message : err)
+)
 
 export default (state = initialState, {type, app, email, user, error, token, refreshTimeout}) => {
     switch (type) {
@@ -26,7 +33,7 @@ export default (state = initialState, {type, app, email, user, error, token, ref
         case types.ERROR:
             return {
                 ...state,
-                error: toString(is(Object, error) ? error.message : error),
+                error: parseError(error),
                 status: ''
             }
         case types.GOTO_APP_REGISTRATION:

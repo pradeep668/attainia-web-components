@@ -1,0 +1,69 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
+import {Link} from 'react-router-dom'
+import Form from '../common/Form'
+import Button from '../common/Button'
+import LinkButton from '../common/LinkButton'
+import ReduxFormField from '../common/ReduxFormField'
+import {breakpoints, forms} from '../common/constants'
+
+const StyledForm = styled(Form)`
+    & > * {
+        margin: ${forms.formItemMargin};
+    }
+
+    & .newResourceHeader {
+        text-align: center;
+    }
+
+    @supports not (display: grid) {
+        .newResourceHeader,
+        .newResourceButtonCancel,
+        .newResourceButtonSave,
+        .newResourceName {
+            max-width: 50em;
+            margin: 0 auto;
+        }
+    }
+
+    @supports (display: grid) {
+        @media ${breakpoints.desktop} {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas: 'header header' 'name name' 'save cancel';
+
+            .newResourceHeader {
+                grid-area: header;
+            }
+            .newResourceButtonCancel {
+                grid-area: cancel;
+            }
+            .newResourceButtonSave {
+                grid-area: save;
+            }
+            .newResourceName {
+                grid-area: name;
+            }
+        }
+    }
+`
+const ResourcesNew = ({handleSubmit, createResource}) =>
+    <StyledForm onSubmit={handleSubmit(createResource)}>
+        <h3 className="newResourceHeader">Add a new resource</h3>
+        <ReduxFormField className="newResourceName" placeholder="Name" name="name" />
+        <Button className="newResourceButtonSave" type="submit">
+            Save
+        </Button>
+        <LinkButton className="newResourceButtonCancel">
+            <Link to="/">Cancel</Link>
+        </LinkButton>
+    </StyledForm>
+
+ResourcesNew.propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+    createResource: PropTypes.func.isRequired
+}
+
+export default ResourcesNew

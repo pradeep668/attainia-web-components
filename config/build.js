@@ -11,14 +11,14 @@ const pkg = require('../package.json')
 
 async function build() {
     try {
-        const files = glob.sync(`${process.cwd()}/src/**/*.js`)
-            .map(path => path.split('src/')[1].split('/'))
+        const files = glob.sync(`${process.cwd()}/src/components/**/*.js`)
+            .map(path => path.split('src/components/')[1].split('/'))
             .filter(([module, filename]) => module && filename)
             .map(([module, filename]) => ({module, filename}))
 
         await Promise.all(files.map(async ({module, filename}) => {
             const bundle = await rollup({
-                input: `src/${module}/${filename}`,
+                input: `src/components/${module}/${filename}`,
                 external: Object.keys(pkg.dependencies),
                 plugins: [
                     images(),
@@ -31,8 +31,8 @@ async function build() {
                     async(),
                     babel({
                         babelrc: false,
-                        runtimeHelpers: true,
                         exclude: 'node_modules/**',
+                        runtimeHelpers: true,
                         presets: [
                             require('babel-preset-es2015-rollup'),
                             require('babel-preset-react')
@@ -40,7 +40,8 @@ async function build() {
                         plugins: [
                             require('babel-plugin-external-helpers'),
                             require('babel-plugin-syntax-async-functions'),
-                            require('babel-plugin-transform-object-rest-spread')
+                            require('babel-plugin-transform-object-rest-spread'),
+                            Object.assign(require('babel-plugin-transform-runtime'), {polyfill: false})
                         ]
                     })
                 ]

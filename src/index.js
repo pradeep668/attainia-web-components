@@ -1,4 +1,5 @@
-import auth from './auth'
-import common from './common'
+import {render} from 'react-dom'
+import Routes from './Routes'
+import './globals'
 
-export default {auth, common}
+render(Routes, document.querySelector('#root'))
