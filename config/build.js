@@ -32,6 +32,7 @@ async function build() {
                     babel({
                         babelrc: false,
                         exclude: 'node_modules/**',
+                        runtimeHelpers: true,
                         presets: [
                             require('babel-preset-es2015-rollup'),
                             require('babel-preset-react')
@@ -39,7 +40,8 @@ async function build() {
                         plugins: [
                             require('babel-plugin-external-helpers'),
                             require('babel-plugin-syntax-async-functions'),
-                            require('babel-plugin-transform-object-rest-spread')
+                            require('babel-plugin-transform-object-rest-spread'),
+                            Object.assign(require('babel-plugin-transform-runtime'), {polyfill: false})
                         ]
                     })
                 ]
