@@ -10,6 +10,11 @@ import Logo from '../common/Logo'
 import ReduxFormField from '../common/ReduxFormField'
 import {forms} from '../common/constants'
 
+const FullPageWrapper = styled.div`
+    min-height: 100vh;
+    display: grid;
+    align-items: center;
+`
 const StyledForm = styled(Form)`
     & > * {
         margin: ${forms.formItemMargin};
@@ -77,23 +82,25 @@ const StyledForm = styled(Form)`
     }
 `
 const Login = ({handleSubmit, tryLogin, email, hasAuthError, gotoPasswordHelp, gotoRegistration, showRegistration}) =>
-    <StyledForm onSubmit={handleSubmit(tryLogin)}>
-        <header className="loginHeader">{hasAuthError ? <AuthError /> : <Logo />}</header>
-        <ReduxFormField className="email" placeholder="email" name="email" type="email" value={email} />
-        <ReduxFormField className="password" placeholder="password" type="password" name="password" />
-        <ReduxFormField className="rememberMe" label="Remember Me" type="checkbox" name="remember" />
-        <Link className="passwordHelp" href="#" onClick={gotoPasswordHelp}>
-            Password Help
-        </Link>
-        <Button className="loginButton" type="submit">
-            Login
-        </Button>
-        {showRegistration && (
-            <Link className="register" href="#" onClick={gotoRegistration}>
-                Need an Account?
+    <FullPageWrapper>
+        <StyledForm onSubmit={handleSubmit(tryLogin)}>
+            <header className="loginHeader">{hasAuthError ? <AuthError /> : <Logo />}</header>
+            <ReduxFormField className="email" placeholder="email" name="email" type="email" value={email} />
+            <ReduxFormField className="password" placeholder="password" type="password" name="password" />
+            <ReduxFormField className="rememberMe" label="Remember Me" type="checkbox" name="remember" />
+            <Link className="passwordHelp" href="#" onClick={gotoPasswordHelp}>
+                Password Help
             </Link>
-        )}
-    </StyledForm>
+            <Button className="loginButton" type="submit">
+                Login
+            </Button>
+            {showRegistration && (
+                <Link className="register" href="#" onClick={gotoRegistration}>
+                    Need an Account?
+                </Link>
+            )}
+        </StyledForm>
+    </FullPageWrapper>
 
 Login.propTypes = {
     handleSubmit: PropTypes.func.isRequired,

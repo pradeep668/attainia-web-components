@@ -2,7 +2,11 @@ import {path} from 'ramda'
 import {ApolloClient, createNetworkInterface} from 'react-apollo'
 import {SubscriptionClient, addGraphQLSubscriptions} from 'subscriptions-transport-ws'
 
-export default ({baseUrl = 'localhost', storage = 'local', useSubscriptions = true} = {}) => {
+export default ({
+    baseUrl = 'localhost',
+    storage = 'local',
+    useSubscriptions = true
+} = {}) => {
     const networkInterface = createNetworkInterface({uri: `http://${baseUrl}/graphql`})
 
     if (/(local|session)/i.test(storage)) {
