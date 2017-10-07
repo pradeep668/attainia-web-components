@@ -1,6 +1,7 @@
 import {path} from 'ramda'
 import {ApolloClient, createNetworkInterface} from 'react-apollo'
 import {SubscriptionClient, addGraphQLSubscriptions} from 'subscriptions-transport-ws'
+import {getAccessTokenFromStorage} from './helpers'
 
 export default ({
     baseUrl = 'localhost',
@@ -15,9 +16,7 @@ export default ({
                 if (!path(['options', 'headers'], req)) {
                     req.options.headers = {}
                 }
-                req.options.headers['x-token'] = (/local/i.test(storage) ? localStorage : sessionStorage).getItem(
-                    'token'
-                )
+                req.options.headers.Authorization = `Bearer ${getAccessTokenFromStorage(storage)}`
                 next()
             }
         }])

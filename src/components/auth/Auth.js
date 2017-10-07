@@ -1,35 +1,63 @@
-import {is} from 'ramda'
+import {isEmpty, is} from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 
 import AuthStatus from './AuthStatus.container'
 import Refresher from './Refresher.container'
 import Routes from './Routes.container'
+import Validator from './Validator.container'
+import {getAccessTokenFromStorage, removeToken, setToken} from './helpers'
 
 const Auth = props => {
-    const {isLoggedIn, isLoggedOut, children, onLogin, onLogout, storage, user, useRefresh} = props
+    const {
+        children,
+        isLoggedOut,
+        onLogin,
+        onLogout,
+        storage,
+        tokenInStore,
+        user,
+        useRefresh
+    } = props
 
-    if (isLoggedIn) {
-        if (/(local|session)/i.test(storage)) {
-            if (/local/i.test(storage)) localStorage.setItem('token', user.token)
-            else if (/session/i.test(storage)) sessionStorage.setItem('token', user.token)
-        }
-        onLogin(user)
+    const access_token = getAccessTokenFromStorage(storage)
+
+    if (access_token || tokenInStore) {
+        setToken(props)
+
+        onLogin(isEmpty(user) ? {token: {access_token}} : user)
 
         if (onLogout && useRefresh) {
             return (
-                <Refresher>
-                    <AuthStatus>{children}</AuthStatus>
-                </Refresher>
+                <Validator token={access_token || tokenInStore} {...props}>
+                    <Refresher token={access_token || tokenInStore}>
+                        <AuthStatus>{children}</AuthStatus>
+                    </Refresher>
+                </Validator>
             )
         } else if (useRefresh) {
-            return <Refresher>{children}</Refresher>
+            return (
+                <Validator token={access_token || tokenInStore} {...props}>
+                    <Refresher token={access_token || tokenInStore}>
+                        {children}
+                    </Refresher>
+                </Validator>
+            )
         } else if (onLogout) {
-            return <AuthStatus>{children}</AuthStatus>
+            return (
+                <Validator token={access_token || tokenInStore} {...props}>
+                    <AuthStatus>{children}</AuthStatus>
+                </Validator>
+            )
         }
 
-        return children
+        return (
+            <Validator token={access_token || tokenInStore} {...props}>
+                {children}
+            </Validator>
+        )
     } else if (isLoggedOut && is(Function, onLogout)) {
+        removeToken()
         onLogout()
     }
 
@@ -38,7 +66,7 @@ const Auth = props => {
 
 Auth.propTypes = {
     children: PropTypes.node,
-    isLoggedIn: PropTypes.bool.isRequired,
+    tokenInStore: PropTypes.string,
     isLoggedOut: PropTypes.bool.isRequired,
     onLogin: PropTypes.func.isRequired,
     onLogout: PropTypes.func,
@@ -55,7 +83,6 @@ Auth.propTypes = {
 
 Auth.defaultProps = {
     children: null,
-    isLoggedIn: false,
     isLoggedOut: false,
     onLogin: () => true,
     storage: 'local',

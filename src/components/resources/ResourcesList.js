@@ -53,7 +53,7 @@ const StyledForm = styled(Form)`
     }
 
     @supports (display: grid) {
-        @media ${breakpoints.desktop} {
+        @media ${breakpoints.tablet} {
             display: grid;
             grid-template-columns: 1fr;
             grid-template-areas: 'header' 'list' 'add';

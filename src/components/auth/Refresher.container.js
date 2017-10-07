@@ -8,7 +8,6 @@ import {REFRESH_TOKEN} from './mutations'
 import {handleError, updatedToken, refresh, clearRefresh} from './actions'
 
 const mapStateToProps = store => ({
-    token: path(['auth', 'user', 'token', 'access_token'], store),
     refreshInMs: Number(path(['auth', 'user', 'token', 'refreshInMs'], store)),
     condition: store.auth.status === 'login'
 })
