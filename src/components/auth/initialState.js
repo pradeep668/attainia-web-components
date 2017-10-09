@@ -4,5 +4,6 @@ export default {
     route: 'login',
     status: '',
     refreshStatus: '',
+    rememberMe: false,
     user: {}
 }

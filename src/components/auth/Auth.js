@@ -14,6 +14,7 @@ const Auth = props => {
         isLoggedOut,
         onLogin,
         onLogout,
+        rememberMe,
         storage,
         tokenInStore,
         user,
@@ -23,7 +24,7 @@ const Auth = props => {
     const access_token = getAccessTokenFromStorage(storage)
 
     if (access_token || tokenInStore) {
-        setToken(props)
+        if (access_token || rememberMe) setToken(props)
 
         onLogin(isEmpty(user) ? {token: {access_token}} : user)
 
@@ -70,6 +71,7 @@ Auth.propTypes = {
     isLoggedOut: PropTypes.bool.isRequired,
     onLogin: PropTypes.func.isRequired,
     onLogout: PropTypes.func,
+    rememberMe: PropTypes.bool.isRequired,
     storage: PropTypes.oneOf(['local', 'session', 'none']),
     useRefresh: PropTypes.bool.isRequired,
     user: PropTypes.shape({
@@ -85,6 +87,7 @@ Auth.defaultProps = {
     children: null,
     isLoggedOut: false,
     onLogin: () => true,
+    rememberMe: false,
     storage: 'local',
     useRefresh: true,
     user: {}
