@@ -8,6 +8,7 @@ import Form from '../common/Form'
 import Link from '../common/Link'
 import Logo from '../common/Logo'
 import ReduxFormField from '../common/ReduxFormField'
+import FormField from '../common/FormField'
 import {forms} from '../common/constants'
 
 const FullPageWrapper = styled.div`
@@ -81,13 +82,24 @@ const StyledForm = styled(Form)`
         }
     }
 `
-const Login = ({handleSubmit, tryLogin, email, hasAuthError, gotoPasswordHelp, gotoRegistration, showRegistration}) =>
+const Login = ({
+    handleSubmit, tryLogin, email, hasAuthError,
+    gotoPasswordHelp, gotoRegistration, rememberMe,
+    showRegistration, toggleRememberMe
+}) =>
     <FullPageWrapper>
         <StyledForm onSubmit={handleSubmit(tryLogin)}>
             <header className="loginHeader">{hasAuthError ? <AuthError /> : <Logo />}</header>
             <ReduxFormField className="email" placeholder="email" name="email" type="email" value={email} />
             <ReduxFormField className="password" placeholder="password" type="password" name="password" />
-            <ReduxFormField className="rememberMe" label="Remember Me" type="checkbox" name="remember" />
+            <FormField
+                className="rememberMe"
+                label="Remember Me"
+                type="checkbox"
+                name="rememberMe"
+                checked={rememberMe}
+                handlers={{onChange: toggleRememberMe}}
+            />
             <Link className="passwordHelp" href="#" onClick={gotoPasswordHelp}>
                 Password Help
             </Link>
@@ -109,7 +121,9 @@ Login.propTypes = {
     gotoRegistration: PropTypes.func.isRequired,
     email: PropTypes.string,
     hasAuthError: PropTypes.bool.isRequired,
-    showRegistration: PropTypes.bool.isRequired
+    rememberMe: PropTypes.bool,
+    showRegistration: PropTypes.bool.isRequired,
+    toggleRememberMe: PropTypes.func.isRequired
 }
 
 Login.defaultProps = {

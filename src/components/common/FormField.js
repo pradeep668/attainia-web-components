@@ -21,12 +21,14 @@ const FieldWrapper = styled.div`
 `
 
 const FormField = ({
-    handlers, input, id, meta: {touched, error}, label, name, placeholder, type, value, className
+    handlers, input, id, meta: {touched, error}, label, name, placeholder, type, checked, value, className
 }) =>
     <FieldWrapper type={type} className={`${className}`}>
         {isNotNil(label) && !isCheck(type) && <label htmlFor={id}>{label}</label>}
-        <InputField {...pickBy(isNotNil, {id, value, type, placeholder, name, ...input, ...handlers})} />
-        {isNotNil(label) && isCheck(type) && <CheckboxLabel htmlFor={id}>{label}</CheckboxLabel>}
+        <InputField {...pickBy(isNotNil, {id, value, checked, type, placeholder, name, ...input, ...handlers})} />
+        {isNotNil(label) && isCheck(type) &&
+            <CheckboxLabel htmlFor={id} onClick={handlers.onChange}>{label}</CheckboxLabel>
+        }
         {touched && error && <FieldError>{error}</FieldError>}
     </FieldWrapper>
 
@@ -58,6 +60,7 @@ FormField.propTypes = {
     label: PropTypes.string,
     name: PropTypes.string,
     id: PropTypes.string.isRequired,
+    checked: PropTypes.bool,
     placeholder: PropTypes.string,
     type: PropTypes.string,
     value: PropTypes.oneOfType([

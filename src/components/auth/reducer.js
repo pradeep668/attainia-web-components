@@ -9,7 +9,11 @@ const parseError = compose(
     err => (is(Object, err) ? err.message : err)
 )
 
-export default (state = initialState, {type, app, email, user, error, token, refreshTimeout}) => {
+export default (
+    state = initialState, {
+        type, app, email, user, error, token, refreshTimeout
+    }
+) => {
     switch (type) {
         case types.CANCEL:
             return {
@@ -94,6 +98,11 @@ export default (state = initialState, {type, app, email, user, error, token, ref
                     name: user.name,
                     email: user.email
                 }
+            }
+        case types.REMEMBER_ME:
+            return {
+                ...state,
+                rememberMe: !state.rememberMe
             }
         case types.UPDATED_TOKEN:
             return {

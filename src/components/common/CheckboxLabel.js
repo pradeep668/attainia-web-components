@@ -1,3 +1,5 @@
+import {pickBy} from 'ramda'
+import {isNotNil} from 'ramda-adjunct'
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -14,15 +16,16 @@ Span.propTypes = {
     className: PropTypes.string.isRequired
 }
 
-const Label = ({className, children, htmlFor}) =>
-    <label htmlFor={htmlFor} className={className}>
+const Label = ({className, children, htmlFor, onClick}) =>
+    <label htmlFor={htmlFor} className={className} {...pickBy(isNotNil, {onClick})}>
         <StyledSpan>{children}</StyledSpan>
     </label>
 
 Label.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string.isRequired,
-    htmlFor: PropTypes.string.isRequired
+    htmlFor: PropTypes.string.isRequired,
+    onClick: PropTypes.func
 }
 
 const CheckboxLabel = styled(Label)`

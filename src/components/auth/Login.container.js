@@ -5,7 +5,14 @@ import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
 import Login from './Login'
-import {handleError, login, refresh, gotoRegistration, gotoPasswordHelp} from './actions'
+import {
+    handleError,
+    login,
+    refresh,
+    toggleRememberMe,
+    gotoRegistration,
+    gotoPasswordHelp
+} from './actions'
 import constants from './constants'
 import {LOGIN_USER} from './mutations'
 
@@ -20,7 +27,8 @@ const validate = values => {
 const mapStateToProps = state => ({
     hasAuthError: Boolean(state.auth.error),
     email: path(['auth', 'user', 'email'], state),
-    name: path(['auth', 'user', 'name'], state)
+    name: path(['auth', 'user', 'name'], state),
+    rememberMe: state.auth.rememberMe
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -40,6 +48,9 @@ const mapDispatchToProps = dispatch => ({
     },
     refresh() {
         return dispatch(refresh())
+    },
+    toggleRememberMe() {
+        return dispatch(toggleRememberMe())
     }
 })
 
@@ -51,9 +62,9 @@ const FormedLogin = reduxForm({
 
 const LoginWithData = graphql(LOGIN_USER, {
     props: ({ownProps, mutate}) => ({
-        async tryLogin(credentials) {
+        async tryLogin({email, password}) {
             try {
-                const {data: {error, loginUser}} = await mutate({variables: credentials})
+                const {data: {error, loginUser}} = await mutate({variables: {email, password}})
                 if (error) {
                     throw new Error(error)
                 }
