@@ -40,6 +40,7 @@ const CheckboxLabel = styled(Label)`
     opacity: 1;
 
     &:after {
+        box-sizing: unset;
         content: '';
         width: 6px;
         height: 3px;
@@ -54,6 +55,7 @@ const CheckboxLabel = styled(Label)`
         transform: rotate(-45deg);
     }
     &:hover::after {
+        box-sizing: unset;
         opacity: 0.4;
     }
 `

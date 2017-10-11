@@ -7,8 +7,10 @@ import Header from './layout/Header.container'
 import Main from './layout/Main'
 import Page from './layout/Page'
 
+const baseUrl = process.env.REACT_APP_AUTH_BASE_URL
+
 const App = ({children}) =>
-    <AuthProvider>
+    <AuthProvider baseUrl={baseUrl}>
         <Page>
             <Header className="header" />
             <Main className="main">{children}</Main>
