@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Logo from '../common/Logo'
 import ApplicationSearchButton from '../common/ApplicationSearchButton'
+import NotificationButton from '../common/NotificationButton'
 import {colors} from '../common/constants'
 
 const Li = styled.div`
@@ -60,7 +61,9 @@ const Header = ({className}) =>
         <Li className="btnSearch">
             <ApplicationSearchButton />
         </Li>
-        <Li className="btnNotifications">N</Li>
+        <Li className="btnNotifications">
+            <NotificationButton />
+        </Li>
         <Li className="profileMenu"><div>User Profile</div></Li>
     </ListHeader>
 
