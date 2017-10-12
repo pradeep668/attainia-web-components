@@ -8,7 +8,9 @@ export const colors = {
     jet: '#333333',
     spanishGray: '#9b9b9b',
     outerSpace: '#464646',
-    lightCoral: '#F0887D'
+    lightCoral: '#F0887D',
+    cornflowerBlue: '#227fbb',
+    lapisLazuli: '#1b6595'
 }
 
 export const fonts = {
