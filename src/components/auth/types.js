@@ -4,6 +4,7 @@ export default {
     CLEAR_ERROR: 'awc_error_clear',
     CLEAR_REFRESH: 'awc_clear_refresh',
     ERROR: 'awc_error',
+    GET_USER_NAV_MENU: 'awc_get_user_menu',
     GOTO_PASSWORD_HELP: 'awc_goto_password_help',
     GOTO_REGISTRATION: 'awc_goto_registration',
     GOTO_APP_REGISTRATION: 'awc_goto_app_registration',

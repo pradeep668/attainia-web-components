@@ -11,7 +11,7 @@ const parseError = compose(
 
 export default (
     state = initialState, {
-        type, app, email, user, error, token, refreshTimeout
+        type, app, email, user, error, token, refreshTimeout, navigation
     }
 ) => {
     switch (type) {
@@ -39,6 +39,14 @@ export default (
                 ...state,
                 error: parseError(error),
                 status: ''
+            }
+        case types.GET_USER_NAV_MENU:
+            return {
+                ...state,
+                menu: {
+                    ...state.menu,
+                    navigation: navigation.map(label => ({label}))
+                }
             }
         case types.GOTO_APP_REGISTRATION:
             return {
