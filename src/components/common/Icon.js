@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const Div = styled.div`
     height: 20px;
-    width:20px;
+    width: 20px;
 `
 
 const Icon = ({className, imgSrc, alt}) =>

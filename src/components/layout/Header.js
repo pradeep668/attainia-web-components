@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Logo from '../common/Logo'
-import Icon from '../common/Icon'
-import searchicon from '../common/searchicon.svg'
+import ApplicationSearchButton from '../common/ApplicationSearchButton'
 import {colors} from '../common/constants'
 
 const Li = styled.div`
@@ -59,7 +58,7 @@ const Header = ({className}) =>
     <ListHeader className={className}>
         <Li className="logo"><Logo /></Li>
         <Li className="btnSearch">
-            <Icon className="search" imgSrc={(searchicon && searchicon.src) || searchicon} alt="S" />
+            <ApplicationSearchButton />
         </Li>
         <Li className="btnNotifications">N</Li>
         <Li className="profileMenu"><div>User Profile</div></Li>
