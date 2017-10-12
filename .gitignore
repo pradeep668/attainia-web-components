@@ -7,3 +7,6 @@
 /common/
 /layout/
 /resources/
+
+# Mac files
+.DS_Store

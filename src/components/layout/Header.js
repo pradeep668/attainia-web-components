@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Logo from '../common/Logo'
+import ApplicationSearchButton from '../common/ApplicationSearchButton'
+import NotificationButton from '../common/NotificationButton'
 import {colors} from '../common/constants'
 
 const Li = styled.div`
@@ -11,7 +13,7 @@ const Li = styled.div`
     height: 100%;
     padding: 0 15px;
 
-    & img {
+    Logo.img {
         width: 95px;
         height: 25px;
     }
@@ -56,8 +58,12 @@ const ListHeader = styled.ul`
 const Header = ({className}) =>
     <ListHeader className={className}>
         <Li className="logo"><Logo /></Li>
-        <Li className="btnSearch">S</Li>
-        <Li className="btnNotifications">N</Li>
+        <Li className="btnSearch">
+            <ApplicationSearchButton />
+        </Li>
+        <Li className="btnNotifications">
+            <NotificationButton />
+        </Li>
         <Li className="profileMenu"><div>User Profile</div></Li>
     </ListHeader>
 
