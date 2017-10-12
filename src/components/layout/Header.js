@@ -4,25 +4,62 @@ import styled from 'styled-components'
 import Logo from '../common/Logo'
 import {colors} from '../common/constants'
 
-const H1 = styled.h1`
-    color: ${colors.rossoCorsa};
+const Li = styled.div`
+    color: ${colors.cornflowerBlue};
     text-align: center;
-    vertical-align: middle;
+    background: white;
+    height: 100%;
+    padding: 0 15px;
 
     & img {
-        margin-left: 40px;
         width: 95px;
         height: 25px;
     }
+
+    @supports not (display: grid) {
+        display: block;
+    }
+
+    @supports (display: grid) {
+        display: grid;
+        align-content: center;
+    }
 `
-const StyledHeader = styled.header`
-    background-color: white;
+const ListHeader = styled.ul`
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background: ${colors.isabellineGray};
+
+    .logo {
+        padding-left: 50px;
+    }
+
+    @supports not (display: grid) {
+        .profileMenu,
+        .btnSearch,
+        .btnNotifications,
+        .logo {
+            max-width: 50em;
+            margin: 0 auto;
+        }
+    }
+
+    @supports (display: grid) {
+        display: grid;
+        grid-template-columns: 1fr repeat(2, 50px) 130px;
+        grid-template-rows: 50px;
+        grid-column-gap: 3px;
+    }
 `
 const Header = ({className}) =>
-    <StyledHeader className={className}>
-        <H1><Logo /></H1>
-    </StyledHeader>
+    <ListHeader className={className}>
+        <Li className="logo"><Logo /></Li>
+        <Li className="btnSearch">S</Li>
+        <Li className="btnNotifications">N</Li>
+        <Li className="profileMenu"><div>User Profile</div></Li>
+    </ListHeader>
 
 Header.propTypes = {
     className: PropTypes.string.isRequired
