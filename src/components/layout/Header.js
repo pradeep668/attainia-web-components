@@ -6,17 +6,23 @@ import {colors} from '../common/constants'
 
 const H1 = styled.h1`
     color: ${colors.rossoCorsa};
-    background-color: white;
     text-align: center;
     vertical-align: middle;
-    padding: 20px 0;
 
     & img {
-        margin: 5px auto;
+        margin-left: 40px;
+        width: 95px;
+        height: 25px;
     }
 `
+const StyledHeader = styled.header`
+    background-color: white;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
+`
 const Header = ({className}) =>
-    <H1 className={className}><Logo /></H1>
+    <StyledHeader className={className}>
+        <H1><Logo /></H1>
+    </StyledHeader>
 
 Header.propTypes = {
     className: PropTypes.string.isRequired
