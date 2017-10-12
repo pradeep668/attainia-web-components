@@ -13,7 +13,7 @@ const Li = styled.div`
     height: 100%;
     padding: 0 15px;
 
-    Logo.img {
+    & img.headerLogo {
         width: 95px;
         height: 25px;
     }
@@ -57,7 +57,7 @@ const ListHeader = styled.ul`
 `
 const Header = ({className}) =>
     <ListHeader className={className}>
-        <Li className="logo"><Logo /></Li>
+        <Li className="logo"><Logo className="headerLogo" /></Li>
         <Li className="btnSearch">
             <ApplicationSearchButton />
         </Li>
