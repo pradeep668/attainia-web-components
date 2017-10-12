@@ -2,6 +2,7 @@ import React from 'react'
 import {Provider} from 'react-redux'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
+import DataTable from './components/common/DataTable.container'
 import ResourcesList from './components/resources/ResourcesList.container'
 import ResourcesDetail from './components/resources/ResourcesDetail.container'
 import ResourcesNew from './components/resources/ResourcesNew.container'
@@ -19,6 +20,7 @@ export default (
                     <Route exact path="/resources" component={ResourcesList} />
                     <Route exact path="/resources/new" component={ResourcesNew} />
                     <Route exact path="/resources/:id" component={ResourcesDetail} />
+                    <Route exact path="/data_table" component={DataTable} />
                 </Switch>
             </BrowserRouter>
         </AuthenticatedApp>
