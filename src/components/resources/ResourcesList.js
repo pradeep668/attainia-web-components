@@ -5,8 +5,8 @@ import styled from 'styled-components'
 
 import {Link} from 'react-router-dom'
 import Form from '../common/Form'
-import LinkButton from '../common/LinkButton'
 import {breakpoints, forms, colors} from '../common/constants'
+import ResourcesHeader from './ResourcesHeader'
 
 const StyledForm = styled(Form)`
     & > * {
@@ -85,8 +85,7 @@ class ResourcesList extends Component {
         const {resources} = this.props
 
         return (
-            <StyledForm>
-                <h2 className="resourcesHeader">Resources</h2>
+                <ResourcesHeader>
                 <ul className="listGroup">
                     {resources.map(({id, name}) => (
                         <li className="listGroupItem" key={uuid()}>
@@ -96,10 +95,7 @@ class ResourcesList extends Component {
                         </li>
                     ))}
                 </ul>
-                <LinkButton className="resourcesButtonAdd">
-                    <Link to="/resources/new">Add a Resource</Link>
-                </LinkButton>
-            </StyledForm>
+                </ResourcesHeader>
         )
     }
 }
