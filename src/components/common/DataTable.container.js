@@ -5,12 +5,38 @@ import styled from 'styled-components'
 import DataTable from './DataTable'
 
 
-const mapStateToProps = (state, ownProps) => {
-    return {data: []}
+const makeFakeData = (size) => {
+    return Array.apply(null, {length: size}).map(function(value, index) {
+        return { name: `Name ${index + 1}`,  prop_1: `Value 1`,  prop_2: `Value 2`}
+    });
 }
 
-function mergeProps(stateProps, dispatchProps, ownProps) {
-    return { stateProps, dispatchProps, ownProps }
+const mapStateToProps = (state, ownProps) => {
+    return {
+        rowsCount: 100,
+        rowHeight: 50,
+        tableWidth: 653,
+        tableHeight: 500,
+        headerHeight: 50,
+        headers: [
+            {
+                name: "Name",
+                key: "name",
+                width: 200
+            },
+            {
+                name: "Property 1",
+                key: "prop_1",
+                width: 200
+            },
+            {
+                name: "Property 2",
+                key: "prop_2",
+                width: 200
+            }
+        ],
+        data: makeFakeData(100)
+    }
 }
 
 const CenterDiv = styled.div`
@@ -19,15 +45,9 @@ const CenterDiv = styled.div`
     margin-right: auto;
 `
 
-const CenteredDataTable = () =>
+const CenteredDataTable = (props) =>
     <CenterDiv>
-        <DataTable 
-        rowsCount={100}
-        rowHeight={50}
-        tableWidth={453}
-        tableHeight={500}
-        headerHeight={50}
-        />
+        <DataTable {...props} />
     </CenterDiv>
 
-export default connect(mapStateToProps, null, mergeProps)(CenteredDataTable)
+export default connect(mapStateToProps)(CenteredDataTable)
