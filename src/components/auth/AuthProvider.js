@@ -7,7 +7,7 @@ import apolloClient from './apollo.client'
 import Auth from './Auth.container'
 
 const createClient = props =>
-    apolloClient({
+    props.ownClient({
         ...pick(['baseUrl', 'storage'], props),
         useSubscriptions: is(Function, props.onLogout)
     })
@@ -22,6 +22,7 @@ AuthProvider.propTypes = {
     children: PropTypes.node,
     onLogin: PropTypes.func,
     onLogout: PropTypes.func,
+    ownClient: PropTypes.func.isRequired,
     storage: PropTypes.oneOf(['local', 'session', 'none']),
     useRefresh: PropTypes.bool.isRequired
 }
@@ -29,6 +30,7 @@ AuthProvider.propTypes = {
 AuthProvider.defaultProps = {
     baseUrl: 'localhost',
     storage: 'local',
+    ownClient: apolloClient,
     useRefresh: true
 }
 

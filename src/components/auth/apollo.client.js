@@ -6,7 +6,8 @@ import {getAccessTokenFromStorage} from './helpers'
 export default ({
     baseUrl = 'localhost',
     storage = 'local',
-    useSubscriptions = true
+    useSubscriptions = true,
+    apolloClientProps = {}
 } = {}) => {
     const networkInterface = createNetworkInterface({uri: `http://${baseUrl}/graphql`})
 
@@ -25,9 +26,10 @@ export default ({
     if (useSubscriptions) {
         const wsClient = new SubscriptionClient(`ws://${baseUrl}/subscriptions`, {reconnect: true})
         return new ApolloClient({
-            networkInterface: addGraphQLSubscriptions(networkInterface, wsClient)
+            networkInterface: addGraphQLSubscriptions(networkInterface, wsClient),
+            ...apolloClientProps
         })
     }
 
-    return new ApolloClient({networkInterface})
+    return new ApolloClient({networkInterface, ...apolloClientProps})
 }
