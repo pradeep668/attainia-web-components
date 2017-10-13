@@ -27,7 +27,7 @@ export default styled.div`
             .main {
                 grid-area: main;
                 display: grid;
-                align-items: center;
+                align-items: start;
             }
 
             .sidebar {
@@ -50,7 +50,7 @@ export default styled.div`
             .main {
                 grid-area: main;
                 display: grid;
-                align-items: center;
+                align-items: start;
             }
 
             .sidebar {
