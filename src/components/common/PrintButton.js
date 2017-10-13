@@ -6,7 +6,7 @@ import printicon from '../common/printicon.svg'
 const Print = props =>
     <Icon
         className="print-icon"
-        imgSrc={(printicon && printicon.src) || printicon}
+        imgSrc={printicon}
         alt="S"
         {...props}
     />

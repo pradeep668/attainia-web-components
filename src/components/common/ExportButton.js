@@ -6,7 +6,7 @@ import documenticon from '../common/documenticon.svg'
 const Document = props =>
     <Icon
         className="document-icon"
-        imgSrc={(documenticon && documenticon.src) || documenticon}
+        imgSrc={documenticon}
         alt="S"
         {...props}
     />
