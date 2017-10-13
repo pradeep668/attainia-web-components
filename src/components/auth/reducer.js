@@ -86,9 +86,11 @@ export default (
                 user: {email}
             }
         case types.REFRESH:
+            if (state.refreshTimeout) clearTimeout(state.refreshTimeout)
+
             return {
                 ...state,
-                refreshTimeout: clearTimeout(state.refreshTimeout) || refreshTimeout
+                refreshTimeout
             }
         case types.REGISTER_APP:
             return {
