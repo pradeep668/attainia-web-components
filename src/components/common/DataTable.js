@@ -21,17 +21,42 @@ class TooltipHeaderCell extends React.PureComponent {
     }
 }
 
-const DataTable = ({rowsCount, rowHeight, tableWidth}) =>
+const DataTable = (
+    {
+        rowsCount, 
+        rowHeight, 
+        tableWidth,
+        tableHeight,
+        headerHeight
+    }
+) =>
     <div>
         <Table
             rowsCount={rowsCount}
             rowHeight={rowHeight}
             width={tableWidth}
-            height={500}
-            headerHeight={50}>
+            height={tableHeight}
+            headerHeight={headerHeight}>
             <Column
-                header={<TooltipHeaderCell data="Basic Header" />}
-                cell={<Cell>Basic Content</Cell>}
+                header={<Cell></Cell>}
+                cell={<Cell><input type="checkbox" /></Cell>}
+                width={35}
+                fixed={true}
+            />
+            <Column
+                header={<TooltipHeaderCell data="Basic Header 1" />}
+                cell={<Cell>{"Basic data 1"}</Cell>}
+                width={200}
+                fixed={true}
+            />
+            <Column
+                header={<TooltipHeaderCell data="Basic Header 2" />}
+                cell={<Cell>{"Basic data 2"}</Cell>}
+                width={200}
+            />
+            <Column
+                header={<TooltipHeaderCell data="Basic Header 3" />}
+                cell={<Cell>{"Basic data 3"}</Cell>}
                 width={200}
             />
         </Table>
@@ -41,7 +66,9 @@ const DataTable = ({rowsCount, rowHeight, tableWidth}) =>
 DataTable.propTypes = {
     rowsCount: PropTypes.number.isRequired,
     rowHeight: PropTypes.number.isRequired,
-    tableWidth: PropTypes.number.isRequired
+    tableWidth: PropTypes.number.isRequired,
+    tableHeight: PropTypes.number.isRequired,
+    headerHeight: PropTypes.number.isRequired
 }    
 
 export default DataTable
