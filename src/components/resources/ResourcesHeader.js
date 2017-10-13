@@ -22,18 +22,8 @@ const ListHeader = styled.ul`
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.2);
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 12px;
     background: ${colors.isabellineGray};
-
-    .title {
-        padding-left: 50px;
-        .h1 {
-            color: ${colors.spanishGray}
-        }
-    }
-
-    .btnCreateResource {
-    }
 
     @supports not (display: grid) {
         .btnCreateResource,
@@ -45,22 +35,30 @@ const ListHeader = styled.ul`
 
     @supports (display: grid) {
         display: grid;
-        grid-template-columns: 1fr repeat(3, 50px) 130px;
+        grid-template-columns: 1fr repeat(2, 50px) 140px;
         grid-template-rows: 50px;
         grid-column-gap: 3px;
+
+        .titleAndResourceCount {
+            display: inline-grid;
+            grid-template-columns: minmax(auto, 6%) 1fr;
+            align-items: center;
+            .title {
+                padding-right: 10px; 
+            }
+            .resourceCount {
+                color: ${colors.spanishGray}
+            }
+        }
     }
 `
 
 const ResourcesHeader = ({className, resourceName, resourceCount}) =>
     <ListHeader>
         <Li>
-            <div className="title">
-                <h1>{resourceName}</h1>
-            </div>
-        </Li>
-        <Li>
-            <div className="resourceCount">
-                <h2>( {resourceCount} )</h2>
+            <div className="titleAndResourceCount">
+                <h1 className="title">{resourceName}</h1>
+                <h2 className="resourceCount">( {resourceCount} )</h2>
             </div>
         </Li>
         <Li>
