@@ -6,6 +6,7 @@ export default styled.div`
     @supports not (display: grid) {
         .header,
         .main,
+        .sidebar,
         .footer {
             max-width: 50em;
             margin: 0 auto;
@@ -13,11 +14,11 @@ export default styled.div`
     }
 
     @supports (display: grid) {
-        @media ${breakpoints.desktop} {
+        @media ${breakpoints.tablet} {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 70px auto 40px;
-            grid-template-areas: 'header header' 'main main' 'footer footer';
+            grid-template-columns: 200px 1fr;
+            grid-template-rows: 50px auto 40px;
+            grid-template-areas: 'header header' 'sidebar main' 'footer footer';
 
             .header {
                 grid-area: header;
@@ -29,6 +30,10 @@ export default styled.div`
                 align-items: center;
             }
 
+            .sidebar {
+                grid-area: sidebar;
+            }
+
             .footer {
                 grid-area: footer;
             }
@@ -36,8 +41,25 @@ export default styled.div`
 
         @media ${breakpoints.largeDesktop} {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-areas: 'header header header' 'main main main' 'footer footer footer';
+            grid-template-columns: 200px 1fr 1fr;
+            grid-template-areas: 'header header header' 'sidebar main main' 'footer footer footer';
+            .header {
+                grid-area: header;
+            }
+
+            .main {
+                grid-area: main;
+                display: grid;
+                align-items: center;
+            }
+
+            .sidebar {
+                grid-area: sidebar;
+            }
+
+            .footer {
+                grid-area: footer;
+            }
         }
     }
 `

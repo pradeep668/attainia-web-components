@@ -8,3 +8,6 @@ package-lock.json
 /common/
 /layout/
 /resources/
+
+# Mac files
+.DS_Store

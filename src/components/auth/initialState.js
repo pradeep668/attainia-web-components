@@ -5,5 +5,9 @@ export default {
     status: '',
     refreshStatus: '',
     rememberMe: false,
+    menu: {
+        navigation: [],
+        profile: []
+    },
     user: {}
 }

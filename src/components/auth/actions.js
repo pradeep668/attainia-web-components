@@ -3,6 +3,7 @@ import types from './types'
 export const cancel = () => ({type: types.CANCEL})
 export const handleError = error => ({error, type: types.ERROR})
 export const clearError = () => ({type: types.CLEAR_ERROR})
+export const getUserNavMenu = navigation => ({navigation, type: types.GET_USER_NAV_MENU})
 export const gotoPasswordHelp = () => ({type: types.GOTO_PASSWORD_HELP})
 export const gotoRegistration = () => ({type: types.GOTO_REGISTRATION})
 export const gotoAppRegistration = () => ({type: types.GOTO_APP_REGISTRATION})
