@@ -2,6 +2,7 @@ import {pick, is} from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 import {ApolloProvider} from 'react-apollo'
+import {connect} from 'react-redux'
 
 import apolloClient from './apollo.client'
 import Auth from './Auth.container'
@@ -18,7 +19,7 @@ const AuthProvider = props =>
     </ApolloProvider>
 
 AuthProvider.propTypes = {
-    baseUrl: PropTypes.string.isRequired,
+    baseUrl: PropTypes.string,
     children: PropTypes.node,
     onLogin: PropTypes.func,
     onLogout: PropTypes.func,
@@ -28,10 +29,16 @@ AuthProvider.propTypes = {
 }
 
 AuthProvider.defaultProps = {
-    baseUrl: 'localhost',
     storage: 'local',
     ownClient: apolloClient,
     useRefresh: true
 }
 
-export default AuthProvider
+export default connect(
+    store => ({urlFromStore: store.auth.baseUrl}),
+    null,
+    (storeProps, _, ownProps) => ({
+        baseUrl: ownProps.baseUrl || storeProps.urlFromStore,
+        children: ownProps.children
+    })
+)(AuthProvider)

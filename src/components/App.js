@@ -8,10 +8,8 @@ import Main from './layout/Main'
 import Page from './layout/Page'
 import NavBarList from './layout/NavBarList.container'
 
-const baseUrl = process.env.REACT_APP_AUTH_BASE_URL
-
 const App = ({children}) =>
-    <AuthProvider baseUrl={baseUrl}>
+    <AuthProvider>
         <Page>
             <Header className="header" />
             <NavBarList className="sidebar" />
