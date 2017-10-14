@@ -38,7 +38,7 @@ export default connect(
     store => ({urlFromStore: store.auth.baseUrl}),
     null,
     (storeProps, _, ownProps) => ({
-        baseUrl: ownProps.baseUrl || storeProps.urlFromStore,
-        children: ownProps.children
+        ...ownProps,
+        baseUrl: ownProps.baseUrl || storeProps.urlFromStore
     })
 )(AuthProvider)

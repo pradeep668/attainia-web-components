@@ -62,15 +62,15 @@ const ResourcesHeader = ({className, resourceName, resourceCount}) =>
             </div>
         </Li>
         <Li>
-            <ExportButton className="btnExport" /> 
+            <ExportButton className="btnExport" />
         </Li>
         <Li>
             <PrintButton className="btnPrint" />
         </Li>
-   		<Li>
-			<LinkButton className="btnCreateResource">
-    			<Link to="/resources/new">Add a Resource</Link>
-    		</LinkButton>
+        <Li>
+            <LinkButton className="btnCreateResource">
+                <Link to="/resources/new">Add a Resource</Link>
+            </LinkButton>
         </Li>
     </ListHeader>
 
