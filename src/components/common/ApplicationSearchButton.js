@@ -6,7 +6,7 @@ import searchicon from '../common/searchicon.svg'
 const ApplicationSearch = props =>
     <Icon
         className="search-icon"
-        imgSrc={(searchicon && searchicon.src) || searchicon}
+        imgSrc={searchicon}
         alt="S"
         {...props}
     />
