@@ -29,11 +29,34 @@ class TextCell extends React.PureComponent {
         const {data, rowIndex, columnKey, ...props} = this.props;
         return (
             <Cell {...props}>
-            {data[rowIndex][columnKey]}
+                <span>{data[rowIndex][columnKey]}</span>
             </Cell>
         );
     }
 };
+
+class LinkCell extends React.PureComponent {
+    render() {
+        const {data, rowIndex, columnKey, ...props} = this.props
+        return (
+            <Cell {...props}>
+                <a href="#">{data[rowIndex][columnKey]}</a>
+            </Cell>
+        )
+    }
+}
+
+const NumberCell = styled(TextCell)`
+    .public_fixedDataTableCell_cellContent {
+        text-align: right;
+    }
+`
+
+const NumberTooltipHeaderCell = styled(TooltipHeaderCell)`
+    .public_fixedDataTableCell_cellContent {
+        text-align: right;
+    }
+`
 
 const StyledTable = styled(Table)`
     .fixedDataTableRowLayout_rowWrapper:hover .public_fixedDataTableCell_main {
@@ -41,18 +64,57 @@ const StyledTable = styled(Table)`
     }
 `
 
+export const ColumnType = {
+    TEXT: Symbol('TEXT'),
+    NUMBER: Symbol('NUMBER'),
+    LINK: Symbol('LINK'),
+}
+
 const RenderColumns = (headers, data) =>
     {
         return headers.map(function(header) {
-            return <Column key={uuid()}
-                header={<TooltipHeaderCell data={header.name} />}
-                columnKey={header.key}
-                cell={<TextCell data={data} />}
-                width={header.width}
-                />
+
+            switch (header.columnType) {
+                case ColumnType.TEXT:
+                    return <Column key={uuid()}
+                        header={<TooltipHeaderCell data={header.name} />}
+                        columnKey={header.key}
+                        cell={<TextCell data={data} />}
+                        width={header.width}
+                        fixed={header.fixed}
+                        />
+
+                case ColumnType.NUMBER:
+                    return <Column key={uuid()}
+                        header={<NumberTooltipHeaderCell data={header.name} />}
+                        columnKey={header.key}
+                        cell={<NumberCell data={data} />}
+                        width={header.width}
+                        fixed={header.fixed}
+                        />
+
+                case ColumnType.LINK:
+                    return <Column key={uuid()}
+                        header={<TooltipHeaderCell data={header.name} />}
+                        columnKey={header.key}
+                        cell={<LinkCell data={data} />}
+                        width={header.width}
+                        fixed={header.fixed}
+                        />
+
+                default:
+                    return <Column key={uuid()}
+                        header={<TooltipHeaderCell data={header.name} />}
+                        columnKey={header.key}
+                        cell={<TextCell data={data} />}
+                        width={header.width}
+                        fixed={header.fixed}
+                        />
+
+            }
     })}
 
-const DataTable = ({
+export const DataTable = ({
     rowsCount,
     rowHeight,
     tableWidth,
@@ -89,10 +151,15 @@ DataTable.propTypes = {
         PropTypes.shape({
             name: PropTypes.string,
             key: PropTypes.string,
-            width: PropTypes.number
+            width: PropTypes.number,
+            fixed: PropTypes.bool,
+            columnType: PropTypes.symbol
         }),
     ),
     data: PropTypes.arrayOf(PropTypes.object)
 }
 
-export default DataTable
+export default {
+    DataTable, 
+    ColumnType
+}
