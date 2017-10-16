@@ -12,12 +12,11 @@ const makeFakeData = (size) => {
     return Array.apply(null, {length: size}).map(function(value, index) {
         return { 
             name: `Name ${index + 1}`,  
-            prop_1: `Value 1`,  
-            prop_2: `Value 2`,  
-            prop_3: `Value 3`,  
-            prop_4: `Value 4`, 
-            prop_5: getRandomArbitrary(0, 1000).toFixed(2),
-            prop_6: {label: "Google", link: "http://www.google.com"}
+            prop_1: `Value 1`, 
+            prop_2: getRandomArbitrary(0, 1000).toFixed(2),
+            prop_3: {label: "Google", link: "http://www.google.com"},
+            prop_4: {iconSource: "http://three.master.attainia.com/static/assets/images/edit.svg", altText: "Edit", link: "http://www.google.com"},
+            prop_5: {imageSource: "http://static.meishij.net/images/newsearch_eyeicon.png", altText: "Visible"}
         }
     })
 }
@@ -31,52 +30,51 @@ const mapStateToProps = (state, ownProps) => {
         headers: [
             {
                 name: "Name",
+                toolTip: "The name of the thing",
                 key: "name",
                 width: 200,
                 fixed: true,
                 columnType: ColumnType.TEXT
             },
             {
-                name: "Property 1",
+                name: "Text Property",
+                toolTip: "Some text of the thing",
                 key: "prop_1",
                 width: 200,
                 fixed: false,
                 columnType: ColumnType.TEXT
             },
             {
-                name: "Property 2",
+                name: "Number Property",
+                toolTip: "Some number of the thing",
                 key: "prop_2",
-                width: 200,
-                fixed: false,
-                columnType: ColumnType.TEXT
-            },
-            {
-                name: "Property 3",
-                key: "prop_3",
-                width: 200,
-                fixed: false,
-                columnType: ColumnType.TEXT
-            },
-            {
-                name: "Property 4",
-                key: "prop_4",
-                width: 200,
-                fixed: false,
-                columnType: ColumnType.TEXT
-            },
-            {
-                name: "Property 5",
-                key: "prop_5",
                 width: 200,
                 fixed: false,
                 columnType: ColumnType.NUMBER
             },
             {
-                name: "Property 6",
-                key: "prop_6",
+                name: "Link Property",
+                toolTip: "Some link of the thing",
+                key: "prop_3",
                 width: 200,
                 fixed: false,
                 columnType: ColumnType.LINK
+            },
+            {
+                name: "Icon Link Property",
+                toolTip: "Some icon of the thing",
+                key: "prop_4",
+                width: 200,
+                fixed: false,
+                columnType: ColumnType.ICON_LINK
+            },
+            {
+                name: "Image Property",
+                toolTip: "Some image of the thing",
+                key: "prop_5",
+                width: 200,
+                fixed: false,
+                columnType: ColumnType.IMAGE
             }
         ],
         data: makeFakeData(100)

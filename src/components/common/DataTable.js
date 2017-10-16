@@ -8,55 +8,23 @@ import styled from 'styled-components'
 import {Table, Column, Cell} from 'fixed-data-table-2'
 import 'fixed-data-table-2/dist/fixed-data-table.css'
 
+import {
+    TooltipHeaderCell,
+    TextCell,
+    LinkCell,
+    ImageCell,
+    IconLinkCell,
+    NumberCell,
+    NumberTooltipHeaderCell
+} from './DataTableCells'
 
-class TooltipHeaderCell extends React.PureComponent {
-    render() {
-        const {data, ...props} = this.props
-        return (
-            <Cell
-            {...props}
-            data-tip={data}>
-                <div>
-                    {data}
-                </div>
-            </Cell>
-        )
-    }
+export const ColumnType = {
+    TEXT: Symbol('TEXT'),
+    NUMBER: Symbol('NUMBER'),
+    LINK: Symbol('LINK'),
+    IMAGE: Symbol('IMAGE'),
+    ICON_LINK: Symbol('ICON')
 }
-
-class TextCell extends React.PureComponent {
-    render() {
-        const {data, rowIndex, columnKey, ...props} = this.props;
-        return (
-            <Cell {...props}>
-                <span>{data[rowIndex][columnKey]}</span>
-            </Cell>
-        );
-    }
-};
-
-class LinkCell extends React.PureComponent {
-    render() {
-        const {data, rowIndex, columnKey, ...props} = this.props
-        return (
-            <Cell {...props}>
-                <a href={data[rowIndex][columnKey].link}>{data[rowIndex][columnKey].label}</a>
-            </Cell>
-        )
-    }
-}
-
-const NumberCell = styled(TextCell)`
-    .public_fixedDataTableCell_cellContent {
-        text-align: right;
-    }
-`
-
-const NumberTooltipHeaderCell = styled(TooltipHeaderCell)`
-    .public_fixedDataTableCell_cellContent {
-        text-align: right;
-    }
-`
 
 const StyledTable = styled(Table)`
     .fixedDataTableRowLayout_rowWrapper:hover .public_fixedDataTableCell_main {
@@ -64,11 +32,15 @@ const StyledTable = styled(Table)`
     }
 `
 
-export const ColumnType = {
-    TEXT: Symbol('TEXT'),
-    NUMBER: Symbol('NUMBER'),
-    LINK: Symbol('LINK'),
-}
+const TableHeader = styled.div`
+    border: 1px solid #d3d3d3;
+    border-bottom-style: none;
+    padding: 8px;
+
+    .header-checkbox {
+        margin-right: 16px;
+    }
+`
 
 const RenderColumns = (headers, data) =>
     {
@@ -77,7 +49,7 @@ const RenderColumns = (headers, data) =>
             switch (header.columnType) {
                 case ColumnType.TEXT:
                     return <Column key={uuid()}
-                        header={<TooltipHeaderCell data={header.name} />}
+                        header={<TooltipHeaderCell data={header} />}
                         columnKey={header.key}
                         cell={<TextCell data={data} />}
                         width={header.width}
@@ -86,7 +58,7 @@ const RenderColumns = (headers, data) =>
 
                 case ColumnType.NUMBER:
                     return <Column key={uuid()}
-                        header={<NumberTooltipHeaderCell data={header.name} />}
+                        header={<NumberTooltipHeaderCell data={header} />}
                         columnKey={header.key}
                         cell={<NumberCell data={data} />}
                         width={header.width}
@@ -95,16 +67,34 @@ const RenderColumns = (headers, data) =>
 
                 case ColumnType.LINK:
                     return <Column key={uuid()}
-                        header={<TooltipHeaderCell data={header.name} />}
+                        header={<TooltipHeaderCell data={header} />}
                         columnKey={header.key}
                         cell={<LinkCell data={data} />}
+                        width={header.width}
+                        fixed={header.fixed}
+                        />
+                
+                case ColumnType.IMAGE:
+                    return <Column key={uuid()}
+                        header={<TooltipHeaderCell data={header} />}
+                        columnKey={header.key}
+                        cell={<ImageCell data={data} />}
+                        width={header.width}
+                        fixed={header.fixed}
+                        />
+
+                case ColumnType.ICON_LINK:
+                    return <Column key={uuid()}
+                        header={<TooltipHeaderCell data={header} />}
+                        columnKey={header.key}
+                        cell={<IconLinkCell data={data} />}
                         width={header.width}
                         fixed={header.fixed}
                         />
 
                 default:
                     return <Column key={uuid()}
-                        header={<TooltipHeaderCell data={header.name} />}
+                        header={<TooltipHeaderCell data={header} />}
                         columnKey={header.key}
                         cell={<TextCell data={data} />}
                         width={header.width}
@@ -123,6 +113,7 @@ export const DataTable = ({
     data
 }) =>
     <div>
+        <TableHeader><input type='checkbox' className='header-checkbox'/>{data.length} total</TableHeader>
         <StyledTable
             rowsCount={data.length}
             rowHeight={rowHeight}
@@ -131,13 +122,13 @@ export const DataTable = ({
             headerHeight={headerHeight}>
             <Column
                 header={<Cell></Cell>}
-                cell={<Cell><input type="checkbox" /></Cell>}
+                cell={<Cell><input type='checkbox' /></Cell>}
                 width={35}
                 fixed={true}
             />
             {RenderColumns(headers, data)}
         </StyledTable>
-        <ReactTooltip place="top" effect="solid" />
+        <ReactTooltip place='top' effect='solid' />
     </div>
 
 DataTable.propTypes = {
@@ -148,16 +139,14 @@ DataTable.propTypes = {
     headers: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string,
+            toolTip: PropTypes.string,
             key: PropTypes.string,
             width: PropTypes.number,
             fixed: PropTypes.bool,
             columnType: PropTypes.symbol
         }),
-    ),
-    data: PropTypes.arrayOf(PropTypes.object)
+    ).isRequired,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired
 }
 
-export default {
-    DataTable, 
-    ColumnType
-}
+export default {DataTable, ColumnType}
