@@ -40,7 +40,7 @@ class LinkCell extends React.PureComponent {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
             <Cell {...props}>
-                <a href="#">{data[rowIndex][columnKey]}</a>
+                <a href={data[rowIndex][columnKey].link}>{data[rowIndex][columnKey].label}</a>
             </Cell>
         )
     }
@@ -115,7 +115,6 @@ const RenderColumns = (headers, data) =>
     })}
 
 export const DataTable = ({
-    rowsCount,
     rowHeight,
     tableWidth,
     tableHeight,
@@ -142,7 +141,6 @@ export const DataTable = ({
     </div>
 
 DataTable.propTypes = {
-    rowsCount: PropTypes.number.isRequired,
     rowHeight: PropTypes.number.isRequired,
     tableWidth: PropTypes.number.isRequired,
     tableHeight: PropTypes.number.isRequired,

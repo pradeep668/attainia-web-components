@@ -10,13 +10,20 @@ const getRandomArbitrary = (min, max) => {
 
 const makeFakeData = (size) => {
     return Array.apply(null, {length: size}).map(function(value, index) {
-        return { name: `Name ${index + 1}`,  prop_1: `Value 1`,  prop_2: `Value 2`,  prop_3: `Value 3`,  prop_4: `Value 4`, prop_5: getRandomArbitrary(0, 1000).toFixed(2)}
-    });
+        return { 
+            name: `Name ${index + 1}`,  
+            prop_1: `Value 1`,  
+            prop_2: `Value 2`,  
+            prop_3: `Value 3`,  
+            prop_4: `Value 4`, 
+            prop_5: getRandomArbitrary(0, 1000).toFixed(2),
+            prop_6: {label: "Google", link: "http://www.google.com"}
+        }
+    })
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        rowsCount: 100,
         rowHeight: 50,
         tableWidth: 653,
         tableHeight: 500,
@@ -63,6 +70,13 @@ const mapStateToProps = (state, ownProps) => {
                 width: 200,
                 fixed: false,
                 columnType: ColumnType.NUMBER
+            },
+            {
+                name: "Property 6",
+                key: "prop_6",
+                width: 200,
+                fixed: false,
+                columnType: ColumnType.LINK
             }
         ],
         data: makeFakeData(100)
