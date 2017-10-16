@@ -42,67 +42,67 @@ const TableHeader = styled.div`
     }
 `
 
-const RenderColumns = (headers, data) =>
-    {
-        return headers.map(function(header) {
+const RenderColumns = (headers, data) => {
+    return headers.map(function(header) {
 
-            switch (header.columnType) {
-                case ColumnType.TEXT:
-                    return <Column key={uuid()}
-                        header={<TooltipHeaderCell data={header} />}
-                        columnKey={header.key}
-                        cell={<TextCell data={data} />}
-                        width={header.width}
-                        fixed={header.fixed}
-                        />
+        switch (header.columnType) {
+            case ColumnType.TEXT:
+                return <Column key={uuid()}
+                    header={<TooltipHeaderCell data={header} />}
+                    columnKey={header.key}
+                    cell={<TextCell data={data} />}
+                    width={header.width}
+                    fixed={header.fixed}
+                    />
 
-                case ColumnType.NUMBER:
-                    return <Column key={uuid()}
-                        header={<NumberTooltipHeaderCell data={header} />}
-                        columnKey={header.key}
-                        cell={<NumberCell data={data} />}
-                        width={header.width}
-                        fixed={header.fixed}
-                        />
+            case ColumnType.NUMBER:
+                return <Column key={uuid()}
+                    header={<NumberTooltipHeaderCell data={header} />}
+                    columnKey={header.key}
+                    cell={<NumberCell data={data} />}
+                    width={header.width}
+                    fixed={header.fixed}
+                    />
 
-                case ColumnType.LINK:
-                    return <Column key={uuid()}
-                        header={<TooltipHeaderCell data={header} />}
-                        columnKey={header.key}
-                        cell={<LinkCell data={data} />}
-                        width={header.width}
-                        fixed={header.fixed}
-                        />
-                
-                case ColumnType.IMAGE:
-                    return <Column key={uuid()}
-                        header={<TooltipHeaderCell data={header} />}
-                        columnKey={header.key}
-                        cell={<ImageCell data={data} />}
-                        width={header.width}
-                        fixed={header.fixed}
-                        />
+            case ColumnType.LINK:
+                return <Column key={uuid()}
+                    header={<TooltipHeaderCell data={header} />}
+                    columnKey={header.key}
+                    cell={<LinkCell data={data} />}
+                    width={header.width}
+                    fixed={header.fixed}
+                    />
+            
+            case ColumnType.IMAGE:
+                return <Column key={uuid()}
+                    header={<TooltipHeaderCell data={header} />}
+                    columnKey={header.key}
+                    cell={<ImageCell data={data} />}
+                    width={header.width}
+                    fixed={header.fixed}
+                    />
 
-                case ColumnType.ICON_LINK:
-                    return <Column key={uuid()}
-                        header={<TooltipHeaderCell data={header} />}
-                        columnKey={header.key}
-                        cell={<IconLinkCell data={data} />}
-                        width={header.width}
-                        fixed={header.fixed}
-                        />
+            case ColumnType.ICON_LINK:
+                return <Column key={uuid()}
+                    header={<TooltipHeaderCell data={header} />}
+                    columnKey={header.key}
+                    cell={<IconLinkCell data={data} />}
+                    width={header.width}
+                    fixed={header.fixed}
+                    />
 
-                default:
-                    return <Column key={uuid()}
-                        header={<TooltipHeaderCell data={header} />}
-                        columnKey={header.key}
-                        cell={<TextCell data={data} />}
-                        width={header.width}
-                        fixed={header.fixed}
-                        />
+            default:
+                return <Column key={uuid()}
+                    header={<TooltipHeaderCell data={header} />}
+                    columnKey={header.key}
+                    cell={<TextCell data={data} />}
+                    width={header.width}
+                    fixed={header.fixed}
+                    />
 
-            }
-    })}
+        }
+    }
+)}
 
 export const DataTable = ({
     rowHeight,

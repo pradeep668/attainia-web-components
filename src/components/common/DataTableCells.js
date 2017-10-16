@@ -36,7 +36,7 @@ export class LinkCell extends React.PureComponent {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
             <Cell {...props}>
-                <a href={data[rowIndex][columnKey].link} target="_blank">{data[rowIndex][columnKey].label}</a>
+                <a href={data[rowIndex][columnKey].link}>{data[rowIndex][columnKey].label}</a>
             </Cell>
         )
     }
@@ -58,7 +58,7 @@ export class IconLinkCell extends React.PureComponent {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
             <Cell {...props}>
-                <a href={data[rowIndex][columnKey].link} target="_blank"><img src={data[rowIndex][columnKey].iconSource} alt={data[rowIndex][columnKey].altText} /></a>
+                <a href={data[rowIndex][columnKey].link}><img src={data[rowIndex][columnKey].iconSource} alt={data[rowIndex][columnKey].altText} /></a>
             </Cell>
         )
     }
