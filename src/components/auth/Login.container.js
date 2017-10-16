@@ -11,7 +11,9 @@ import {
     refresh,
     toggleRememberMe,
     gotoRegistration,
-    gotoPasswordHelp
+    gotoPasswordHelp,
+    finishedLoading,
+    startedLoading
 } from './actions'
 import constants from './constants'
 import {LOGIN_USER} from './mutations'
@@ -28,6 +30,7 @@ const mapStateToProps = state => ({
     hasAuthError: Boolean(state.auth.error),
     email: path(['auth', 'user', 'email'], state),
     name: path(['auth', 'user', 'name'], state),
+    loading: state.auth.loading,
     rememberMe: state.auth.rememberMe
 })
 
@@ -37,6 +40,12 @@ const mapDispatchToProps = dispatch => ({
     },
     login(user) {
         return dispatch(login(user))
+    },
+    startedLoading() {
+        return dispatch(startedLoading())
+    },
+    finishedLoading() {
+        return dispatch(finishedLoading())
     },
     gotoPasswordHelp(e) {
         e.preventDefault()
@@ -64,11 +73,20 @@ const LoginWithData = graphql(LOGIN_USER, {
     props: ({ownProps, mutate}) => ({
         async tryLogin({email, password}) {
             try {
+                ownProps.startedLoading()
+
                 const {data: {error, loginUser}} = await mutate({variables: {email, password}})
                 if (error) {
                     throw new Error(error)
                 }
                 if (loginUser) {
+                    if (ownProps.onLogin) {
+                        const deferred = ownProps.onLogin(loginUser)
+                        if (deferred && deferred.then) {
+                            await deferred
+                        }
+                    }
+
                     const {token} = loginUser
                     if (ownProps.useRefresh && token) {
                         const refreshInMs = Math.max((Number(token.expires_in) - 10) * 1000, 0)
@@ -90,6 +108,7 @@ const LoginWithData = graphql(LOGIN_USER, {
                             toPairs(without('redirect_uris', token)).map(([key, val]) => `${key}=${val}`).join('&')
                         }`
                     }
+                    ownProps.finishedLoading()
                 }
             } catch (err) {
                 ownProps.handleError(err)

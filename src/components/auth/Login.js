@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import AuthError from './AuthError.container'
-import Button from '../common/Button'
+import SpinningButton from '../common/SpinningButton'
 import Form from '../common/Form'
 import Link from '../common/Link'
 import Logo from '../common/Logo'
@@ -85,7 +85,7 @@ const StyledForm = styled(Form)`
 const Login = ({
     handleSubmit, tryLogin, email, hasAuthError,
     gotoPasswordHelp, gotoRegistration, rememberMe,
-    showRegistration, toggleRememberMe
+    showRegistration, toggleRememberMe, loading
 }) =>
     <FullPageWrapper>
         <StyledForm onSubmit={handleSubmit(tryLogin)}>
@@ -103,9 +103,9 @@ const Login = ({
             <Link className="passwordHelp" href="#" onClick={gotoPasswordHelp}>
                 Password Help
             </Link>
-            <Button className="loginButton" type="submit">
+            <SpinningButton inProgress={loading} className="loginButton" type="submit">
                 Login
-            </Button>
+            </SpinningButton>
             {showRegistration && (
                 <Link className="register" href="#" onClick={gotoRegistration}>
                     Need an Account?
@@ -121,6 +121,7 @@ Login.propTypes = {
     gotoRegistration: PropTypes.func.isRequired,
     email: PropTypes.string,
     hasAuthError: PropTypes.bool.isRequired,
+    loading: PropTypes.bool.isRequired,
     rememberMe: PropTypes.bool,
     showRegistration: PropTypes.bool.isRequired,
     toggleRememberMe: PropTypes.func.isRequired
@@ -128,7 +129,8 @@ Login.propTypes = {
 
 Login.defaultProps = {
     hasAuthError: false,
-    showRegistration: false
+    showRegistration: false,
+    loading: false
 }
 
 export default Login
