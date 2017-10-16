@@ -9,6 +9,8 @@ export default {
     GOTO_REGISTRATION: 'awc_goto_registration',
     GOTO_APP_REGISTRATION: 'awc_goto_app_registration',
     LOGIN: 'awc_login',
+    LOADING_STARTED: 'awc_started_loading',
+    LOADING_FINISHED: 'awc_finished_loading',
     LOGOUT: 'awc_logout',
     PASSWORD_HELP: 'awc_password_help',
     REGISTER_USER: 'awc_register_user',
