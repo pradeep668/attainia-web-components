@@ -22,12 +22,12 @@ export class TooltipHeaderCell extends React.PureComponent {
 
 export class TextCell extends React.PureComponent {
     render() {
-        const {data, rowIndex, columnKey, ...props} = this.props;
+        const {data, rowIndex, columnKey, ...props} = this.props
         return (
             <Cell {...props}>
                 <span>{data[rowIndex][columnKey]}</span>
             </Cell>
-        );
+        )
     }
 }
 
