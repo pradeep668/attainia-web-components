@@ -1,5 +1,6 @@
 export default {
     app: {},
+    baseUrl: 'localhost',
     error: '',
     route: 'login',
     status: '',
