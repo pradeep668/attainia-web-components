@@ -30,7 +30,10 @@ const ListHeader = styled.ul`
         .btnPrint,
         .btnExport,
         .resourceCount,
-        .title
+        .title {
+            margin: 0 auto;
+            max-width: 50em;
+        }
     }
 
     @supports (display: grid) {
@@ -54,11 +57,13 @@ const ListHeader = styled.ul`
 `
 
 const ResourcesHeader = ({className, resourceName, resourceCount}) =>
-    <ListHeader>
+    <ListHeader className={className}>
         <Li>
             <div className="titleAndResourceCount">
                 <h1 className="title">{resourceName}</h1>
-                <h2 className="resourceCount">( {resourceCount} )</h2>
+                <h2 className="resourceCount">
+                    {resourceCount ? `( ${resourceCount} )` : ''}
+                </h2>
             </div>
         </Li>
         <Li>
@@ -76,9 +81,13 @@ const ResourcesHeader = ({className, resourceName, resourceCount}) =>
 
 
 ResourcesHeader.propTypes = {
-    className: PropTypes.string.isRequired,
+    className: PropTypes.string,
     resourceName: PropTypes.string.isRequired,
     resourceCount: PropTypes.number.isRequired
+}
+
+ResourcesHeader.defaultProps = {
+    resourceCount: 0
 }
 
 export default ResourcesHeader

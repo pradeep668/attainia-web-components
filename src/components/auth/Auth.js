@@ -1,4 +1,4 @@
-import {isEmpty, is} from 'ramda'
+import {is} from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -12,12 +12,10 @@ const Auth = props => {
     const {
         children,
         isLoggedOut,
-        onLogin,
         onLogout,
         rememberMe,
         storage,
         tokenInStore,
-        user,
         useRefresh
     } = props
 
@@ -25,8 +23,6 @@ const Auth = props => {
 
     if (access_token || tokenInStore) {
         if (access_token || rememberMe) setToken(props)
-
-        onLogin(isEmpty(user) ? {token: {access_token}} : user)
 
         if (onLogout && useRefresh) {
             return (
@@ -69,28 +65,18 @@ Auth.propTypes = {
     children: PropTypes.node,
     tokenInStore: PropTypes.string,
     isLoggedOut: PropTypes.bool.isRequired,
-    onLogin: PropTypes.func.isRequired,
     onLogout: PropTypes.func,
     rememberMe: PropTypes.bool.isRequired,
     storage: PropTypes.oneOf(['local', 'session', 'none']),
-    useRefresh: PropTypes.bool.isRequired,
-    user: PropTypes.shape({
-        id: PropTypes.string,
-        email: PropTypes.string,
-        token: PropTypes.shape({
-            access_token: PropTypes.string
-        })
-    })
+    useRefresh: PropTypes.bool.isRequired
 }
 
 Auth.defaultProps = {
     children: null,
     isLoggedOut: false,
-    onLogin: () => true,
     rememberMe: false,
     storage: 'local',
-    useRefresh: true,
-    user: {}
+    useRefresh: true
 }
 
 export default Auth

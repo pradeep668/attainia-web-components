@@ -5,8 +5,12 @@ const {rollup} = require('rollup')
 const async = require('rollup-plugin-async')
 const babel = require('rollup-plugin-babel')
 const commonjs = require('rollup-plugin-commonjs')
+const css = require('rollup-plugin-postcss')
 const nodeResolve = require('rollup-plugin-node-resolve')
 const images = require('rollup-plugin-image')
+const json = require('rollup-plugin-json')
+const svg = require('rollup-plugin-svg')
+const visualizer = require('rollup-plugin-visualizer')
 const pkg = require('../package.json')
 
 async function build() {
@@ -21,13 +25,18 @@ async function build() {
                 input: `src/components/${module}/${filename}`,
                 external: Object.keys(pkg.dependencies),
                 plugins: [
+                    svg(),
                     images(),
+                    json(),
+                    css(),
                     nodeResolve({
                         jsnext: true,
                         preferBuiltins: false,
                         browser: true
                     }),
-                    commonjs(),
+                    commonjs({
+                        ignoreGlobal: true
+                    }),
                     async(),
                     babel({
                         babelrc: false,
@@ -43,7 +52,8 @@ async function build() {
                             require('babel-plugin-transform-object-rest-spread'),
                             Object.assign(require('babel-plugin-transform-runtime'), {polyfill: false})
                         ]
-                    })
+                    }),
+                    visualizer()
                 ]
             })
 

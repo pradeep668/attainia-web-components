@@ -10,5 +10,6 @@ export default {
         navigation: [],
         profile: []
     },
-    user: {}
+    user: {},
+    loading: false
 }

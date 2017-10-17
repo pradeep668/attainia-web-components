@@ -4,7 +4,7 @@ import {withApollo} from 'react-apollo'
 
 import AuthStatus from './AuthStatus'
 import {handleError, logout} from './actions'
-import {IS_LOGGED_OUT} from './subscriptions'
+import IS_LOGGED_OUT from './subscriptions'
 
 const mapStateToProps = state => ({
     token: path(['auth', 'user', 'token', 'access_token'], state)

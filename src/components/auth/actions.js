@@ -16,3 +16,5 @@ export const toggleRememberMe = rememberMe => ({rememberMe, type: types.REMEMBER
 export const login = user => ({user, type: types.LOGIN})
 export const logout = () => ({type: types.LOGOUT})
 export const updatedToken = token => ({token, type: types.UPDATED_TOKEN})
+export const startedLoading = () => ({type: types.LOADING_STARTED})
+export const finishedLoading = () => ({type: types.LOADING_FINISHED})

@@ -53,11 +53,11 @@ const StyledForm = styled(Form)`
     }
 `
 const PasswordHelp = ({handleSubmit, tryPasswordHelp, email, cancel}) =>
-    <StyledForm className='passwordHelpForm' onSubmit={handleSubmit(tryPasswordHelp)}>
-        <Logo className='attainiaLogo' />
-        <ReduxFormField className='email' placeholder='email' name='email' type='email' value={email} />
-        <Button className='passwordHelpButton' type='submit'>Reset Password</Button>
-        <Button className='cancelButton' type='button' onClick={cancel}>Cancel</Button>
+    <StyledForm className="passwordHelpForm" onSubmit={handleSubmit(tryPasswordHelp)}>
+        <Logo className="attainiaLogo" />
+        <ReduxFormField className="email" placeholder="email" name="email" type="email" value={email} />
+        <Button className="passwordHelpButton" type="submit">Reset Password</Button>
+        <Button className="cancelButton" type="button" onClick={cancel}>Cancel</Button>
     </StyledForm>
 
 PasswordHelp.propTypes = {
