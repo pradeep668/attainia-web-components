@@ -16,12 +16,13 @@ const makeFakeData = size =>
         prop_2: getRandomArbitrary(0, 1000).toFixed(2),
         prop_3: {label: 'Google', link: 'http://www.google.com'},
         prop_4: {iconSource: edit, altText: 'Edit', link: 'http://www.google.com'},
-        prop_5: {imageSource: image, altText: 'Visible'}
+        prop_5: {imageSource: image, altText: 'Visible'},
+        prop_6: {toolTip: 'This is a tooltip for the property.', text: 'Tool Tip Text', altText: 'Tooltip'}
     }))
 
 const mapStateToProps = () => ({
     rowHeight: 50,
-    tableWidth: 653,
+    tableWidth: 1053,
     tableHeight: 500,
     headerHeight: 50,
     headers: [
@@ -72,6 +73,14 @@ const mapStateToProps = () => ({
             width: 200,
             fixed: false,
             columnType: ColumnType.IMAGE
+        },
+        {
+            name: 'Tooltip Text Property',
+            toolTip: 'Some tooltip text of the thing',
+            key: 'prop_6',
+            width: 200,
+            fixed: false,
+            columnType: ColumnType.INFO_TEXT
         }
     ],
     data: makeFakeData(100)

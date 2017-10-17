@@ -31,9 +31,10 @@ export class TextCell extends React.PureComponent {
     }
 }
 
-const inline_image = styled.img`
+const InlineImg = styled.img`
     display: inline;
-    margin-right: 8px;
+    margin-right: 16px;
+    vertical-align: middle;
 `
 
 export class InfoIconToolTipTextCell extends React.PureComponent {
@@ -42,7 +43,7 @@ export class InfoIconToolTipTextCell extends React.PureComponent {
         return (
             <div>
                 <Cell {...props}>
-                    <inline_image src={info} data-tip data-for={`cell-${rowIndex}-${columnKey}`} alt={data[rowIndex][columnKey].altText}/><span>{data[rowIndex][columnKey].text}</span>
+                    <InlineImg src={info} data-tip data-for={`cell-${rowIndex}-${columnKey}`} alt={data[rowIndex][columnKey].altText}/><span>{data[rowIndex][columnKey].text}</span>
                 </Cell>
                 <ReactTooltip place="left" effect="solid" id={`cell-${rowIndex}-${columnKey}`}>
                     <span>{data[rowIndex][columnKey].toolTip}</span>
