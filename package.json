@@ -9,6 +9,7 @@
   "scripts": {
     "babel": "BABEL_ENV=production babel src --out-dir ./ --ignore node_modules/ --copy-files",
     "prebuild": "npm run clean",
+    "precommit-validate": "hooks/lint_js || (echo 'Please fix any of the above-mentioned linting errors before finalizing this commit.' && exit 1)",
     "build": "npm run build:dev && npm run build:prod",
     "build:dev": "react-scripts build",
     "build:prod": "NODE_ENV=production node config/build.js",
@@ -16,10 +17,16 @@
     "eject": "react-scripts eject",
     "prepublish": "npm run build:prod",
     "postpublish": "npm run clean",
-    "lint": "node_modules/.bin/eslint src/**/*.js",
+    "lint": "node_modules/.bin/eslint \"src/**/*.js\"",
     "prestart": "npm run clean",
     "start": "react-scripts start",
     "test": "react-scripts test --env=jsdom"
+  },
+  "pre-commit": {
+    "run": [
+      "precommit-validate"
+    ],
+    "silent": true
   },
   "repository": {
     "type": "git",
@@ -86,6 +93,7 @@
     "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "7.2.1",
     "glob-all": "3.1.0",
+    "pre-commit": "1.2.2",
     "prettier": "1.7.0",
     "prettier-eslint-cli": "4.3.2",
     "rimraf": "2.6.1",
