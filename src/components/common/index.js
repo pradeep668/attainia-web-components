@@ -1,7 +1,7 @@
 import Button from './Button'
 import CheckboxLabel from './CheckboxLabel'
 import {renderConditional, Conditional} from './Conditional'
-import DataTable from './DataTable'
+import {DataTable, ColumnType} from './DataTable'
 import ErrorMessage from './ErrorMessage'
 import FieldError from './FieldError'
 import Form from './Form'
@@ -16,6 +16,7 @@ export default {
     Button,
     CheckboxLabel,
     Conditional,
+    ColumnType,
     DataTable,
     ErrorMessage,
     FieldError,
