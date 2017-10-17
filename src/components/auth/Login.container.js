@@ -12,10 +12,12 @@ import {
     toggleRememberMe,
     gotoRegistration,
     gotoPasswordHelp,
+    updatedToken,
     finishedLoading,
     startedLoading
 } from './actions'
 import constants from './constants'
+import {getAccessTokenFromStorage} from './helpers'
 import {LOGIN_USER} from './mutations'
 
 const {login: {rules, messages}} = constants
@@ -47,6 +49,9 @@ const mapDispatchToProps = dispatch => ({
     finishedLoading() {
         return dispatch(finishedLoading())
     },
+    getAccessTokenFromStorage() {
+        return getAccessTokenFromStorage()
+    },
     gotoPasswordHelp(e) {
         e.preventDefault()
         return dispatch(gotoPasswordHelp())
@@ -60,6 +65,9 @@ const mapDispatchToProps = dispatch => ({
     },
     toggleRememberMe() {
         return dispatch(toggleRememberMe())
+    },
+    parseToken(token) {
+        return dispatch(updatedToken(token))
     }
 })
 
