@@ -9,6 +9,7 @@ const css = require('rollup-plugin-postcss')
 const nodeResolve = require('rollup-plugin-node-resolve')
 const images = require('rollup-plugin-image')
 const json = require('rollup-plugin-json')
+const svg = require('rollup-plugin-svg')
 const visualizer = require('rollup-plugin-visualizer')
 const pkg = require('../package.json')
 
@@ -24,6 +25,7 @@ async function build() {
                 input: `src/components/${module}/${filename}`,
                 external: Object.keys(pkg.dependencies),
                 plugins: [
+                    svg(),
                     images(),
                     json(),
                     css(),
