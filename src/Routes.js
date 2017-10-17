@@ -20,7 +20,7 @@ export default (
                     <Route exact path="/resources" component={ResourcesList} />
                     <Route exact path="/resources/new" component={ResourcesNew} />
                     <Route exact path="/resources/:id" component={ResourcesDetail} />
-                    <Route exact path="/data_table" component={DataTable} />
+                    <Route exact path="/data_table" component={DataTable} /> {/* Only used for development purposes */}
                 </Switch>
             </BrowserRouter>
         </AuthenticatedApp>

@@ -15,20 +15,39 @@ import {
     ImageCell,
     IconLinkCell,
     NumberCell,
-    NumberTooltipHeaderCell
+    NumberTooltipHeaderCell,
+    InfoIconToolTipTextCell
 } from './DataTableCells'
+
 
 export const ColumnType = {
     TEXT: Symbol('TEXT'),
     NUMBER: Symbol('NUMBER'),
     LINK: Symbol('LINK'),
     IMAGE: Symbol('IMAGE'),
-    ICON_LINK: Symbol('ICON')
+    ICON_LINK: Symbol('ICON'),
+    INFO_TEXT: Symbol('INFO_TEXT')
 }
 
 const StyledTable = styled(Table)`
     .fixedDataTableRowLayout_rowWrapper:hover .public_fixedDataTableCell_main {
         background-color: #d4e1f7;
+    }
+
+    .fixedDataTableRowLayout_main {
+        overflow: visible;
+    }
+
+    .fixedDataTableCellGroupLayout_cellGroup {
+        overflow: visible;
+    }
+
+    .fixedDataTableLayout_rowsContainer {
+        overflow: visible;
+    }
+
+    .fixedDataTableRowLayout_rowWrapper {
+        overflow: visible;
     }
 `
 
@@ -87,6 +106,15 @@ const RenderColumns = (headers, data) => {
                     header={<TooltipHeaderCell data={header} />}
                     columnKey={header.key}
                     cell={<IconLinkCell data={data} />}
+                    width={header.width}
+                    fixed={header.fixed}
+                    />
+
+            case ColumnType.INFO_TEXT:
+                return <Column key={uuid()}
+                    header={<TooltipHeaderCell data={header} />}
+                    columnKey={header.key}
+                    cell={<InfoIconToolTipTextCell data={data} />}
                     width={header.width}
                     fixed={header.fixed}
                     />

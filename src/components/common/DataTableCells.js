@@ -1,17 +1,17 @@
 import React from 'react'
 
 import styled from 'styled-components'
-
+import ReactTooltip from 'react-tooltip'
 import {Cell} from 'fixed-data-table-2'
+
+import info from './info.svg'
 
 
 export class TooltipHeaderCell extends React.PureComponent {
     render() {
         const {data, ...props} = this.props
         return (
-            <Cell
-            {...props}
-            data-tip={data.toolTip}>
+            <Cell {...props} data-tip={data.toolTip}>
                 <div>
                     {data.name}
                 </div>
@@ -27,6 +27,27 @@ export class TextCell extends React.PureComponent {
             <Cell {...props}>
                 <span>{data[rowIndex][columnKey]}</span>
             </Cell>
+        )
+    }
+}
+
+const inline_image = styled.img`
+    display: inline;
+    margin-right: 8px;
+`
+
+export class InfoIconToolTipTextCell extends React.PureComponent {
+    render() {
+        const {data, rowIndex, columnKey, ...props} = this.props
+        return (
+            <div>
+                <Cell {...props}>
+                    <inline_image src={info} data-tip data-for={`cell-${rowIndex}-${columnKey}`} alt={data[rowIndex][columnKey].altText}/><span>{data[rowIndex][columnKey].text}</span>
+                </Cell>
+                <ReactTooltip place="left" effect="solid" id={`cell-${rowIndex}-${columnKey}`}>
+                    <span>{data[rowIndex][columnKey].toolTip}</span>
+                </ReactTooltip>
+            </div>
         )
     }
 }
@@ -83,5 +104,6 @@ export default {
     ImageCell,
     IconLinkCell,
     NumberCell,
-    NumberTooltipHeaderCell
+    NumberTooltipHeaderCell,
+    InfoIconToolTipTextCell
 }

@@ -6,6 +6,10 @@ import {DataTable, ColumnType} from './DataTable'
 import edit from './edit.svg'
 import image from './image.svg'
 
+/*
+ * This container is for development purposes only.  It may also provide an example of using the data table component.
+ */
+
 const getRandomArbitrary = (min, max) => {
     return Math.random() * (max - min) + min
   }
@@ -18,7 +22,8 @@ const makeFakeData = (size) => {
             prop_2: getRandomArbitrary(0, 1000).toFixed(2),
             prop_3: {label: 'Google', link: 'http://www.google.com'},
             prop_4: {iconSource: edit, altText: 'Edit', link: 'http://www.google.com'},
-            prop_5: {imageSource: image, altText: 'Visible'}
+            prop_5: {imageSource: image, altText: 'Visible'},
+            prop_6: {text: 'Some text', toolTip: 'This is some additional info about the text. Here is more text to fill up space.', altText: 'Info'}
         }
     })
 }
@@ -26,7 +31,7 @@ const makeFakeData = (size) => {
 const mapStateToProps = (state, ownProps) => {
     return {
         rowHeight: 50,
-        tableWidth: 653,
+        tableWidth: 853,
         tableHeight: 500,
         headerHeight: 50,
         headers: [
@@ -77,11 +82,22 @@ const mapStateToProps = (state, ownProps) => {
                 width: 200,
                 fixed: false,
                 columnType: ColumnType.IMAGE
+            },
+            {
+                name: 'Info Text Property',
+                toolTip: 'Some text with info of the thing',
+                key: 'prop_6',
+                width: 200,
+                fixed: false,
+                columnType: ColumnType.INFO_TEXT
             }
         ],
         data: makeFakeData(100)
     }
 }
+
+const mapDispatchToProps = dispatch => ({
+})
 
 const CenterDiv = styled.div`
     margin-top: 20px;
@@ -94,4 +110,4 @@ const CenteredDataTable = (props) =>
         <DataTable {...props} />
     </CenterDiv>
 
-export default connect(mapStateToProps)(CenteredDataTable)
+export default connect(mapStateToProps, mapDispatchToProps)(CenteredDataTable)
