@@ -1,9 +1,23 @@
 import uuid from 'uuid/v4'
+import styled from 'styled-components'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import ResourcesHeader from './ResourcesHeader'
 
+const ResourcesPage = styled.section`
+    height: 100%;
+
+    @supports not (display: grid) {
+        display: block;
+    }
+
+    @supports (display: grid) {
+        display: grid;
+        grid-auto-rows: max-content;
+        height: 100%;
+    }
+`
 class ResourcesList extends Component {
     componentWillMount() {
         this.props.findAllResources()
@@ -13,7 +27,8 @@ class ResourcesList extends Component {
         const {resources} = this.props
 
         return (
-            <ResourcesHeader>
+            <ResourcesPage>
+                <ResourcesHeader className="resourcesHeader" />
                 <ul className="listGroup">
                     {resources.map(({id, name}) => (
                         <li className="listGroupItem" key={uuid()}>
@@ -23,7 +38,7 @@ class ResourcesList extends Component {
                         </li>
                     ))}
                 </ul>
-            </ResourcesHeader>
+            </ResourcesPage>
         )
     }
 }
