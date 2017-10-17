@@ -13,7 +13,7 @@ class ResourcesList extends Component {
         const {resources} = this.props
 
         return (
-                <ResourcesHeader>
+            <ResourcesHeader>
                 <ul className="listGroup">
                     {resources.map(({id, name}) => (
                         <li className="listGroupItem" key={uuid()}>
@@ -23,7 +23,7 @@ class ResourcesList extends Component {
                         </li>
                     ))}
                 </ul>
-                </ResourcesHeader>
+            </ResourcesHeader>
         )
     }
 }

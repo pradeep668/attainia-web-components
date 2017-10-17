@@ -53,7 +53,7 @@ const ListHeader = styled.ul`
     }
 `
 
-const ResourcesHeader = ({className, resourceName, resourceCount}) =>
+const ResourcesHeader = ({resourceName, resourceCount}) =>
     <ListHeader>
         <Li>
             <div className="titleAndResourceCount">
@@ -76,7 +76,6 @@ const ResourcesHeader = ({className, resourceName, resourceCount}) =>
 
 
 ResourcesHeader.propTypes = {
-    className: PropTypes.string.isRequired,
     resourceName: PropTypes.string.isRequired,
     resourceCount: PropTypes.number.isRequired
 }

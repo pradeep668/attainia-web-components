@@ -9,8 +9,8 @@ const Div = styled.div`
 
 const Icon = ({className, imgSrc, alt}) =>
     <Div className={className}>
-    	<img src={imgSrc} alt={alt} />
-	</Div>
+        <img src={imgSrc} alt={alt} />
+    </Div>
 
 Icon.propTypes = {
     className: PropTypes.string.isRequired,
