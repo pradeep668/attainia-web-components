@@ -9,9 +9,7 @@ const css = require('rollup-plugin-postcss')
 const nodeResolve = require('rollup-plugin-node-resolve')
 const images = require('rollup-plugin-image')
 const json = require('rollup-plugin-json')
-const uglify = require('rollup-plugin-uglify')
 const visualizer = require('rollup-plugin-visualizer')
-const {minify} = require('uglify-es')
 const pkg = require('../package.json')
 
 async function build() {
@@ -53,7 +51,6 @@ async function build() {
                             Object.assign(require('babel-plugin-transform-runtime'), {polyfill: false})
                         ]
                     }),
-                    uglify({}, minify),
                     visualizer()
                 ]
             })
