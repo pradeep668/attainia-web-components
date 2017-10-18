@@ -3,8 +3,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 import {DataTable, ColumnType} from './DataTable'
-import edit from './edit.svg'
-import image from './image.svg'
 
 const getRandomArbitrary = (min, max) =>
     (Math.random() * (max - min)) + min
@@ -15,8 +13,8 @@ const makeFakeData = size =>
         prop_1: 'Value 1',
         prop_2: getRandomArbitrary(0, 1000).toFixed(2),
         prop_3: {label: 'Google', link: 'http://www.google.com'},
-        prop_4: {iconSource: edit, altText: 'Edit', link: 'http://www.google.com'},
-        prop_5: {imageSource: image, altText: 'Visible'}
+        prop_4: {iconSource: 'edit', altText: 'Edit', link: 'http://www.google.com'},
+        prop_5: {imageSource: 'image', altText: 'Visible'}
     }))
 
 const mapStateToProps = () => ({

@@ -1,8 +1,8 @@
 import React from 'react'
 
 import styled from 'styled-components'
-
 import {Cell} from 'fixed-data-table-2'
+import SimpleSvgIcon from './SimpleSvgIcon'
 
 
 export class TooltipHeaderCell extends React.PureComponent {
@@ -47,7 +47,7 @@ export class ImageCell extends React.PureComponent {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
             <Cell {...props}>
-                <img src={data[rowIndex][columnKey].imageSource} alt={data[rowIndex][columnKey].altText} />
+                <SimpleSvgIcon icon={data[rowIndex][columnKey].imageSource} />
             </Cell>
         )
     }
@@ -58,7 +58,9 @@ export class IconLinkCell extends React.PureComponent {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
             <Cell {...props}>
-                <a href={data[rowIndex][columnKey].link}><img src={data[rowIndex][columnKey].iconSource} alt={data[rowIndex][columnKey].altText} /></a>
+                <a href={data[rowIndex][columnKey].link}>
+                    <SimpleSvgIcon icon={data[rowIndex][columnKey].iconSource} />
+                </a>
             </Cell>
         )
     }

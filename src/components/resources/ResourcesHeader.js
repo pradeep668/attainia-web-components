@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 import LinkButton from '../common/LinkButton'
-import ExportButton from '../common/ExportButton'
-import PrintButton from '../common/PrintButton'
+import SimpleSvgIcon from '../common/SimpleSvgIcon'
 import {colors} from '../common/constants'
 
 const Li = styled.div`
@@ -67,10 +66,10 @@ const ResourcesHeader = ({className, resourceName, resourceCount}) =>
             </div>
         </Li>
         <Li>
-            <ExportButton className="btnExport" />
+            <SimpleSvgIcon icon="document" className="btnExport" />
         </Li>
         <Li>
-            <PrintButton className="btnPrint" />
+            <SimpleSvgIcon icon="print" className="btnPrint" />
         </Li>
         <Li>
             <LinkButton className="btnCreateResource">
