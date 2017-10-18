@@ -11,7 +11,7 @@ export class TooltipHeaderCell extends React.PureComponent {
     render() {
         const {data, ...props} = this.props
         return (
-            <Cell {...props} data-tip={data.toolTip}>
+            <Cell {...props} data-tip={data.toolTip} data-for={'header-tooltip'}>
                 <div>
                     {data.name}
                 </div>
@@ -43,11 +43,8 @@ export class InfoIconToolTipTextCell extends React.PureComponent {
         return (
             <div>
                 <Cell {...props}>
-                    <InlineImg src={info} data-tip data-for={`cell-${rowIndex}-${columnKey}`} alt={data[rowIndex][columnKey].altText}/><span>{data[rowIndex][columnKey].text}</span>
+                    <InlineImg src={info} data-tip={data[rowIndex][columnKey].toolTip} data-for={'cell-tooltip'} alt={data[rowIndex][columnKey].altText}/><span>{data[rowIndex][columnKey].text}</span>
                 </Cell>
-                <ReactTooltip place="left" effect="solid" id={`cell-${rowIndex}-${columnKey}`}>
-                    <span>{data[rowIndex][columnKey].toolTip}</span>
-                </ReactTooltip>
             </div>
         )
     }

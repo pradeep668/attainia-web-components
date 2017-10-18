@@ -33,22 +33,6 @@ const StyledTable = styled(Table)`
     .fixedDataTableRowLayout_rowWrapper:hover .public_fixedDataTableCell_main {
         background-color: #d4e1f7;
     }
-
-    .fixedDataTableRowLayout_main {
-        overflow: visible;
-    }
-
-    .fixedDataTableCellGroupLayout_cellGroup {
-        overflow: visible;
-    }
-
-    .fixedDataTableLayout_rowsContainer {
-        overflow: visible;
-    }
-
-    .fixedDataTableRowLayout_rowWrapper {
-        overflow: visible;
-    }
 `
 
 const TableHeader = styled.div`
@@ -156,7 +140,8 @@ export const DataTable = ({
             />
             {RenderColumns(headers, data)}
         </StyledTable>
-        <ReactTooltip place='top' effect='solid' />
+        <ReactTooltip place='top' id='header-tooltip' effect='solid' />
+        <ReactTooltip place='top' id='cell-tooltip' effect='solid' />
     </div>
 
 DataTable.propTypes = {
