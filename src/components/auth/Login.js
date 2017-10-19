@@ -6,7 +6,7 @@ import AuthError from './AuthError.container'
 import SpinningButton from '../common/SpinningButton'
 import Form from '../common/Form'
 import Link from '../common/Link'
-import Logo from '../common/Logo'
+import SimpleSvgIcon from '../common/SimpleSvgIcon'
 import ReduxFormField from '../common/ReduxFormField'
 import FormField from '../common/FormField'
 import {forms} from '../common/constants'
@@ -98,7 +98,9 @@ class Login extends Component {
         return (
             <FullPageWrapper>
                 <StyledForm onSubmit={handleSubmit(tryLogin)}>
-                    <header className="loginHeader">{hasAuthError ? <AuthError /> : <Logo />}</header>
+                    <header className="loginHeader">
+                        {hasAuthError ? <AuthError /> : <SimpleSvgIcon width="161" height="39" icon="attainia_logo" />}
+                    </header>
                     <ReduxFormField
                         className="email"
                         placeholder="email"

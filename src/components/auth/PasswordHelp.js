@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import Button from '../common/Button'
 import Form from '../common/Form'
-import Logo from '../common/Logo'
+import SimpleSvgIcon from '../common/SimpleSvgIcon'
 import ReduxFormField from '../common/ReduxFormField'
 import {breakpoints, forms} from '../common/constants'
 
@@ -54,7 +54,7 @@ const StyledForm = styled(Form)`
 `
 const PasswordHelp = ({handleSubmit, tryPasswordHelp, email, cancel}) =>
     <StyledForm className="passwordHelpForm" onSubmit={handleSubmit(tryPasswordHelp)}>
-        <Logo className="attainiaLogo" />
+        <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="attainia_logo" />
         <ReduxFormField className="email" placeholder="email" name="email" type="email" value={email} />
         <Button className="passwordHelpButton" type="submit">Reset Password</Button>
         <Button className="cancelButton" type="button" onClick={cancel}>Cancel</Button>

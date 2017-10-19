@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import Button from '../common/Button'
 import Form from '../common/Form'
-import Logo from '../common/Logo'
+import SimpleSvgIcon from '../common/SimpleSvgIcon'
 import ReduxFormField from '../common/ReduxFormField'
 import {breakpoints, forms} from '../common/constants'
 
@@ -69,7 +69,7 @@ const StyledForm = styled(Form)`
 `
 const RegisterApplication = ({handleSubmit, tryRegisterApp, cancel}) =>
     <StyledForm onSubmit={handleSubmit(tryRegisterApp)}>
-        <Logo className="attainiaLogo" />
+        <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="attainia_logo" />
         <p className="instructions">Register Your Application</p>
         <ReduxFormField className="applicationName" placeholder="name" name="name" />
         <ReduxFormField className="grantType" placeholder="grant type" name="grantType" />
