@@ -120,6 +120,7 @@ class Login extends Component {
                         type="checkbox"
                         name="rememberMe"
                         checked={rememberMe}
+                        value={rememberMe}
                         handlers={{onChange: toggleRememberMe}}
                     />
                     <Link className="passwordHelp" href="#" onClick={gotoPasswordHelp}>
