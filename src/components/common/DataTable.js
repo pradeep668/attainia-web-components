@@ -8,6 +8,8 @@ import styled from 'styled-components'
 import {Table, Column, Cell} from 'fixed-data-table-2'
 import 'fixed-data-table-2/dist/fixed-data-table.css'
 
+import load from './load.svg'
+
 import {
     TooltipHeaderCell,
     TextCell,
@@ -45,13 +47,35 @@ const TableHeader = styled.div`
     }
 `
 
-const RenderColumns = (headers, data) => {
+const TableFooter = styled.div`
+    border: 1px solid #d3d3d3;
+    border-top-style: none;
+    padding: 8px;
+`
+
+const FooterLink = styled.a`
+    text-decoration: underline;
+    :hover {
+        cursor: pointer;
+    }
+`
+
+const InlineImg = styled.img`
+    margin-left: auto;
+`
+
+const RenderColumns = (headers, data, getSortedData) => {
+
+    const handleSort = (column) => {
+        getSortedData(column, data)
+    }
+
     return headers.map(function(header) {
 
         switch (header.columnType) {
             case ColumnType.TEXT:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} />}
+                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<TextCell data={data} />}
                     width={header.width}
@@ -60,7 +84,7 @@ const RenderColumns = (headers, data) => {
 
             case ColumnType.NUMBER:
                 return <Column key={uuid()}
-                    header={<NumberTooltipHeaderCell data={header} />}
+                    header={<NumberTooltipHeaderCell data={header} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<NumberCell data={data} />}
                     width={header.width}
@@ -69,7 +93,7 @@ const RenderColumns = (headers, data) => {
 
             case ColumnType.LINK:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} />}
+                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<LinkCell data={data} />}
                     width={header.width}
@@ -78,7 +102,7 @@ const RenderColumns = (headers, data) => {
             
             case ColumnType.IMAGE:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} />}
+                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<ImageCell data={data} />}
                     width={header.width}
@@ -87,7 +111,7 @@ const RenderColumns = (headers, data) => {
 
             case ColumnType.ICON_LINK:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} />}
+                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<IconLinkCell data={data} />}
                     width={header.width}
@@ -96,7 +120,7 @@ const RenderColumns = (headers, data) => {
 
             case ColumnType.INFO_TEXT:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} />}
+                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<InfoIconToolTipTextCell data={data} />}
                     width={header.width}
@@ -105,7 +129,7 @@ const RenderColumns = (headers, data) => {
 
             default:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} />}
+                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<TextCell data={data} />}
                     width={header.width}
@@ -116,32 +140,49 @@ const RenderColumns = (headers, data) => {
     }
 )}
 
-export const DataTable = ({
-    rowHeight,
-    tableWidth,
-    tableHeight,
-    headerHeight,
-    headers,
-    data
-}) =>
-    <div>
-        <TableHeader><input type='checkbox' className='header-checkbox'/>{data.length} total</TableHeader>
-        <StyledTable
-            rowsCount={data.length}
-            rowHeight={rowHeight}
-            width={tableWidth}
-            height={tableHeight}
-            headerHeight={headerHeight}>
+const RenderCheckColumn = (hasCheckColumn) => {
+    
+    if (hasCheckColumn) {
+        return (
             <Column
                 header={<Cell></Cell>}
                 cell={<Cell><input type='checkbox' /></Cell>}
                 width={35}
                 fixed={true}
             />
-            {RenderColumns(headers, data)}
+        )
+    }
+}
+
+export const DataTable = ({
+    rowHeight,
+    tableWidth,
+    tableHeight,
+    headerHeight,
+    hasCheckColumn,
+    getNextPage,
+    getSortedData,
+    headers,
+    data
+}) =>
+    <div>
+        { hasCheckColumn ?
+            <TableHeader><input type='checkbox' className='header-checkbox'/>{data.length} total</TableHeader>
+            :
+            <TableHeader>{data.length} total</TableHeader>
+        }
+        <StyledTable
+            rowsCount={data.length}
+            rowHeight={rowHeight}
+            width={tableWidth}
+            height={tableHeight}
+            headerHeight={headerHeight}>
+            {RenderCheckColumn(hasCheckColumn)}
+            {RenderColumns(headers, data, getSortedData)}
         </StyledTable>
         <ReactTooltip place='top' id='header-tooltip' effect='solid' />
         <ReactTooltip place='top' id='cell-tooltip' effect='solid' />
+        <TableFooter><FooterLink onClick={getNextPage}><InlineImg src={load} alt='Load More Data' title='Load More Data'></InlineImg></FooterLink></TableFooter>
     </div>
 
 DataTable.propTypes = {
@@ -149,6 +190,9 @@ DataTable.propTypes = {
     tableWidth: PropTypes.number.isRequired,
     tableHeight: PropTypes.number.isRequired,
     headerHeight: PropTypes.number.isRequired,
+    hasCheckColumn: PropTypes.bool.isRequired,
+    getNextPage: PropTypes.func.isRequired,
+    getSortedData: PropTypes.func.isRequired,
     headers: PropTypes.arrayOf(
         PropTypes.shape({
             name: PropTypes.string,

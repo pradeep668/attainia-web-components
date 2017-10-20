@@ -1,19 +1,50 @@
 import React from 'react'
 
 import styled from 'styled-components'
-import ReactTooltip from 'react-tooltip'
 import {Cell} from 'fixed-data-table-2'
 
 import info from './info.svg'
+import desc from './sort_desc.svg'
+import asc from './sort_asc.svg'
 
+
+const SortIcon = styled.img`
+    display: flex;
+    vertical-align: middle;
+    width: 8px;
+    order: 2;
+`
+
+const divStyle = {
+    display: 'flex'
+}
+
+const headerStyle = {
+    order: 1
+}
 
 export class TooltipHeaderCell extends React.PureComponent {
     render() {
-        const {data, ...props} = this.props
+        const {data, sortCallback, ...props} = this.props
+
+        const handleClick = () => {
+            sortCallback(data.key)
+        }
+
+        const HeaderLink = styled.a`
+            text-decoration: underline;
+            :hover {
+                cursor: pointer;
+            }
+        `
+
         return (
             <Cell {...props} data-tip={data.toolTip} data-for={'header-tooltip'}>
-                <div>
-                    {data.name}
+                <div style={divStyle}>
+                    <HeaderLink style={headerStyle} onClick={handleClick}>
+                        {data.name}
+                    </HeaderLink>
+                    <SortIcon src={desc}></SortIcon>
                 </div>
             </Cell>
         )
@@ -66,7 +97,7 @@ export class ImageCell extends React.PureComponent {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
             <Cell {...props}>
-                <img src={data[rowIndex][columnKey].imageSource} alt={data[rowIndex][columnKey].altText} />
+                <img src={data[rowIndex][columnKey].imageSource} alt={data[rowIndex][columnKey].altText} title={data[rowIndex][columnKey].altText}/>
             </Cell>
         )
     }
