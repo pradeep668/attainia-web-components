@@ -102,13 +102,110 @@ export default (
 );
 ```
 
-### Importing non-Transpiled JavaScript Components
+## Configuring a Theme
 
-In case you wish to import the pre-transpiled components, you can change your import path (for _any_ component) to pull from the `src/` folder rather than the `/` root directory of the project.
-
+It is best to follow official styled-components guidelines for themeing, but you can leverage many `<ThemeProvider />` components or just one that wraps the entire React application (usually the same place you create your Redux `<Provider />`). If you _are_ using the [styled-components ThemeProvider](https://www.styled-components.com/docs/advanced#theming) you can pass the theme into it like this:
 
 ```javascript
-import Login from 'attainia-web-components/src/auth/Login';
+<ThemeProvider theme={theme.catalog}>
+   // All your application components which need to use the theme
+</ThemeProvider>
+```
+
+Any of the children components to `<ThemeProvider />` in your application can then access the theme:
+
+```javascript
+import styled from 'styled-components'
+
+export default styled.button`
+    border-radius: 5px;
+    background-color: ${props => props.theme.colors.primary.default || 'black'}
+    color: ${props => props.theme.colors.secondary.default || 'white'}
+`
+```
+
+Many/most of the components in this library attempt to parse themeing constants from the `theme` object passed in via the React `context`. The structure of the theme object which many of these components are expecting can be defined like this:
+
+```javascript
+{
+  // simple svg icons who require only an array of coordinates to be mapped to a <g><path d="path1" /><path d="path2" /> ...</g>
+  icons: {
+    // Always set a primary icon
+    primary: {
+      paths: [
+        "M56 403 ..."
+      ]
+    },
+    delete: {
+      paths: [
+        "M37 47403 ..."
+      ]
+    },
+    edit: {
+      paths: [
+        "M37 47403 ...",
+        "M47 238 3834..."
+      ]
+    }
+  },
+  fonts: {
+    fontSize: "12px",
+    fontFamily: "Lato, Helvetica, sans-serif"
+    // define any other font related theme-wide styles in camelcased equivalents of the native CSS properties
+    ...
+  },
+  breakpoints: {
+    phone: "screen and (min-width: 544px)",
+    tablet: "screen and (min-width: 768px)",
+    desktop: "screen and (min-width: 992px)",
+    largeDesktop: "screen and (min-width: 1200px)"
+  },
+  colors: {
+    primary: {
+      default: "#E10600", // set a "default" value in case of simple themes OR if a non-existent property is called
+      red: {
+        lt: "#F0887D",
+        md: "#E10600",
+        dk: "#FF0700"
+      },
+      // define any other necessary blue, green, orange, purple, yellow, or gray ranges
+      ...
+    },
+    secondary: {
+      default: "#1b6595", // set a "default" value in case of simple themes OR if a non-existent property is called
+      blue: {
+        lt: "#227fbb",
+        md: "#1b6595",
+        dk: "#1F74B2"
+      },
+      // define any other red, green, orange, purple, yellow, or gray ranges
+      ...
+    },
+    status: {
+      error: "#E10600",
+      warning: "#FFF59D",
+      ok: "#64DD17"
+    },
+    grayscale: {
+      white: "", // defaults to #ffffff
+      black: "", // defaults to #000000
+      // Always set a lt, md, and dk
+      lt: "",
+      md: "",
+      dk: "",
+      // If necessary, set an entire scale
+      100: "",
+      200: "",
+      300: "",
+      400: "",
+      500: "",
+      600: "",
+      700: "",
+      800: "",
+      900: ""
+    }
+  }
+}
 ```
 
 ## Component Table of Contents
@@ -134,7 +231,7 @@ Common Components:
 * [LinkButton](#link-button)
 * [Conditional](#conditional-rendering) 
 * [ReduxFormField](#redux-form-field) 
-* [Logo](#attainia-logo)
+* [SimpleSvgIcon](#simple-svg-icon)
 
 ### Auth Provider
 
@@ -270,9 +367,21 @@ An HTML `<a>` link which has been styled according to company (Attainia) brandin
 
 An HTML `<a>` link wrapping the styled Attainia Button
 
-### Attainia Logo
+### Simple Svg Icon
 
-The current Attainia branded logo, in component form.
+This component parses stringified paths from the `icons` object passed into your styled-components `<ThemeProvider theme={theme} />`. Just set the `icon` property and it will look for a `paths` array inside the matching icon. _Note_ this component handles simple SVGs and renders as
+
+```
+<g><path d={...} /><path d={...} /> ... </g>
+```
+
+Therefore it is not meant for complex SVGs with the myriad of other tags that can go inside of a `<svg></svg>` wrapper.
+
+The way to use it is like so:
+
+```javascript
+<SimpleSvgIcon icon="notification" fill="crimson" width="10" height="10" />
+```
 
 ### Redux Form Field
 

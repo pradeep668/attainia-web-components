@@ -1,21 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import {colors} from '../common/constants'
+import {getThemeProp} from '../common/helpers'
 
 const Footer = styled.footer`
-    background-color: ${colors.outerSpace};
-    color: white;
+    background-color: ${getThemeProp(['colors', 'grayscale', 'md'], 'slategrey')};
+    color: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
     padding: 10px 20px;
     text-align: center;
 
     & a {
-        color: white;
+        color: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
     }
 
     & a:hover,
     & a:focus {
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
     }
 `
 const WrappedFooter = ({className}) =>

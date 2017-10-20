@@ -7,11 +7,11 @@ import Form from '../common/Form'
 import Button from '../common/Button'
 import LinkButton from '../common/LinkButton'
 import ReduxFormField from '../common/ReduxFormField'
-import {breakpoints, forms} from '../common/constants'
+import {getThemeProp} from '../common/helpers'
 
 const StyledForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin};
+        margin: ${getThemeProp(['forms', 'formItemMargin'], '5px')};
     }
 
     & .newResourceHeader {
@@ -29,7 +29,7 @@ const StyledForm = styled(Form)`
     }
 
     @supports (display: grid) {
-        @media ${breakpoints.tablet} {
+        @media ${getThemeProp(['breakpoints', 'tablet'], 'screen and (min-width: 768px)')} {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-areas: 'header header' 'name name' 'save cancel';

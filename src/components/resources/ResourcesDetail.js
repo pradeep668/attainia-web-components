@@ -9,23 +9,23 @@ import {Link} from 'react-router-dom'
 import Form from '../common/Form'
 import Button from '../common/Button'
 import LinkButton from '../common/LinkButton'
-import {breakpoints, forms, colors} from '../common/constants'
 import {Conditional} from '../common/Conditional'
+import {getThemeProp} from '../common/helpers'
 
 const StyledForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin};
+        margin: ${getThemeProp(['forms', 'formItemMargin'], '5px')};
     }
 
     & .detailName {
         text-align: center;
         vertical-align: middle;
-        background: white;
+        background: ${getThemeProp(['color', 'grayscale', 'white'], 'white')};
         font-size: 28px;
         font-weight: 100;
         border-radius: 10px;
         padding: 40px 0 20px 0;
-        box-shadow: 2px 2px 4px ${colors.pastelGray};
+        box-shadow: 2px 2px 4px ${getThemeProp(['colors', 'grayscale'], 'lightgray')};
     }
 
     & .detailHeader {
@@ -43,7 +43,7 @@ const StyledForm = styled(Form)`
     }
 
     @supports (display: grid) {
-        @media ${breakpoints.desktop} {
+        @media ${getThemeProp(['breakpoints', 'tablet'], 'screen and (min-width: 768px)')} {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-areas: 'header header' 'name name' 'delete cancel';

@@ -6,11 +6,11 @@ import Button from '../common/Button'
 import Form from '../common/Form'
 import SimpleSvgIcon from '../common/SimpleSvgIcon'
 import ReduxFormField from '../common/ReduxFormField'
-import {breakpoints, forms} from '../common/constants'
+import {getThemeProp} from '../common/helpers'
 
 const StyledForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin};
+        margin: ${getThemeProp(['forms', 'formItemMargin'], '5px')};
     }
 
     & .attainiaLogo {
@@ -35,7 +35,7 @@ const StyledForm = styled(Form)`
     }
 
     @supports (display: grid) {
-        @media ${breakpoints.desktop} {
+        @media ${getThemeProp(['breakpoints', 'tablet'], 'screen and (min-width: 768px)')} {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-areas: 'header header' 'instructions instructions' 'name name' 'email email'
@@ -73,7 +73,7 @@ const StyledForm = styled(Form)`
 `
 const Registration = ({handleSubmit, tryRegister, cancel}) =>
     <StyledForm onSubmit={handleSubmit(tryRegister)}>
-        <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="attainia_logo" />
+        <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="primary" />
         <p className="instructions">Register Your Account</p>
         <ReduxFormField className="name" placeholder="name" name="name" />
         <ReduxFormField className="email" placeholder="email" name="email" type="email" />

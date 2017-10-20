@@ -9,7 +9,7 @@ import Link from '../common/Link'
 import SimpleSvgIcon from '../common/SimpleSvgIcon'
 import ReduxFormField from '../common/ReduxFormField'
 import FormField from '../common/FormField'
-import {forms} from '../common/constants'
+import {getThemeProp} from '../common/helpers'
 
 const FullPageWrapper = styled.div`
     min-height: 100vh;
@@ -18,7 +18,7 @@ const FullPageWrapper = styled.div`
 `
 const StyledForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin};
+        margin: ${getThemeProp(['forms', 'formItemMargin'], '5px')};
     }
 
     & .loginHeader > * {
@@ -99,7 +99,7 @@ class Login extends Component {
             <FullPageWrapper>
                 <StyledForm onSubmit={handleSubmit(tryLogin)}>
                     <header className="loginHeader">
-                        {hasAuthError ? <AuthError /> : <SimpleSvgIcon width="161" height="39" icon="attainia_logo" />}
+                        {hasAuthError ? <AuthError /> : <SimpleSvgIcon width="161" height="39" icon="primary" />}
                     </header>
                     <ReduxFormField
                         className="email"
