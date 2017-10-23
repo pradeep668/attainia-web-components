@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, {withTheme} from 'styled-components'
 import {Link} from 'react-router-dom'
 import LinkButton from '../common/LinkButton'
 import SimpleSvgIcon from '../common/SimpleSvgIcon'
-import {colors} from '../common/constants'
+import {getThemeProp} from '../common/helpers'
 
 const Li = styled.div`
     text-align: left;
@@ -22,7 +22,7 @@ const ListHeader = styled.ul`
     list-style: none;
     margin: 0;
     padding: 12px;
-    background: ${colors.isabellineGray};
+    background: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
 
     @supports not (display: grid) {
         .btnCreateResource,
@@ -49,34 +49,47 @@ const ListHeader = styled.ul`
                 padding-right: 10px; 
             }
             .resourceCount {
-                color: ${colors.spanishGray}
+                color: ${getThemeProp(['colors', 'grayscale', 'md'], 'mediumgray')}
             }
         }
     }
 `
 
-const ResourcesHeader = ({className, resourceName, resourceCount}) =>
-    <ListHeader className={className}>
-        <Li>
-            <div className="titleAndResourceCount">
-                <h1 className="title">{resourceName}</h1>
-                <h2 className="resourceCount">
-                    {resourceCount ? `( ${resourceCount} )` : ''}
-                </h2>
-            </div>
-        </Li>
-        <Li>
-            <SimpleSvgIcon icon="document" className="btnExport" />
-        </Li>
-        <Li>
-            <SimpleSvgIcon icon="print" className="btnPrint" />
-        </Li>
-        <Li>
-            <LinkButton className="btnCreateResource">
-                <Link to="/resources/new">Add a Resource</Link>
-            </LinkButton>
-        </Li>
-    </ListHeader>
+const ResourcesHeader = (props) => {
+    const {className, resourceName, resourceCount} = props
+
+    return (
+        <ListHeader className={className}>
+            <Li>
+                <div className="titleAndResourceCount">
+                    <h1 className="title">{resourceName}</h1>
+                    <h2 className="resourceCount">
+                        {resourceCount ? `( ${resourceCount} )` : ''}
+                    </h2>
+                </div>
+            </Li>
+            <Li>
+                <SimpleSvgIcon
+                    icon="document"
+                    className="btnExport"
+                    fill={getThemeProp(['colors', 'secondary', 'default'])(props)}
+                />
+            </Li>
+            <Li>
+                <SimpleSvgIcon
+                    icon="print"
+                    className="btnPrint"
+                    fill={getThemeProp(['colors', 'secondary', 'default'])(props)}
+                />
+            </Li>
+            <Li>
+                <LinkButton className="btnCreateResource" style={{padding: '12px 0'}}>
+                    <Link to="/resources/new">Add a Resource</Link>
+                </LinkButton>
+            </Li>
+        </ListHeader>
+    )
+}
 
 
 ResourcesHeader.propTypes = {
@@ -89,4 +102,4 @@ ResourcesHeader.defaultProps = {
     resourceCount: 0
 }
 
-export default ResourcesHeader
+export default withTheme(ResourcesHeader)

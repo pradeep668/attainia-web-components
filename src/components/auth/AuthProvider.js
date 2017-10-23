@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {ApolloProvider} from 'react-apollo'
 import {connect} from 'react-redux'
+import {withTheme} from 'styled-components'
 
 import apolloClient from './apollo.client'
 import Auth from './Auth.container'
@@ -41,4 +42,4 @@ export default connect(
         ...ownProps,
         baseUrl: ownProps.baseUrl || storeProps.urlFromStore
     })
-)(AuthProvider)
+)(withTheme(AuthProvider))

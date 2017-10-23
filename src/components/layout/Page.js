@@ -1,8 +1,9 @@
 import styled from 'styled-components'
-import {breakpoints} from '../common/constants'
+import {getThemeProp} from '../common/helpers'
 
 export default styled.div`
     height: 100%;
+
     @supports not (display: grid) {
         .header,
         .main,
@@ -14,7 +15,7 @@ export default styled.div`
     }
 
     @supports (display: grid) {
-        @media ${breakpoints.tablet} {
+        @media ${getThemeProp(['breakpoints', 'tablet'], 'screen and (min-width: 768px)')} {
             display: grid;
             grid-template-columns: 200px 1fr;
             grid-template-rows: 50px auto 40px;
@@ -39,7 +40,7 @@ export default styled.div`
             }
         }
 
-        @media ${breakpoints.largeDesktop} {
+        @media ${getThemeProp(['breakpoints', 'largeDesktop'], 'screen and (min-width: 1200px)')} {
             display: grid;
             grid-template-columns: 200px 1fr 1fr;
             grid-template-areas: 'header header header' 'sidebar main main' 'footer footer footer';

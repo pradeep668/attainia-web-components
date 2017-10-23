@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import {colors, fonts} from './constants'
+import {getThemeProp} from './helpers'
 
 export default styled.div`
-    background: ${colors.eerieBlack};
-    color: ${colors.candyAppleRed};
-    font-size: ${fonts.fontSize};
-    font-family: ${fonts.fontFamily};
+    background: ${getThemeProp(['colors', 'grayscale', 'black'], 'black')};
+    color: ${getThemeProp(['colors', 'primary', 'md'], 'red')};
+    font-size: ${getThemeProp(['fonts', 'fontSize'], '12px')};
+    font-family: ${getThemeProp(['fonts', 'fontFamily'], 'Arial')};
     text-align: center;
 `
