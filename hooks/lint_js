@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "The project's JavaScript source files are now being linted"
+
+lint_files=$(git diff --cached --name-only | grep -E '\.(js|jsx)$')
+
+if [ -z "$lint_files" ]; then
+    exit 0
+fi
+
+echo "Linting $lint_files"
+
+node_modules/.bin/eslint $lint_files

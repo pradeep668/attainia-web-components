@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Logo from '../common/Logo'
-import ApplicationSearchButton from '../common/ApplicationSearchButton'
-import NotificationButton from '../common/NotificationButton'
+import SimpleSvgIcon from '../common/SimpleSvgIcon'
 import {colors} from '../common/constants'
 
 const Li = styled.div`
@@ -57,12 +55,14 @@ const ListHeader = styled.ul`
 `
 const Header = ({className}) =>
     <ListHeader className={className}>
-        <Li className="logo"><Logo className="headerLogo" /></Li>
+        <Li className="logo">
+            <SimpleSvgIcon icon="attainia_logo" className="headerLogo" />
+        </Li>
         <Li className="btnSearch">
-            <ApplicationSearchButton />
+            <SimpleSvgIcon icon="search" />
         </Li>
         <Li className="btnNotifications">
-            <NotificationButton />
+            <SimpleSvgIcon icon="notification" />
         </Li>
         <Li className="profileMenu"><div>User Profile</div></Li>
     </ListHeader>

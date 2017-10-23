@@ -38,7 +38,8 @@ export default (
             return {
                 ...state,
                 error: parseError(error),
-                status: ''
+                status: '',
+                loading: false
             }
         case types.GET_USER_NAV_MENU:
             return {
@@ -65,6 +66,16 @@ export default (
                 ...state,
                 route: 'registration',
                 status: ''
+            }
+        case types.LOADING_FINISHED:
+            return {
+                ...state,
+                loading: false
+            }
+        case types.LOADING_STARTED:
+            return {
+                ...state,
+                loading: true
             }
         case types.LOGIN:
             return {
