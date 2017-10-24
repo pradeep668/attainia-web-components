@@ -19,11 +19,16 @@ const Auth = props => {
         useRefresh
     } = props
 
-    const access_token = getAccessTokenFromStorage(storage)
+    let access_token = getAccessTokenFromStorage(storage)
+    if (access_token === '[object Object]') {
+        removeToken()
+        access_token = ''
+    }
+    if (tokenInStore && rememberMe && access_token !== tokenInStore) {
+        setToken(props)
+    }
 
     if (access_token || tokenInStore) {
-        if (access_token || rememberMe) setToken(props)
-
         if (onLogout && useRefresh) {
             return (
                 <Validator token={access_token || tokenInStore} {...props}>
