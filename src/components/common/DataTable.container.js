@@ -3,19 +3,20 @@ import React from 'react'
 import styled from 'styled-components'
 
 import {DataTable} from './DataTable'
-import {sortData, nextPage} from './actions'
+import {sortData, nextPage, selectRow} from './actions'
 
 
-const mapStateToProps = (state, ownProps) => {
-    return state.common
-}
+const mapStateToProps = (state) => state.common
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
+    rowSelected(index, selected) {
+        return dispatch(selectRow(index, selected))
+    },
     getNextPage(pageNumber) {
         return dispatch(nextPage(pageNumber))
     },
-    getSortedData(column, data) {
-        return dispatch(sortData(column, 'nope'))
+    getSortedData(column, sortDirection) {
+        return dispatch(sortData(column, sortDirection))
     }
 })
 

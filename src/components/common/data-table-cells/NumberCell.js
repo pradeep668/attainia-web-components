@@ -13,8 +13,8 @@ export const NumberCell = styled(TextCell)`
 
 NumberCell.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
-    rowIndex: PropTypes.number.isRequired,
-    columnKey: PropTypes.string.isRequired
+    rowIndex: PropTypes.number,
+    columnKey: PropTypes.string
 }
 
 export default {NumberCell}

@@ -32,8 +32,12 @@ export default (state = initialState, action) => {
                 data: state.data.concat(makeFakeData(100))
             })
         }
+        case types.SELECT_ROW: {
+            return Object.assign({}, state, {
+            })
+        }
         // no default
     }
-    
+
     return state
 }

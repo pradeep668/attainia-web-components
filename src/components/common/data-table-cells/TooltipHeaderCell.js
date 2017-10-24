@@ -12,10 +12,6 @@ export class TooltipHeaderCell extends React.PureComponent {
     render() {
         const {data, sortData, sortCallback, ...props} = this.props
 
-        const handleClick = () => {
-            sortCallback(data.key)
-        }
-
         const FlexDiv = styled.div`
             display: flex;
         `
@@ -46,15 +42,21 @@ export class TooltipHeaderCell extends React.PureComponent {
         `
         let sortIcon = ''
 
+        const handleSort = () => {
+            const sortDir = (sortIcon === 'arrow_down') ? 'desc' : 'asc'
+
+            sortCallback(data.key, sortDir)
+        }
+
         if (sortData.columnKey === data.key) {
-            sortIcon = (sortData.sortDirection === 'desc') ? 'sort_desc' : 'sort_asc'
+            sortIcon = (sortData.sortDirection === 'asc') ? 'arrow_down' : 'arrow_up'
         }
 
         return (
             <Cell {...props} data-tip={data.toolTip} data-for={'header-tooltip'}>
                 <FlexDiv>
                     <LeftFlexSpan>
-                        <HeaderLink onClick={handleClick}>{data.name}</HeaderLink>
+                        <HeaderLink onClick={handleSort}>{data.name}</HeaderLink>
                     </LeftFlexSpan>
                     <RightFlexSpan>
                         <SortIcon icon={sortIcon} />
@@ -66,15 +68,14 @@ export class TooltipHeaderCell extends React.PureComponent {
 }
 
 TooltipHeaderCell.propTypes = {
-    data: PropTypes.arrayOf(
-        PropTypes.shape({
+    data: PropTypes.shape({
             name: PropTypes.string,
             toolTip: PropTypes.string,
             key: PropTypes.string,
             width: PropTypes.number,
             fixed: PropTypes.bool,
             columnType: PropTypes.symbol
-        }),
+        }
     ).isRequired,
     sortData: PropTypes.shape({
         columnKey: PropTypes.string,

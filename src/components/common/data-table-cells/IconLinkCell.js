@@ -20,8 +20,8 @@ export class IconLinkCell extends React.PureComponent {
 
 IconLinkCell.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
-    rowIndex: PropTypes.number.isRequired,
-    columnKey: PropTypes.string.isRequired
+    rowIndex: PropTypes.number,
+    columnKey: PropTypes.string
 }
 
 export default IconLinkCell

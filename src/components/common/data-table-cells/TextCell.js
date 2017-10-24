@@ -18,8 +18,8 @@ export class TextCell extends React.PureComponent {
 
 TextCell.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
-    rowIndex: PropTypes.number.isRequired,
-    columnKey: PropTypes.string.isRequired
+    rowIndex: PropTypes.number,
+    columnKey: PropTypes.string
 }
 
 export default {TextCell}

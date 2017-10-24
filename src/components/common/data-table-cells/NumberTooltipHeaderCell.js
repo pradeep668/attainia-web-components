@@ -12,15 +12,14 @@ export const NumberTooltipHeaderCell = styled(TooltipHeaderCell)`
 `
 
 NumberTooltipHeaderCell.propTypes = {
-    data: PropTypes.arrayOf(
-        PropTypes.shape({
+    data: PropTypes.shape({
             name: PropTypes.string,
             toolTip: PropTypes.string,
             key: PropTypes.string,
             width: PropTypes.number,
             fixed: PropTypes.bool,
             columnType: PropTypes.symbol
-        }),
+        }
     ).isRequired,
     sortData: PropTypes.shape({
         columnKey: PropTypes.string,
