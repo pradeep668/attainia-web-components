@@ -9,7 +9,8 @@ export default ({
     useSubscriptions = true,
     apolloClientProps = {}
 } = {}) => {
-    const networkInterface = createNetworkInterface({uri: `http://${baseUrl}/graphql`})
+    const uri = `${/^https?:\/\//i.test(baseUrl) ? baseUrl : `http://${baseUrl}`}/graphql`
+    const networkInterface = createNetworkInterface({uri})
 
     if (/(local|session)/i.test(storage)) {
         networkInterface.use([{
