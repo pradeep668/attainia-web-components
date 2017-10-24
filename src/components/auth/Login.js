@@ -6,10 +6,10 @@ import AuthError from './AuthError.container'
 import SpinningButton from '../common/SpinningButton'
 import Form from '../common/Form'
 import Link from '../common/Link'
-import Logo from '../common/Logo'
+import SimpleSvgIcon from '../common/SimpleSvgIcon'
 import ReduxFormField from '../common/ReduxFormField'
 import FormField from '../common/FormField'
-import {forms} from '../common/constants'
+import {getThemeProp} from '../common/helpers'
 
 const FullPageWrapper = styled.div`
     min-height: 100vh;
@@ -18,7 +18,7 @@ const FullPageWrapper = styled.div`
 `
 const StyledForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin};
+        margin: ${getThemeProp(['forms', 'formItemMargin'], '5px')};
     }
 
     & .loginHeader > * {
@@ -50,7 +50,8 @@ const StyledForm = styled(Form)`
     @supports (display: grid) {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-areas: 'header header' 'email email' 'password password' 'remember-me password-help'
+        grid-template-areas: 'header header' 'email email' 'password password'
+            ${props => (props.showPasswordHelp ? '"remember-me password-help"' : '"remember-me remember-me"')}
             'login-button login-button' ${props => props.showRegistration && '"register register"'};
 
         & .loginHeader {
@@ -92,13 +93,15 @@ class Login extends Component {
         const {
             handleSubmit, tryLogin, email, hasAuthError,
             gotoPasswordHelp, gotoRegistration, rememberMe,
-            showRegistration, toggleRememberMe, loading
+            showPasswordHelp, showRegistration, toggleRememberMe, loading
         } = this.props
 
         return (
             <FullPageWrapper>
-                <StyledForm onSubmit={handleSubmit(tryLogin)}>
-                    <header className="loginHeader">{hasAuthError ? <AuthError /> : <Logo />}</header>
+                <StyledForm onSubmit={handleSubmit(tryLogin)} {...this.props}>
+                    <header className="loginHeader">
+                        {hasAuthError ? <AuthError /> : <SimpleSvgIcon width="161" height="39" icon="primary" />}
+                    </header>
                     <ReduxFormField
                         className="email"
                         placeholder="email"
@@ -118,11 +121,14 @@ class Login extends Component {
                         type="checkbox"
                         name="rememberMe"
                         checked={rememberMe}
+                        value={rememberMe}
                         handlers={{onChange: toggleRememberMe}}
                     />
-                    <Link className="passwordHelp" href="#" onClick={gotoPasswordHelp}>
-                        Password Help
-                    </Link>
+                    {showPasswordHelp && (
+                        <Link className="passwordHelp" href="#" onClick={gotoPasswordHelp}>
+                            Password Help
+                        </Link>
+                    )}
                     <SpinningButton inProgress={loading} className="loginButton" type="submit">
                         Login
                     </SpinningButton>
@@ -148,12 +154,14 @@ Login.propTypes = {
     loading: PropTypes.bool.isRequired,
     parseToken: PropTypes.func.isRequired,
     rememberMe: PropTypes.bool,
+    showPasswordHelp: PropTypes.bool.isRequired,
     showRegistration: PropTypes.bool.isRequired,
     toggleRememberMe: PropTypes.func.isRequired
 }
 
 Login.defaultProps = {
     hasAuthError: false,
+    showPasswordHelp: true,
     showRegistration: false,
     loading: false
 }

@@ -1,16 +1,16 @@
 import styled from 'styled-components'
-import {colors, fonts} from './constants'
+import {getThemeProp, getProp} from './helpers'
 
 export default styled.button`
-    background-color: ${colors.rossoCorsa};
-    color: white;
+    background-color: ${getThemeProp(['colors', 'primary', 'default'], 'crimson')};
+    color: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    font-family: ${fonts.fontFamily};
+    font-family: ${getThemeProp(['fonts', 'fontFamily'], 'Arial')};
     font-size: 15px;
     font-weight: 700;
-    padding: 18px 0;
+    padding: ${getProp(['style', 'padding'], '18px 0')};
     text-align: center;
     text-decoration: none;
     &:focus {

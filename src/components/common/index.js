@@ -9,7 +9,7 @@ import FormField from './FormField'
 import InputField from './InputField'
 import Link from './Link'
 import LinkButton from './LinkButton'
-import Logo from './Logo'
+import SimpleSvgIcon from './SimpleSvgIcon'
 import ReduxFormField from './ReduxFormField'
 
 export default {
@@ -25,7 +25,7 @@ export default {
     InputField,
     Link,
     LinkButton,
-    Logo,
+    SimpleSvgIcon,
     ReduxFormField,
     renderConditional
 }

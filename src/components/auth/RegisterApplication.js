@@ -4,13 +4,13 @@ import styled from 'styled-components'
 
 import Button from '../common/Button'
 import Form from '../common/Form'
-import Logo from '../common/Logo'
+import SimpleSvgIcon from '../common/SimpleSvgIcon'
 import ReduxFormField from '../common/ReduxFormField'
-import {breakpoints, forms} from '../common/constants'
+import {getThemeProp} from '../common/helpers'
 
 const StyledForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin};
+        margin: ${getThemeProp(['forms', 'formItemMargin'], '5px')};
     }
 
     & .attainiaLogo {
@@ -31,7 +31,7 @@ const StyledForm = styled(Form)`
     }
 
     @supports (display: grid) {
-        @media ${breakpoints.desktop} {
+        @media ${getThemeProp(['breakpoints', 'tablet'], 'screen and (min-width: 768px)')} {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-areas: 'header header' 'instructions instructions' 'name name' 'grant grant'
@@ -69,7 +69,7 @@ const StyledForm = styled(Form)`
 `
 const RegisterApplication = ({handleSubmit, tryRegisterApp, cancel}) =>
     <StyledForm onSubmit={handleSubmit(tryRegisterApp)}>
-        <Logo className="attainiaLogo" />
+        <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="primary" />
         <p className="instructions">Register Your Application</p>
         <ReduxFormField className="applicationName" placeholder="name" name="name" />
         <ReduxFormField className="grantType" placeholder="grant type" name="grantType" />

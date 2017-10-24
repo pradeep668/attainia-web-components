@@ -1,6 +1,7 @@
 import React from 'react'
 import {Provider} from 'react-redux'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {ThemeProvider} from 'styled-components'
 
 import DataTable from './components/common/DataTable.container'
 import ResourcesList from './components/resources/ResourcesList.container'
@@ -9,6 +10,7 @@ import ResourcesNew from './components/resources/ResourcesNew.container'
 import AuthenticatedApp from './components/App'
 
 import store from './store'
+import theme from './theme'
 
 export default (
     <Provider store={store}>

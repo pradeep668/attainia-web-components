@@ -2,6 +2,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 import {Cell} from 'fixed-data-table-2'
+import SimpleSvgIcon from './SimpleSvgIcon'
 
 import info from './info.svg'
 import desc from './sort_desc.svg'
@@ -117,7 +118,9 @@ export class IconLinkCell extends React.PureComponent {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
             <Cell {...props}>
-                <a href={data[rowIndex][columnKey].link}><img src={data[rowIndex][columnKey].iconSource} alt={data[rowIndex][columnKey].altText} /></a>
+                <a href={data[rowIndex][columnKey].link}>
+                    <SimpleSvgIcon icon={data[rowIndex][columnKey].iconSource} />
+                </a>
             </Cell>
         )
     }

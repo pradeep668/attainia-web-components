@@ -1,9 +1,9 @@
 /* eslint "no-unused-expressions": "off" */
 import 'regenerator-runtime/runtime'
 import {injectGlobal} from 'styled-components'
-import injectTapEventPlugin from 'react-tap-event-plugin'
+import initReactFastclick from 'react-fastclick'
 
-injectTapEventPlugin()
+initReactFastclick()
 injectGlobal`
     html, body, #root {
         margin: 0;
