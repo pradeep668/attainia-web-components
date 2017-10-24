@@ -23,7 +23,11 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case types.SORT_DATA: {
             return Object.assign({}, state, {
-                data: state.data.slice(0).sort((a, b) => b[action.column] - a[action.column])
+                data: state.data.slice(0).sort((a, b) => b[action.column] - a[action.column]),
+                sortData: {
+                    columnKey: action.column,
+                    sortDirection: action.direction
+                }
             })
         }
         case types.NEXT_PAGE: {

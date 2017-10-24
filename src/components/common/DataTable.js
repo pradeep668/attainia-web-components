@@ -64,7 +64,7 @@ const InlineImg = styled.img`
     margin-left: auto;
 `
 
-const RenderColumns = (headers, data, getSortedData) => {
+const RenderColumns = (headers, data, sortData, getSortedData) => {
 
     const handleSort = (column) => {
         getSortedData(column, data)
@@ -75,7 +75,7 @@ const RenderColumns = (headers, data, getSortedData) => {
         switch (header.columnType) {
             case ColumnType.TEXT:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
+                    header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<TextCell data={data} />}
                     width={header.width}
@@ -84,7 +84,7 @@ const RenderColumns = (headers, data, getSortedData) => {
 
             case ColumnType.NUMBER:
                 return <Column key={uuid()}
-                    header={<NumberTooltipHeaderCell data={header} sortCallback={handleSort}/>}
+                    header={<NumberTooltipHeaderCell data={header} sortData={sortData} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<NumberCell data={data} />}
                     width={header.width}
@@ -93,7 +93,7 @@ const RenderColumns = (headers, data, getSortedData) => {
 
             case ColumnType.LINK:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
+                    header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<LinkCell data={data} />}
                     width={header.width}
@@ -102,7 +102,7 @@ const RenderColumns = (headers, data, getSortedData) => {
             
             case ColumnType.IMAGE:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
+                    header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<ImageCell data={data} />}
                     width={header.width}
@@ -111,7 +111,7 @@ const RenderColumns = (headers, data, getSortedData) => {
 
             case ColumnType.ICON_LINK:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
+                    header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<IconLinkCell data={data} />}
                     width={header.width}
@@ -120,7 +120,7 @@ const RenderColumns = (headers, data, getSortedData) => {
 
             case ColumnType.INFO_TEXT:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
+                    header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<InfoIconToolTipTextCell data={data} />}
                     width={header.width}
@@ -129,7 +129,7 @@ const RenderColumns = (headers, data, getSortedData) => {
 
             default:
                 return <Column key={uuid()}
-                    header={<TooltipHeaderCell data={header} sortCallback={handleSort}/>}
+                    header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={handleSort}/>}
                     columnKey={header.key}
                     cell={<TextCell data={data} />}
                     width={header.width}
@@ -160,6 +160,7 @@ export const DataTable = ({
     tableHeight,
     headerHeight,
     hasCheckColumn,
+    sortData,
     getNextPage,
     getSortedData,
     headers,
@@ -178,7 +179,7 @@ export const DataTable = ({
             height={tableHeight}
             headerHeight={headerHeight}>
             {RenderCheckColumn(hasCheckColumn)}
-            {RenderColumns(headers, data, getSortedData)}
+            {RenderColumns(headers, data, sortData, getSortedData)}
         </StyledTable>
         <ReactTooltip place='top' id='header-tooltip' effect='solid' />
         <ReactTooltip place='top' id='cell-tooltip' effect='solid' />
@@ -191,6 +192,10 @@ DataTable.propTypes = {
     tableHeight: PropTypes.number.isRequired,
     headerHeight: PropTypes.number.isRequired,
     hasCheckColumn: PropTypes.bool.isRequired,
+    sortData: PropTypes.shape({
+        columnKey: PropTypes.string,
+        sortDirection: PropTypes.string
+    }),
     getNextPage: PropTypes.func.isRequired,
     getSortedData: PropTypes.func.isRequired,
     headers: PropTypes.arrayOf(

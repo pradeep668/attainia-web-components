@@ -8,44 +8,53 @@ import desc from './sort_desc.svg'
 import asc from './sort_asc.svg'
 
 
-const SortIcon = styled.img`
-    display: flex;
-    vertical-align: middle;
-    width: 8px;
-    order: 2;
-`
-
-const divStyle = {
-    display: 'flex'
-}
-
-const headerStyle = {
-    order: 1
-}
-
 export class TooltipHeaderCell extends React.PureComponent {
     render() {
-        const {data, sortCallback, ...props} = this.props
+        const {data, sortData, sortCallback, ...props} = this.props
 
         const handleClick = () => {
             sortCallback(data.key)
         }
 
+        const FlexDiv = styled.div`
+            display: flex;
+        `
+
+        const FlexSpan = styled.span`
+            display: flex;
+            flex-grow: 3;
+            order: 1;
+        `
+
         const HeaderLink = styled.a`
             text-decoration: underline;
+            width: 100%;
+            margin-right: 5px;
             :hover {
                 cursor: pointer;
             }
         `
 
+        const SortIcon = styled.img`
+            display: flex;
+            vertical-align: middle;
+            width: 8px;
+            order: 2;
+        `
+        var sortIcon = ''
+
+        if (sortData.columnKey === data.key) {
+            sortIcon = (sortData.sortDirection === 'desc') ? desc : asc
+        }
+
         return (
             <Cell {...props} data-tip={data.toolTip} data-for={'header-tooltip'}>
-                <div style={divStyle}>
-                    <HeaderLink style={headerStyle} onClick={handleClick}>
-                        {data.name}
-                    </HeaderLink>
-                    <SortIcon src={desc}></SortIcon>
-                </div>
+                <FlexDiv>
+                    <FlexSpan>
+                        <HeaderLink onClick={handleClick}>{data.name}</HeaderLink>
+                    </FlexSpan>
+                    <SortIcon src={sortIcon}></SortIcon>
+                </FlexDiv>
             </Cell>
         )
     }
@@ -121,7 +130,7 @@ export const NumberCell = styled(TextCell)`
 `
 
 export const NumberTooltipHeaderCell = styled(TooltipHeaderCell)`
-    .public_fixedDataTableCell_cellContent {
+    .public_fixedDataTableCell_cellContent a {
         text-align: right;
     }
 `

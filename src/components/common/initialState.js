@@ -81,7 +81,11 @@ export default {
     tableWidth: 1253,
     tableHeight: 500,
     headerHeight: 50,
-    hasCheckColumn: false,
+    hasCheckColumn: true,
+    sortData: {
+        columnKey: 'name',
+        sortDirection: 'asc'
+    },
     headers: makeFakeHeaders(),
     data: makeFakeData(100)
 }
