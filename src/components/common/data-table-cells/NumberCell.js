@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
 
-import TextCell from './TextCell'
+import {TextCell} from './TextCell'
 
 
 export const NumberCell = styled(TextCell)`
@@ -17,4 +17,4 @@ NumberCell.propTypes = {
     columnKey: PropTypes.string.isRequired
 }
 
-export default NumberCell
+export default {NumberCell}

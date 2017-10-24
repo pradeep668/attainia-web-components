@@ -5,21 +5,21 @@ import PropTypes from 'prop-types'
 import {Cell} from 'fixed-data-table-2'
 
 
-export class TextCell extends React.PureComponent {
+export class LinkCell extends React.PureComponent {
     render() {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
             <Cell {...props}>
-                <span>{data[rowIndex][columnKey]}</span>
+                <a href={data[rowIndex][columnKey].link}>{data[rowIndex][columnKey].label}</a>
             </Cell>
         )
     }
 }
 
-TextCell.propTypes = {
+LinkCell.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
     rowIndex: PropTypes.number.isRequired,
     columnKey: PropTypes.string.isRequired
 }
 
-export default {TextCell}
+export default LinkCell

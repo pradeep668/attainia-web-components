@@ -83,4 +83,4 @@ TooltipHeaderCell.propTypes = {
     sortCallback: PropTypes.func
 }
 
-export default TooltipHeaderCell
+export default {TooltipHeaderCell}
