@@ -1,7 +1,5 @@
 import initialState from './initialState'
 import types from './types'
-import edit from './edit.svg'
-import image from './image.svg'
 
 
 const getRandomArbitrary = (min, max) =>
@@ -13,13 +11,12 @@ Array(size).fill().map((_, index) => ({
     prop_1: 'Value 1',
     prop_2: getRandomArbitrary(0, 1000).toFixed(2),
     prop_3: {label: 'Google', link: 'http://www.google.com'},
-    prop_4: {iconSource: edit, altText: 'Edit', link: 'http://www.google.com'},
-    prop_5: {imageSource: image, altText: 'Visible'},
+    prop_4: {iconName: 'edit', altText: 'Edit', link: 'http://www.google.com'},
+    prop_5: {imageSource: 'https://www.omnicheer.com/images/header-social/icon-grey-instagram.png', altText: 'Visible'},
     prop_6: {toolTip: 'This is a tooltip for the property.', text: 'Tool Tip Text', altText: 'Tooltip'}
 }))
 
 export default (state = initialState, action) => {
-
     switch (action.type) {
         case types.SORT_DATA: {
             return Object.assign({}, state, {

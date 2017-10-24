@@ -10,14 +10,15 @@ import 'fixed-data-table-2/dist/fixed-data-table.css'
 
 import load from './load.svg'
 
+import TooltipHeaderCell from './data-table-cells/TooltipHeaderCell'
+import NumberTooltipHeaderCell from './data-table-cells/NumberTooltipHeaderCell'
+import TextCell from './data-table-cells/TextCell'
+import NumberCell from './data-table-cells/NumberCell'
+
 import {
-    TooltipHeaderCell,
-    TextCell,
     LinkCell,
     ImageCell,
     IconLinkCell,
-    NumberCell,
-    NumberTooltipHeaderCell,
     InfoIconToolTipTextCell
 } from './DataTableCells'
 
@@ -99,7 +100,7 @@ const RenderColumns = (headers, data, sortData, getSortedData) => {
                     width={header.width}
                     fixed={header.fixed}
                     />
-            
+
             case ColumnType.IMAGE:
                 return <Column key={uuid()}
                     header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={handleSort}/>}
@@ -141,7 +142,7 @@ const RenderColumns = (headers, data, sortData, getSortedData) => {
 )}
 
 const RenderCheckColumn = (hasCheckColumn) => {
-    
+
     if (hasCheckColumn) {
         return (
             <Column
