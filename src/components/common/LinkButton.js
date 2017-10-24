@@ -6,5 +6,6 @@ export default styled(Button)`
     & > a {
         text-decoration: none;
         color: ${getThemeProp(['grayscale', 'white'], 'white')};
+        font-size: ${getThemeProp(['fonts', 'fontSize'], '12px')};
     }
 `
