@@ -60,8 +60,8 @@ const LoadMoreButton = styled(Button)`
     margin-right: auto;
 `
 
-const RenderColumns = (headers, data, sortData, getSortedData) => {
-    return headers.map((header) => {
+const RenderColumns = (headers, data, sortData, getSortedData) => (
+    headers.map((header) => {
         switch (header.columnType) {
             case ColumnType.TEXT: {
                 return <Column
@@ -135,7 +135,7 @@ const RenderColumns = (headers, data, sortData, getSortedData) => {
             fixed={header.fixed}
         />
     })
-}
+)
 
 const RenderCheckColumn = (hasCheckColumn, rowSelected) => {
     let checkColumn
