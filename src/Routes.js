@@ -7,6 +7,7 @@ import DataTable from './components/common/DataTable.container'
 import ResourcesList from './components/resources/ResourcesList.container'
 import ResourcesDetail from './components/resources/ResourcesDetail.container'
 import ResourcesNew from './components/resources/ResourcesNew.container'
+import AuthenticatedApp from './components/App'
 
 import store from './store'
 import theme from './theme'
@@ -14,16 +15,18 @@ import theme from './theme'
 export default (
     <ThemeProvider theme={theme}>
         <Provider store={store}>
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/" component={ResourcesList} />
-                    <Route exact path="/home" component={ResourcesList} />
-                    <Route exact path="/resources" component={ResourcesList} />
-                    <Route exact path="/resources/new" component={ResourcesNew} />
-                    <Route exact path="/resources/:id" component={ResourcesDetail} />
-                    <Route exact path="/data_table" component={DataTable} /> {/* Only used for dev purposes */}
-                </Switch>
-            </BrowserRouter>
+            <AuthenticatedApp>
+                <BrowserRouter>
+                    <Switch>
+                        <Route exact path="/" component={ResourcesList} />
+                        <Route exact path="/home" component={ResourcesList} />
+                        <Route exact path="/resources" component={ResourcesList} />
+                        <Route exact path="/resources/new" component={ResourcesNew} />
+                        <Route exact path="/resources/:id" component={ResourcesDetail} />
+                        <Route exact path="/data_table" component={DataTable} /> {/* Only used for dev purposes */}
+                    </Switch>
+                </BrowserRouter>
+            </AuthenticatedApp>
         </Provider>
     </ThemeProvider>
 )
