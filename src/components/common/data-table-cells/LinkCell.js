@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {Cell} from 'fixed-data-table-2'
 
 
-export class LinkCell extends React.PureComponent {
+export default class LinkCell extends React.PureComponent {
     render() {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
@@ -21,5 +21,3 @@ LinkCell.propTypes = {
     rowIndex: PropTypes.number,
     columnKey: PropTypes.string
 }
-
-export default LinkCell

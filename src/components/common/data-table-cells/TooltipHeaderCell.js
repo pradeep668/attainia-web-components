@@ -8,7 +8,7 @@ import {Cell} from 'fixed-data-table-2'
 import SimpleSvgIcon from '../SimpleSvgIcon'
 
 
-export class TooltipHeaderCell extends React.PureComponent {
+export default class TooltipHeaderCell extends React.PureComponent {
     render() {
         const {data, sortData, sortCallback, ...props} = this.props
 
@@ -83,5 +83,3 @@ TooltipHeaderCell.propTypes = {
     }),
     sortCallback: PropTypes.func
 }
-
-export default {TooltipHeaderCell}

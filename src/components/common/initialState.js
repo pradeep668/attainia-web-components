@@ -6,6 +6,7 @@ const getRandomArbitrary = (min, max) =>
 
 const makeFakeData = size =>
     Array(size).fill().map((_, index) => ({
+        selected: false,
         name: `Name ${index + 1}`,
         prop_1: 'Value 1',
         prop_2: getRandomArbitrary(0, 1000).toFixed(2),

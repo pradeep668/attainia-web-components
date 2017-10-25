@@ -8,16 +8,15 @@ import styled from 'styled-components'
 import {Table, Column, Cell} from 'fixed-data-table-2'
 import 'fixed-data-table-2/dist/fixed-data-table.css'
 
-
 import Button from './Button'
-import {TooltipHeaderCell} from './data-table-cells/TooltipHeaderCell'
+import TooltipHeaderCell from './data-table-cells/TooltipHeaderCell'
 import {NumberTooltipHeaderCell} from './data-table-cells/NumberTooltipHeaderCell'
-import {TextCell} from './data-table-cells/TextCell'
-import {LinkCell} from './data-table-cells/LinkCell'
+import TextCell from './data-table-cells/TextCell'
+import LinkCell from './data-table-cells/LinkCell'
 import {NumberCell} from './data-table-cells/NumberCell'
-import {InfoIconToolTipTextCell} from './data-table-cells/InfoIconToolTipTextCell'
-import {ImageCell} from './data-table-cells/ImageCell'
-import {IconLinkCell} from './data-table-cells/IconLinkCell'
+import InfoIconToolTipTextCell from './data-table-cells/InfoIconToolTipTextCell'
+import ImageCell from './data-table-cells/ImageCell'
+import IconLinkCell from './data-table-cells/IconLinkCell'
 
 
 export const ColumnType = {
@@ -137,20 +136,32 @@ const RenderColumns = (headers, data, sortData, getSortedData) => (
     })
 )
 
-const RenderCheckColumn = (hasCheckColumn, rowSelected) => {
+const RenderCheckColumn = (hasCheckColumn, rowSelected, data) => {
     let checkColumn
-    let checkedState = false
 
     const handleCheck = (index) => {
-        checkedState = !checkedState
-        rowSelected(index, checkedState)
+        const selected = (typeof data === 'undefined') ? false : !data[index].selected
+        rowSelected(index, selected)
+    }
+
+    const isChecked = (index) => {
+        const checked = (typeof data === 'undefined') ? false : data[index].selected
+        return checked
     }
 
     if (hasCheckColumn) {
         checkColumn = (
             <Column
                 header={<Cell />}
-                cell={({rowIndex}) => (<Cell><input type="checkbox" onChange={() => handleCheck(rowIndex)} /></Cell>)}
+                cell={({rowIndex}) => (
+                    <Cell>
+                        <input
+                            type="checkbox"
+                            onChange={() => handleCheck(rowIndex)}
+                            checked={isChecked(rowIndex)}
+                        />
+                    </Cell>
+                )}
                 width={35}
                 fixed
             />
@@ -182,7 +193,7 @@ export const DataTable = ({
             height={tableHeight}
             headerHeight={headerHeight}
         >
-            {RenderCheckColumn(hasCheckColumn, rowSelected)}
+            {RenderCheckColumn(hasCheckColumn, rowSelected, data)}
             {RenderColumns(headers, data, sortData, getSortedData)}
         </StyledTable>
         <ReactTooltip place="top" id="header-tooltip" effect="solid" />

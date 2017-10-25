@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 
 import styled from 'styled-components'
 
-import {TooltipHeaderCell} from './TooltipHeaderCell'
+import TooltipHeaderCell from './TooltipHeaderCell'
 
 
 export const NumberTooltipHeaderCell = styled(TooltipHeaderCell)`
@@ -28,4 +28,4 @@ NumberTooltipHeaderCell.propTypes = {
     sortCallback: PropTypes.func
 }
 
-export default {NumberTooltipHeaderCell}
+export default NumberTooltipHeaderCell

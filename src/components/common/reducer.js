@@ -7,6 +7,7 @@ const getRandomArbitrary = (min, max) =>
 
 const makeFakeData = size =>
 Array(size).fill().map((_, index) => ({
+    selected: false,
     name: `Name ${index + 1}`,
     prop_1: 'Value 1',
     prop_2: getRandomArbitrary(0, 1000).toFixed(2),
@@ -19,22 +20,34 @@ Array(size).fill().map((_, index) => ({
 export default (state = initialState, action) => {
     switch (action.type) {
         case types.SORT_DATA: {
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 data: state.data.slice(0).sort((a, b) => b[action.column] - a[action.column]),
                 sortData: {
                     columnKey: action.column,
                     sortDirection: action.direction
                 }
-            })
+            }
         }
         case types.NEXT_PAGE: {
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 data: state.data.concat(makeFakeData(100))
-            })
+            }
         }
         case types.SELECT_ROW: {
-            return Object.assign({}, state, {
-            })
+            return {
+                ...state,
+                data: state.data.map((row, index) => {
+                    const newRow = row
+
+                    if (index === action.index) {
+                        newRow.selected = action.selected
+                    }
+
+                    return newRow
+                })
+            }
         }
         // no default
     }

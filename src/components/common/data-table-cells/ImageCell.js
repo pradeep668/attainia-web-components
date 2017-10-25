@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {Cell} from 'fixed-data-table-2'
 
 
-export class ImageCell extends React.PureComponent {
+export default class ImageCell extends React.PureComponent {
     render() {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
@@ -25,5 +25,3 @@ ImageCell.propTypes = {
     rowIndex: PropTypes.number,
     columnKey: PropTypes.string
 }
-
-export default ImageCell

@@ -13,7 +13,7 @@ const InlineImg = styled(SimpleSvgIcon)`
     vertical-align: middle;
 `
 
-export class InfoIconToolTipTextCell extends React.PureComponent {
+export default class InfoIconToolTipTextCell extends React.PureComponent {
     render() {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
@@ -37,5 +37,3 @@ InfoIconToolTipTextCell.propTypes = {
     rowIndex: PropTypes.number,
     columnKey: PropTypes.string
 }
-
-export default InfoIconToolTipTextCell

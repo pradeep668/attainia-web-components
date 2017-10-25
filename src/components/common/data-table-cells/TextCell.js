@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import {Cell} from 'fixed-data-table-2'
 
 
-export class TextCell extends React.PureComponent {
+export default class TextCell extends React.PureComponent {
     render() {
         const {data, rowIndex, columnKey, ...props} = this.props
         return (
@@ -21,5 +21,3 @@ TextCell.propTypes = {
     rowIndex: PropTypes.number,
     columnKey: PropTypes.string
 }
-
-export default {TextCell}
