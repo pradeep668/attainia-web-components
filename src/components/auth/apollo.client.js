@@ -1,7 +1,7 @@
 import {path} from 'ramda'
 import {ApolloClient, createNetworkInterface} from 'react-apollo'
 import {SubscriptionClient, addGraphQLSubscriptions} from 'subscriptions-transport-ws'
-import {getAccessTokenFromStorage} from './helpers'
+import {getAccessTokenFromStorage, formatBaseUri} from './helpers'
 
 export default ({
     baseUrl = 'localhost',
@@ -9,7 +9,7 @@ export default ({
     useSubscriptions = true,
     apolloClientProps = {}
 } = {}) => {
-    const uri = `${/^https?:\/\//i.test(baseUrl) ? baseUrl : `http://${baseUrl}`}/graphql`
+    const uri = `${formatBaseUri(baseUrl)}/graphql`
     const networkInterface = createNetworkInterface({uri})
 
     if (/(local|session)/i.test(storage)) {
@@ -25,7 +25,10 @@ export default ({
     }
 
     if (useSubscriptions) {
-        const wsClient = new SubscriptionClient(`ws://${baseUrl}/subscriptions`, {reconnect: true})
+        const wsClient = new SubscriptionClient(
+            `ws://${uri.split('://')[1]}/subscriptions`,
+            {reconnect: true}
+        )
         return new ApolloClient({
             networkInterface: addGraphQLSubscriptions(networkInterface, wsClient),
             ...apolloClientProps
