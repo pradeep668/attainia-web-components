@@ -18,7 +18,7 @@ const ResourcesPage = styled.section`
         height: 100%;
     }
 `
-class ResourcesList extends Component {
+class Resources extends Component {
     componentWillMount() {
         this.props.findAllResources()
     }
@@ -43,7 +43,7 @@ class ResourcesList extends Component {
     }
 }
 
-ResourcesList.propTypes = {
+Resources.propTypes = {
     findAllResources: PropTypes.func.isRequired,
     resources: PropTypes.arrayOf(
         PropTypes.shape({
@@ -53,8 +53,8 @@ ResourcesList.propTypes = {
     )
 }
 
-ResourcesList.defaultProps = {
+Resources.defaultProps = {
     resources: []
 }
 
-export default ResourcesList
+export default Resources
