@@ -22,11 +22,11 @@ async function build() {
         const files = glob.sync(`${process.cwd()}/src/components/**/*.js`)
             .map(path => path.split('src/components/')[1].split('/'))
             .filter(([module, filename]) => module && filename)
-            .map(([module, filename]) => ({module, filename}))
+            .map(([module, filename, subfilename]) => ({module, filename, subfilename}))
 
-        await Promise.all(files.map(async ({module, filename}) => {
+        await Promise.all(files.map(async ({module, filename, subfilename}) => {
             const bundle = await rollup({
-                input: `src/components/${module}/${filename}`,
+                input: `src/components/${module}/${filename}${subfilename ? `/${subfilename}` : ''}`,
                 external: Object.keys(pkg.dependencies),
                 globals: {react: 'React'},
                 plugins: [
@@ -79,7 +79,7 @@ async function build() {
             return bundle.write({
                 format: 'es', // umd || cjs
                 sourcemap: true,
-                file: `${module}/${filename}`
+                file: `${module}/${filename}${subfilename ? `/${subfilename}` : ''}`
             })
         }))
         process.exit(0)
