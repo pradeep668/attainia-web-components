@@ -1,11 +1,12 @@
-import {compose, is, toString} from 'ramda'
+import {omit, compose, is, trim, toString} from 'ramda'
 import types from './types'
 import initialState from './initialState'
 
 const parseError = compose(
+    trim,
     ([label, message]) => message || label,
     str => str.split(/error:/i),
-    toString,
+    val => (is(String, val) ? val : toString(val)),
     err => (is(Object, err) ? err.message : err)
 )
 
@@ -33,7 +34,10 @@ export default (
                 refreshTimeout: clearTimeout(state.refreshTimeout)
             }
         case types.CLEAR_LOGIN:
-            return {...initialState}
+            return {
+                ...state,
+                ...omit(['baseUrl'], initialState)
+            }
         case types.ERROR:
             return {
                 ...state,
@@ -86,7 +90,8 @@ export default (
             }
         case types.LOGOUT:
             return {
-                ...initialState,
+                ...omit(['refreshTimeout'], state),
+                ...omit(['baseUrl'], initialState),
                 status: 'logout'
             }
         case types.PASSWORD_HELP:
