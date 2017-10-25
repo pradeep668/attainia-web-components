@@ -3,7 +3,6 @@ import {Provider} from 'react-redux'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import {ThemeProvider} from 'styled-components'
 
-import DataTable from './components/common/DataTable.container'
 import Resources from './components/resources/Resources.container'
 import ResourcesDetail from './components/resources/ResourcesDetail.container'
 import ResourcesNew from './components/resources/ResourcesNew.container'
@@ -23,7 +22,6 @@ export default (
                         <Route exact path="/resources" component={Resources} />
                         <Route exact path="/resources/new" component={ResourcesNew} />
                         <Route exact path="/resources/:id" component={ResourcesDetail} />
-                        <Route exact path="/data_table" component={DataTable} /> {/* Only used for dev purposes */}
                     </Switch>
                 </BrowserRouter>
             </AuthenticatedApp>
