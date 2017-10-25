@@ -1,5 +1,6 @@
 import {path} from 'ramda'
 
+export const formatBaseUri = uri => (/^https?:\/\//i.test(uri) ? uri : `http://${uri}`)
 export const getAccessToken = props => path(['user', 'token', 'access_token'], props)
 export const getAccessTokenFromStorage = storage => {
     if (/local/i.test(storage)) {
