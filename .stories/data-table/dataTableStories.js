@@ -1,13 +1,11 @@
 import React from 'react'
-import {Provider} from 'react-redux';
-import {createStore} from 'redux'
 import {storiesOf} from '@storybook/react'
 import {action} from '@storybook/addon-actions'
 import {ThemeProvider} from 'styled-components'
+import styled from 'styled-components'
 
 import theme from '../../src/theme'
 import {DataTable, ColumnType} from '../../src/components/common/DataTable'
-import CenteredDataTable from './dataTableContainer'
 import {
     getMockDataNoneSelected,
     getMockDataFirstSelected,
@@ -20,15 +18,21 @@ import {
     getSortDataThirdDesc
 } from './dataTableMockData'
 
-const reducer = (state) => { return state }
-const store = createStore(reducer)
+const CenterDiv = styled.div`
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+`
+
+const CenteredDataTable = (props) =>
+    <CenterDiv>
+        <DataTable {...props} />
+    </CenterDiv>
 
 storiesOf('DataTable', module)
     .addDecorator((getStory) => (
         <ThemeProvider theme={theme}>
-            <Provider store={store}>
-                { getStory() }
-            </Provider>
+            { getStory() }
         </ThemeProvider>
     ))
     .add('Without check column, no sort', () =>
