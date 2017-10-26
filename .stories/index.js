@@ -1,4 +1,4 @@
 import '../src/globals'
 
 // Import stories for individual components
-import './dataTableStories'
+import './data-table/dataTableStories'

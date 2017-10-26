@@ -1,4 +1,4 @@
-import {ColumnType} from '../src/components/common/DataTable'
+import {ColumnType} from '../../src/components/common/DataTable'
 import types from './dataTablesTypes'
 
 

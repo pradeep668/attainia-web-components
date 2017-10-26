@@ -5,8 +5,8 @@ import {storiesOf} from '@storybook/react'
 import {action} from '@storybook/addon-actions'
 import {ThemeProvider} from 'styled-components'
 
-import theme from '../src/theme'
-import {DataTable, ColumnType} from '../src/components/common/DataTable'
+import theme from '../../src/theme'
+import {DataTable, ColumnType} from '../../src/components/common/DataTable'
 import ThisDataTable from './dataTableContainer'
 import reducer from './dataTableReducer'
 

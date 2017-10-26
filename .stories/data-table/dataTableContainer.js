@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import styled from 'styled-components'
 
-import {DataTable, ColumnType} from '../src/components/common/DataTable'
+import {DataTable, ColumnType} from '../../src/components/common/DataTable'
 import types from './dataTablesTypes'
 
 
