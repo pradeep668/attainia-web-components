@@ -11,7 +11,6 @@
     "react"
   ],
   "plugins": [
-    "transform-runtime",
     "add-module-exports",
     "syntax-async-functions",
     "transform-object-rest-spread"
