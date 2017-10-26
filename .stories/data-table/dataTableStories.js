@@ -46,7 +46,7 @@ storiesOf('DataTable', module)
             data={getMockDataNoneSelected(10)}
         />
     )
-    .add('Without check column, no sort, no fixed', () =>
+    .add('Without check column, no sort, no fixed col', () =>
         <CenteredDataTable
             rowHeight={50}
             tableWidth={1253}
