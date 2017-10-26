@@ -1,6 +1,7 @@
 import React from 'react'
 import {storiesOf} from '@storybook/react'
 import {action} from '@storybook/addon-actions'
+import {withInfo} from '@storybook/addon-info'
 import {ThemeProvider} from 'styled-components'
 import styled from 'styled-components'
 
@@ -31,138 +32,156 @@ storiesOf('DataTable', module)
             </CenterDiv>
         </ThemeProvider>
     ))
-    .add('Without check column, no sort', () =>
-        <DataTable
-            rowHeight={50}
-            tableWidth={1253}
-            tableHeight={500}
-            headerHeight={50}
-            hasCheckColumn={false}
-            getNextPage={action('nextPage')}
-            rowSelected={action('selectRow')}
-            getSortedData={action('sortData')}
-            sortData={{}}
-            headers={getMockHeadersFirstFixed()}
-            data={getMockDataNoneSelected(10)}
-        />
+    .add('Without check column, no sort',
+        withInfo('A DataTable without a checkbox column, no sorting data for any column, and the name column is fixed.')(() =>
+            <DataTable
+                rowHeight={50}
+                tableWidth={1253}
+                tableHeight={500}
+                headerHeight={50}
+                hasCheckColumn={false}
+                getNextPage={action('nextPage')}
+                rowSelected={action('selectRow')}
+                getSortedData={action('sortData')}
+                sortData={{}}
+                headers={getMockHeadersFirstFixed()}
+                data={getMockDataNoneSelected(10)}
+            />
+        )
     )
-    .add('Without check column, no sort, no fixed col', () =>
-        <DataTable
-            rowHeight={50}
-            tableWidth={1253}
-            tableHeight={500}
-            headerHeight={50}
-            hasCheckColumn={false}
-            getNextPage={action('nextPage')}
-            rowSelected={action('selectRow')}
-            getSortedData={action('sortData')}
-            sortData={{}}
-            headers={getMockHeadersNoneFixed()}
-            data={getMockDataNoneSelected(10)}
-        />
+    .add('Without check column, no sort, no fixed col',
+        withInfo('A DataTable without a checkbox column and no sorting data for any column.')(() =>
+            <DataTable
+                rowHeight={50}
+                tableWidth={1253}
+                tableHeight={500}
+                headerHeight={50}
+                hasCheckColumn={false}
+                getNextPage={action('nextPage')}
+                rowSelected={action('selectRow')}
+                getSortedData={action('sortData')}
+                sortData={{}}
+                headers={getMockHeadersNoneFixed()}
+                data={getMockDataNoneSelected(10)}
+            />
+        )
     )
-    .add('Check column, no sort', () =>
-        <DataTable
-            rowHeight={50}
-            tableWidth={1253}
-            tableHeight={500}
-            headerHeight={50}
-            hasCheckColumn={true}
-            getNextPage={action('nextPage')}
-            rowSelected={action('selectRow')}
-            getSortedData={action('sortData')}
-            sortData={{}}
-            headers={getMockHeadersFirstFixed()}
-            data={getMockDataNoneSelected(10)}
-        />
+    .add('Check column, no sort',
+        withInfo('A DataTable with a checkbox column and no sorting data for any column, and the check and name columns are fixed.')(() =>
+            <DataTable
+                rowHeight={50}
+                tableWidth={1253}
+                tableHeight={500}
+                headerHeight={50}
+                hasCheckColumn={true}
+                getNextPage={action('nextPage')}
+                rowSelected={action('selectRow')}
+                getSortedData={action('sortData')}
+                sortData={{}}
+                headers={getMockHeadersFirstFixed()}
+                data={getMockDataNoneSelected(10)}
+            />
+        )
     )
-    .add('Check column, no sort, first row selected', () =>
-        <DataTable
-            rowHeight={50}
-            tableWidth={1253}
-            tableHeight={500}
-            headerHeight={50}
-            hasCheckColumn={true}
-            getNextPage={action('nextPage')}
-            rowSelected={action('selectRow')}
-            getSortedData={action('sortData')}
-            sortData={{}}
-            headers={getMockHeadersFirstFixed()}
-            data={getMockDataFirstSelected(10)}
-        />
+    .add('Check column, no sort, first row selected',
+        withInfo('A DataTable with a checkbox column and no sorting data for any column, and the check and name columns are fixed.  Also, the first row is selected')(() =>
+            <DataTable
+                rowHeight={50}
+                tableWidth={1253}
+                tableHeight={500}
+                headerHeight={50}
+                hasCheckColumn={true}
+                getNextPage={action('nextPage')}
+                rowSelected={action('selectRow')}
+                getSortedData={action('sortData')}
+                sortData={{}}
+                headers={getMockHeadersFirstFixed()}
+                data={getMockDataFirstSelected(10)}
+            />
+        )
     )
-    .add('Check column, no sort, all rows selected', () =>
-        <DataTable
-            rowHeight={50}
-            tableWidth={1253}
-            tableHeight={500}
-            headerHeight={50}
-            hasCheckColumn={true}
-            getNextPage={action('nextPage')}
-            rowSelected={action('selectRow')}
-            getSortedData={action('sortData')}
-            sortData={{}}
-            headers={getMockHeadersFirstFixed()}
-            data={getMockDataAllSelected(10)}
-        />
+    .add('Check column, no sort, all rows selected',
+        withInfo('A DataTable with a checkbox column and no sorting data for any column, and the check and name columns are fixed.  Also, all rows are selected')(() =>
+            <DataTable
+                rowHeight={50}
+                tableWidth={1253}
+                tableHeight={500}
+                headerHeight={50}
+                hasCheckColumn={true}
+                getNextPage={action('nextPage')}
+                rowSelected={action('selectRow')}
+                getSortedData={action('sortData')}
+                sortData={{}}
+                headers={getMockHeadersFirstFixed()}
+                data={getMockDataAllSelected(10)}
+            />
+        )
     )
-    .add('Check column, first col sorted asc', () =>
-        <DataTable
-            rowHeight={50}
-            tableWidth={1253}
-            tableHeight={500}
-            headerHeight={50}
-            hasCheckColumn={true}
-            getNextPage={action('nextPage')}
-            rowSelected={action('selectRow')}
-            getSortedData={action('sortData')}
-            sortData={getSortDataFirstAsc()}
-            headers={getMockHeadersFirstFixed()}
-            data={getMockDataNoneSelected(10)}
-        />
+    .add('Check column, first col sorted asc',
+        withInfo('A DataTable with a checkbox column and no sorting data for any column, and the check and name columns are fixed.  Also, the first column is sorted, ascending.')(() =>
+            <DataTable
+                rowHeight={50}
+                tableWidth={1253}
+                tableHeight={500}
+                headerHeight={50}
+                hasCheckColumn={true}
+                getNextPage={action('nextPage')}
+                rowSelected={action('selectRow')}
+                getSortedData={action('sortData')}
+                sortData={getSortDataFirstAsc()}
+                headers={getMockHeadersFirstFixed()}
+                data={getMockDataNoneSelected(10)}
+            />
+        )
     )
-    .add('Check column, first col sorted desc', () =>
-        <DataTable
-            rowHeight={50}
-            tableWidth={1253}
-            tableHeight={500}
-            headerHeight={50}
-            hasCheckColumn={true}
-            getNextPage={action('nextPage')}
-            rowSelected={action('selectRow')}
-            getSortedData={action('sortData')}
-            sortData={getSortDataFirstDesc()}
-            headers={getMockHeadersFirstFixed()}
-            data={getMockDataNoneSelected(10)}
-        />
+    .add('Check column, first col sorted desc',
+        withInfo('A DataTable with a checkbox column and no sorting data for any column, and the check and name columns are fixed.  Also, the first column is sorted, descending.')(() =>
+            <DataTable
+                rowHeight={50}
+                tableWidth={1253}
+                tableHeight={500}
+                headerHeight={50}
+                hasCheckColumn={true}
+                getNextPage={action('nextPage')}
+                rowSelected={action('selectRow')}
+                getSortedData={action('sortData')}
+                sortData={getSortDataFirstDesc()}
+                headers={getMockHeadersFirstFixed()}
+                data={getMockDataNoneSelected(10)}
+            />
+        )
     )
-    .add('Check column, number col sorted asc', () =>
-        <DataTable
-            rowHeight={50}
-            tableWidth={1253}
-            tableHeight={500}
-            headerHeight={50}
-            hasCheckColumn={true}
-            getNextPage={action('nextPage')}
-            rowSelected={action('selectRow')}
-            getSortedData={action('sortData')}
-            sortData={getSortDataThirdAsc()}
-            headers={getMockHeadersFirstFixed()}
-            data={getMockDataNoneSelected(10)}
-        />
+    .add('Check column, number col sorted asc',
+        withInfo('A DataTable with a checkbox column and no sorting data for any column, and the check and name columns are fixed.  Also, the number column is sorted, ascending.')(() =>
+            <DataTable
+                rowHeight={50}
+                tableWidth={1253}
+                tableHeight={500}
+                headerHeight={50}
+                hasCheckColumn={true}
+                getNextPage={action('nextPage')}
+                rowSelected={action('selectRow')}
+                getSortedData={action('sortData')}
+                sortData={getSortDataThirdAsc()}
+                headers={getMockHeadersFirstFixed()}
+                data={getMockDataNoneSelected(10)}
+            />
+        )
     )
-    .add('Check column, number col sorted desc', () =>
-        <DataTable
-            rowHeight={50}
-            tableWidth={1253}
-            tableHeight={500}
-            headerHeight={50}
-            hasCheckColumn={true}
-            getNextPage={action('nextPage')}
-            rowSelected={action('selectRow')}
-            getSortedData={action('sortData')}
-            sortData={getSortDataThirdDesc()}
-            headers={getMockHeadersFirstFixed()}
-            data={getMockDataNoneSelected(10)}
-        />
+    .add('Check column, number col sorted desc',
+        withInfo('A DataTable with a checkbox column and no sorting data for any column, and the check and name columns are fixed.  Also, the number column is sorted, descending.')(() =>
+            <DataTable
+                rowHeight={50}
+                tableWidth={1253}
+                tableHeight={500}
+                headerHeight={50}
+                hasCheckColumn={true}
+                getNextPage={action('nextPage')}
+                rowSelected={action('selectRow')}
+                getSortedData={action('sortData')}
+                sortData={getSortDataThirdDesc()}
+                headers={getMockHeadersFirstFixed()}
+                data={getMockDataNoneSelected(10)}
+            />
+        )
     )
