@@ -8,7 +8,6 @@ import {ThemeProvider} from 'styled-components'
 import theme from '../../src/theme'
 import {DataTable, ColumnType} from '../../src/components/common/DataTable'
 import CenteredDataTable from './dataTableContainer'
-import reducer from './dataTableReducer'
 import {
     getMockDataNoneSelected,
     getMockDataFirstSelected,
@@ -21,6 +20,7 @@ import {
     getSortDataThirdDesc
 } from './dataTableMockData'
 
+const reducer = (state) => { return state }
 const store = createStore(reducer)
 
 storiesOf('DataTable', module)
