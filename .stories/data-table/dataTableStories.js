@@ -32,7 +32,7 @@ storiesOf('DataTable', module)
     .add('Data Table without check column', () =>
     <ThisDataTable
         rowHeight={50}
-        tableWidth={2253}
+        tableWidth={1253}
         tableHeight={500}
         headerHeight={50}
         hasCheckColumn={false}
