@@ -118,11 +118,6 @@ export default (state = initialState, action) => {
 
 // Data table initial state
 const initialState = {
-    rowHeight: 50,
-    tableWidth: 1253,
-    tableHeight: 500,
-    headerHeight: 50,
-    hasCheckColumn: true,
     sortData: {
         columnKey: 'name',
         sortDirection: 'asc'

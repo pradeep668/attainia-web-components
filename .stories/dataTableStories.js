@@ -20,4 +20,21 @@ storiesOf('DataTable', module)
             </Provider>
         </ThemeProvider>
     ))
-    .add('Data Table Component', () => <ThisDataTable /> )
+    .add('Data Table with check column', () =>
+        <ThisDataTable
+            rowHeight={50}
+            tableWidth={1253}
+            tableHeight={500}
+            headerHeight={50}
+            hasCheckColumn={true}
+        />
+    )
+    .add('Data Table without check column', () =>
+    <ThisDataTable
+        rowHeight={50}
+        tableWidth={1253}
+        tableHeight={500}
+        headerHeight={50}
+        hasCheckColumn={false}
+    />
+)
