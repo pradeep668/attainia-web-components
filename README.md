@@ -213,7 +213,7 @@ Many/most of the components in this library attempt to parse themeing constants 
 Using React Storybook, we can develop and design UI components outside of an application in an isolated environment.  For more information about Storybooks, see the links below.
 
 [Storybook Site](https://storybook.js.org/)
-[Storybook GiHub](https://github.com/storybooks/storybook)
+[Storybook GitHub](https://github.com/storybooks/storybook)
 
 You can run the Storybooks using the following command:
 
