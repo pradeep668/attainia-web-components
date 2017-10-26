@@ -19,24 +19,20 @@ import {
 } from './dataTableMockData'
 
 const CenterDiv = styled.div`
-    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
 `
 
-const CenteredDataTable = (props) =>
-    <CenterDiv>
-        <DataTable {...props} />
-    </CenterDiv>
-
 storiesOf('DataTable', module)
     .addDecorator((getStory) => (
         <ThemeProvider theme={theme}>
-            { getStory() }
+            <CenterDiv>
+                { getStory() }
+            </CenterDiv>
         </ThemeProvider>
     ))
     .add('Without check column, no sort', () =>
-        <CenteredDataTable
+        <DataTable
             rowHeight={50}
             tableWidth={1253}
             tableHeight={500}
@@ -51,7 +47,7 @@ storiesOf('DataTable', module)
         />
     )
     .add('Without check column, no sort, no fixed col', () =>
-        <CenteredDataTable
+        <DataTable
             rowHeight={50}
             tableWidth={1253}
             tableHeight={500}
@@ -66,7 +62,7 @@ storiesOf('DataTable', module)
         />
     )
     .add('Check column, no sort', () =>
-        <CenteredDataTable
+        <DataTable
             rowHeight={50}
             tableWidth={1253}
             tableHeight={500}
@@ -81,7 +77,7 @@ storiesOf('DataTable', module)
         />
     )
     .add('Check column, no sort, first row selected', () =>
-        <CenteredDataTable
+        <DataTable
             rowHeight={50}
             tableWidth={1253}
             tableHeight={500}
@@ -96,7 +92,7 @@ storiesOf('DataTable', module)
         />
     )
     .add('Check column, no sort, all rows selected', () =>
-        <CenteredDataTable
+        <DataTable
             rowHeight={50}
             tableWidth={1253}
             tableHeight={500}
@@ -111,7 +107,7 @@ storiesOf('DataTable', module)
         />
     )
     .add('Check column, first col sorted asc', () =>
-        <CenteredDataTable
+        <DataTable
             rowHeight={50}
             tableWidth={1253}
             tableHeight={500}
@@ -126,7 +122,7 @@ storiesOf('DataTable', module)
         />
     )
     .add('Check column, first col sorted desc', () =>
-        <CenteredDataTable
+        <DataTable
             rowHeight={50}
             tableWidth={1253}
             tableHeight={500}
@@ -141,7 +137,7 @@ storiesOf('DataTable', module)
         />
     )
     .add('Check column, number col sorted asc', () =>
-        <CenteredDataTable
+        <DataTable
             rowHeight={50}
             tableWidth={1253}
             tableHeight={500}
@@ -156,7 +152,7 @@ storiesOf('DataTable', module)
         />
     )
     .add('Check column, number col sorted desc', () =>
-        <CenteredDataTable
+        <DataTable
             rowHeight={50}
             tableWidth={1253}
             tableHeight={500}
