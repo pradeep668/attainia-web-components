@@ -3,13 +3,10 @@ import {connect} from 'react-redux'
 import styled from 'styled-components'
 
 import {DataTable, ColumnType} from '../src/components/common/DataTable'
+import types from './dataTablesTypes'
 
-const types = {
-    SORT_DATA: 'sort_data',
-    NEXT_PAGE: 'next_page',
-    SELECT_ROW: 'select_row'
-}
 
+// Actions
 const sortData = (column, direction) => ({column, direction, type: types.SORT_DATA})
 const nextPage = pageNumber => ({pageNumber, type: types.NEXT_PAGE})
 const selectRow = (index, selected) => ({index, selected, type: types.SELECT_ROW})

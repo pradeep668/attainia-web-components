@@ -7,8 +7,8 @@ import {ThemeProvider} from 'styled-components'
 
 import theme from '../src/theme'
 import {DataTable, ColumnType} from '../src/components/common/DataTable'
-import ThisDataTable from './data-table-container'
-import reducer from './data-table-reducer'
+import ThisDataTable from './dataTableContainer'
+import reducer from './dataTableReducer'
 
 const store = createStore(reducer)
 
