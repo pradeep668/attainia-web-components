@@ -1,24 +1,25 @@
 import React from 'react'
 
 import PropTypes from 'prop-types'
-
 import {Cell} from 'fixed-data-table-2'
+import SimpleSvgIcon from '../common/SimpleSvgIcon'
 
-
-export default class LinkCell extends React.PureComponent {
+export default class IconLinkCell extends React.PureComponent {
     render() {
         const {cellData, ...props} = this.props
         return (
             <Cell {...props}>
-                <a href={cellData.link}>{cellData.label}</a>
+                <a href={cellData.link}>
+                    <SimpleSvgIcon icon={cellData.iconName} />
+                </a>
             </Cell>
         )
     }
 }
 
-LinkCell.propTypes = {
+IconLinkCell.propTypes = {
     cellData: PropTypes.shape({
         link: PropTypes.string.isRequired,
-        label: PropTypes.string.isRequired
+        iconName: PropTypes.string.isRequired
     }).isRequired
 }

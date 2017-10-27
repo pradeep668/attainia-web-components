@@ -1,11 +1,11 @@
-import {ColumnType} from '../../src/components/common/DataTable'
+import {ColumnType} from '../../src/components/data-table/DataTable'
 
 
 // Utility functions for generating mock data
 const getRandomArbitrary = (min, max) =>
     (Math.random() * (max - min)) + min
 
-const getBaseMockData = size =>
+const getBaseMockData = size => 
     Array(size).fill().map((_, index) => ({
         selected: false,
         name: `Name ${index + 1}`,

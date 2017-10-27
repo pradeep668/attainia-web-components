@@ -6,7 +6,7 @@ import {ThemeProvider} from 'styled-components'
 import styled from 'styled-components'
 
 import theme from '../../src/theme'
-import {DataTable, ColumnType} from '../../src/components/common/DataTable'
+import {DataTable, ColumnType} from '../../src/components/data-table/DataTable'
 import {
     getMockDataNoneSelected,
     getMockDataFirstSelected,
@@ -43,9 +43,15 @@ storiesOf('DataTable', module)
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
-                sortData={{}}
                 headers={getMockHeadersFirstFixed()}
-                data={getMockDataNoneSelected(10)}
+                data={{
+                    sortData: {},
+                    pageData: {
+                        page: 1,
+                        total: 10
+                    },
+                    rows: getMockDataNoneSelected(10)
+                }}
             />
         )
     )
@@ -60,9 +66,15 @@ storiesOf('DataTable', module)
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
-                sortData={{}}
                 headers={getMockHeadersNoneFixed()}
-                data={getMockDataNoneSelected(10)}
+                data={{
+                    sortData: {},
+                    pageData: {
+                        page: 1,
+                        total: 10
+                    },
+                    rows: getMockDataNoneSelected(10)
+                }}
             />
         )
     )
@@ -77,9 +89,15 @@ storiesOf('DataTable', module)
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
-                sortData={{}}
                 headers={getMockHeadersFirstFixed()}
-                data={getMockDataNoneSelected(10)}
+                data={{
+                    sortData: {},
+                    pageData: {
+                        page: 1,
+                        total: 10
+                    },
+                    rows: getMockDataNoneSelected(10)
+                }}
             />
         )
     )
@@ -94,9 +112,15 @@ storiesOf('DataTable', module)
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
-                sortData={{}}
                 headers={getMockHeadersFirstFixed()}
-                data={getMockDataFirstSelected(10)}
+                data={{
+                    sortData: {},
+                    pageData: {
+                        page: 1,
+                        total: 10
+                    },
+                    rows: getMockDataFirstSelected(10)
+                }}
             />
         )
     )
@@ -111,9 +135,15 @@ storiesOf('DataTable', module)
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
-                sortData={{}}
                 headers={getMockHeadersFirstFixed()}
-                data={getMockDataAllSelected(10)}
+                data={{
+                    sortData: {},
+                    pageData: {
+                        page: 1,
+                        total: 10
+                    },
+                    rows: getMockDataAllSelected(10)
+                }}
             />
         )
     )
@@ -128,9 +158,15 @@ storiesOf('DataTable', module)
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
-                sortData={getSortDataFirstAsc()}
                 headers={getMockHeadersFirstFixed()}
-                data={getMockDataNoneSelected(10)}
+                data={{
+                    sortData: getSortDataFirstAsc(),
+                    pageData: {
+                        page: 1,
+                        total: 10
+                    },
+                    rows: getMockDataNoneSelected(10)
+                }}
             />
         )
     )
@@ -145,9 +181,15 @@ storiesOf('DataTable', module)
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
-                sortData={getSortDataFirstDesc()}
                 headers={getMockHeadersFirstFixed()}
-                data={getMockDataNoneSelected(10)}
+                data={{
+                    sortData: getSortDataFirstDesc(),
+                    pageData: {
+                        page: 1,
+                        total: 10
+                    },
+                    rows: getMockDataNoneSelected(10)
+                }}
             />
         )
     )
@@ -162,9 +204,15 @@ storiesOf('DataTable', module)
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
-                sortData={getSortDataThirdAsc()}
                 headers={getMockHeadersFirstFixed()}
-                data={getMockDataNoneSelected(10)}
+                data={{
+                    sortData: getSortDataThirdAsc(),
+                    pageData: {
+                        page: 1,
+                        total: 10
+                    },
+                    rows: getMockDataNoneSelected(10)
+                }}
             />
         )
     )
@@ -179,9 +227,15 @@ storiesOf('DataTable', module)
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
-                sortData={getSortDataThirdDesc()}
                 headers={getMockHeadersFirstFixed()}
-                data={getMockDataNoneSelected(10)}
+                data={{
+                    sortData: getSortDataThirdDesc(),
+                    pageData: {
+                        page: 1,
+                        total: 10
+                    },
+                    rows: getMockDataNoneSelected(10)
+                }}
             />
         )
     )
