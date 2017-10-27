@@ -13,7 +13,7 @@ import TooltipHeaderCell from './data-table-cells/TooltipHeaderCell'
 import {NumberTooltipHeaderCell} from './data-table-cells/NumberTooltipHeaderCell'
 import TextCell from './data-table-cells/TextCell'
 import LinkCell from './data-table-cells/LinkCell'
-import {NumberCell} from './data-table-cells/NumberCell'
+import NumberCell from './data-table-cells/NumberCell'
 import InfoIconToolTipTextCell from './data-table-cells/InfoIconToolTipTextCell'
 import ImageCell from './data-table-cells/ImageCell'
 import IconLinkCell from './data-table-cells/IconLinkCell'
@@ -67,7 +67,7 @@ const RenderColumns = (headers, data, sortData, getSortedData) => (
                     key={uuid()}
                     header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={getSortedData} />}
                     columnKey={header.key}
-                    cell={<TextCell data={data} />}
+                    cell={({rowIndex, columnKey}) => (<TextCell cellData={data[rowIndex][columnKey]} />)}
                     width={header.width}
                     fixed={header.fixed}
                 />
@@ -77,7 +77,7 @@ const RenderColumns = (headers, data, sortData, getSortedData) => (
                     key={uuid()}
                     header={<NumberTooltipHeaderCell data={header} sortData={sortData} sortCallback={getSortedData} />}
                     columnKey={header.key}
-                    cell={<NumberCell data={data} />}
+                    cell={({rowIndex, columnKey}) => (<NumberCell cellData={data[rowIndex][columnKey]} />)}
                     width={header.width}
                     fixed={header.fixed}
                 />
@@ -87,7 +87,7 @@ const RenderColumns = (headers, data, sortData, getSortedData) => (
                     key={uuid()}
                     header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={getSortedData} />}
                     columnKey={header.key}
-                    cell={<LinkCell data={data} />}
+                    cell={({rowIndex, columnKey}) => (<LinkCell cellData={data[rowIndex][columnKey]} />)}
                     width={header.width}
                     fixed={header.fixed}
                 />
@@ -97,7 +97,7 @@ const RenderColumns = (headers, data, sortData, getSortedData) => (
                     key={uuid()}
                     header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={getSortedData} />}
                     columnKey={header.key}
-                    cell={<ImageCell data={data} />}
+                    cell={({rowIndex, columnKey}) => (<ImageCell cellData={data[rowIndex][columnKey]} />)}
                     width={header.width}
                     fixed={header.fixed}
                 />
@@ -107,7 +107,7 @@ const RenderColumns = (headers, data, sortData, getSortedData) => (
                     key={uuid()}
                     header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={getSortedData} />}
                     columnKey={header.key}
-                    cell={<IconLinkCell data={data} />}
+                    cell={({rowIndex, columnKey}) => (<IconLinkCell cellData={data[rowIndex][columnKey]} />)}
                     width={header.width}
                     fixed={header.fixed}
                 />
@@ -117,7 +117,7 @@ const RenderColumns = (headers, data, sortData, getSortedData) => (
                     key={uuid()}
                     header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={getSortedData} />}
                     columnKey={header.key}
-                    cell={<InfoIconToolTipTextCell data={data} />}
+                    cell={({rowIndex, columnKey}) => (<InfoIconToolTipTextCell cellData={data[rowIndex][columnKey]} />)}
                     width={header.width}
                     fixed={header.fixed}
                 />

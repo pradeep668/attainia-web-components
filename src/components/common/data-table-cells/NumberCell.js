@@ -1,20 +1,26 @@
-import PropTypes from 'prop-types'
+import React from 'react'
 
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
+import {Cell} from 'fixed-data-table-2'
 
-import TextCell from './TextCell'
 
-
-export const NumberCell = styled(TextCell)`
-    .public_fixedDataTableCell_cellContent {
-        text-align: right;
-    }
+const NumberStyledCell = styled(Cell)`
+    margin-left: auto;
+    margin-right: 13px;
 `
 
-NumberCell.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
-    rowIndex: PropTypes.number,
-    columnKey: PropTypes.string
+export default class NumberCell extends React.PureComponent {
+    render() {
+        const {cellData, ...props} = this.props
+        return (
+            <NumberStyledCell {...props}>
+                <span>{cellData}</span>
+            </NumberStyledCell>
+        )
+    }
 }
 
-export default NumberCell
+NumberCell.propTypes = {
+    cellData: PropTypes.number.isRequired
+}

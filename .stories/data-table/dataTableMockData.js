@@ -10,7 +10,7 @@ const getBaseMockData = size =>
         selected: false,
         name: `Name ${index + 1}`,
         prop_1: 'Value 1',
-        prop_2: getRandomArbitrary(0, 1000).toFixed(2),
+        prop_2: Number(getRandomArbitrary(0, 1000).toFixed(2)),
         prop_3: {label: 'Google', link: 'http://www.google.com'},
         prop_4: {iconName: 'edit', altText: 'Edit', link: 'http://www.google.com'},
         prop_5: {imageSource: 'https://www.omnicheer.com/images/header-social/icon-grey-instagram.png', altText: 'Visible'},
