@@ -6,7 +6,6 @@ import {connect} from 'react-redux'
 import {withTheme} from 'styled-components'
 
 import apolloClient from './apollo.client'
-import Auth from './Auth.container'
 
 const createClient = props =>
     props.ownClient({
@@ -16,7 +15,7 @@ const createClient = props =>
 
 const AuthProvider = props =>
     <ApolloProvider client={createClient(props)} {...props}>
-        <Auth {...props} />
+        {props.children}
     </ApolloProvider>
 
 AuthProvider.propTypes = {

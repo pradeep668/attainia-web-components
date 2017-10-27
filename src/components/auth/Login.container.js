@@ -5,19 +5,8 @@ import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
 import Login from './Login'
-import {
-    handleError,
-    login,
-    refresh,
-    toggleRememberMe,
-    gotoRegistration,
-    gotoPasswordHelp,
-    updatedToken,
-    finishedLoading,
-    startedLoading
-} from './actions'
+import {handleError, login, toggleRememberMe, finishedLoading, startedLoading} from './actions'
 import constants from './constants'
-import {getAccessTokenFromStorage} from './helpers'
 import {LOGIN_USER} from './mutations'
 
 const {login: {rules, messages}} = constants
@@ -34,41 +23,6 @@ const mapStateToProps = state => ({
     name: path(['auth', 'user', 'name'], state),
     loading: state.auth.loading,
     rememberMe: state.auth.rememberMe
-})
-
-const mapDispatchToProps = dispatch => ({
-    handleError(error) {
-        return dispatch(handleError(error))
-    },
-    login(user) {
-        return dispatch(login(user))
-    },
-    startedLoading() {
-        return dispatch(startedLoading())
-    },
-    finishedLoading() {
-        return dispatch(finishedLoading())
-    },
-    getAccessTokenFromStorage() {
-        return getAccessTokenFromStorage()
-    },
-    gotoPasswordHelp(e) {
-        e.preventDefault()
-        return dispatch(gotoPasswordHelp())
-    },
-    gotoRegistration(e) {
-        e.preventDefault()
-        return dispatch(gotoRegistration())
-    },
-    refresh() {
-        return dispatch(refresh())
-    },
-    toggleRememberMe() {
-        return dispatch(toggleRememberMe())
-    },
-    parseToken(token) {
-        return dispatch(updatedToken(token))
-    }
 })
 
 const FormedLogin = reduxForm({
@@ -125,4 +79,10 @@ const LoginWithData = graphql(LOGIN_USER, {
     })
 })(FormedLogin)
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginWithData)
+export default connect(mapStateToProps, {
+    handleError,
+    login,
+    startedLoading,
+    finishedLoading,
+    toggleRememberMe
+})(LoginWithData)

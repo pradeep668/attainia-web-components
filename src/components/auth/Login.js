@@ -1,11 +1,11 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
 
 import AuthError from './AuthError.container'
 import SpinningButton from '../common/SpinningButton'
 import Form from '../common/Form'
-import Link from '../common/Link'
 import SimpleSvgIcon from '../common/SimpleSvgIcon'
 import ReduxFormField from '../common/ReduxFormField'
 import FormField from '../common/FormField'
@@ -83,17 +83,12 @@ const StyledForm = styled(Form)`
         }
     }
 `
-class Login extends Component {
-    componentDidMount() {
-        const token = this.props.getAccessTokenFromStorage()
-        if (token) this.props.parseToken(token)
-    }
-
+class Login extends PureComponent {
     render() {
         const {
             handleSubmit, tryLogin, email, hasAuthError,
-            gotoPasswordHelp, gotoRegistration, rememberMe,
-            showPasswordHelp, showRegistration, toggleRememberMe, loading
+            passwordHelpLabel, registrationLabel, rememberMeLabel, loginLabel,
+            rememberMe, showPasswordHelp, showRegistration, toggleRememberMe, loading
         } = this.props
 
         return (
@@ -117,26 +112,18 @@ class Login extends Component {
                     />
                     <FormField
                         className="rememberMe"
-                        label="Remember Me"
+                        label={rememberMeLabel}
                         type="checkbox"
                         name="rememberMe"
                         checked={rememberMe}
                         value={rememberMe}
                         handlers={{onChange: toggleRememberMe}}
                     />
-                    {showPasswordHelp && (
-                        <Link className="passwordHelp" href="#" onClick={gotoPasswordHelp}>
-                            Password Help
-                        </Link>
-                    )}
+                    {showPasswordHelp && <Link className="passwordHelp" to="password-help">{passwordHelpLabel}</Link>}
                     <SpinningButton inProgress={loading} className="loginButton" type="submit">
-                        Login
+                        {loginLabel}
                     </SpinningButton>
-                    {showRegistration && (
-                        <Link className="register" href="#" onClick={gotoRegistration}>
-                            Need an Account?
-                        </Link>
-                    )}
+                    {showRegistration && <Link className="register" to="register">{registrationLabel}</Link>}
                 </StyledForm>
             </FullPageWrapper>
         )
@@ -146,13 +133,13 @@ class Login extends Component {
 Login.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     tryLogin: PropTypes.func.isRequired,
-    getAccessTokenFromStorage: PropTypes.func.isRequired,
-    gotoPasswordHelp: PropTypes.func.isRequired,
-    gotoRegistration: PropTypes.func.isRequired,
+    registrationLabel: PropTypes.string.isRequired,
+    passwordHelpLabel: PropTypes.string.isRequired,
+    rememberMeLabel: PropTypes.string.isRequired,
+    loginLabel: PropTypes.string.isRequired,
     email: PropTypes.string,
     hasAuthError: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,
-    parseToken: PropTypes.func.isRequired,
     rememberMe: PropTypes.bool,
     showPasswordHelp: PropTypes.bool.isRequired,
     showRegistration: PropTypes.bool.isRequired,
@@ -161,6 +148,10 @@ Login.propTypes = {
 
 Login.defaultProps = {
     hasAuthError: false,
+    passwordHelpLabel: 'Password Help',
+    registrationLabel: 'Need an Account?',
+    rememberMeLabel: 'Remember Me',
+    loginLabel: 'Login',
     showPasswordHelp: true,
     showRegistration: false,
     loading: false

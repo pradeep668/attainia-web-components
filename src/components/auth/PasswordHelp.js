@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+import {Link} from 'react-router-dom'
 import Button from '../common/Button'
+import LinkButton from '../common/LinkButton'
 import Form from '../common/Form'
 import SimpleSvgIcon from '../common/SimpleSvgIcon'
 import ReduxFormField from '../common/ReduxFormField'
@@ -52,17 +54,16 @@ const StyledForm = styled(Form)`
         }
     }
 `
-const PasswordHelp = ({handleSubmit, tryPasswordHelp, email, cancel}) =>
+const PasswordHelp = ({handleSubmit, tryPasswordHelp, email}) =>
     <StyledForm className="passwordHelpForm" onSubmit={handleSubmit(tryPasswordHelp)}>
         <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="primary" />
         <ReduxFormField className="email" placeholder="email" name="email" type="email" value={email} />
         <Button className="passwordHelpButton" type="submit">Reset Password</Button>
-        <Button className="cancelButton" type="button" onClick={cancel}>Cancel</Button>
+        <LinkButton className="cancelButton"><Link to="/">Cancel</Link></LinkButton>
     </StyledForm>
 
 PasswordHelp.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    cancel: PropTypes.func.isRequired,
     tryPasswordHelp: PropTypes.func.isRequired,
     email: PropTypes.string
 }

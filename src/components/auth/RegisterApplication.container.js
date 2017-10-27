@@ -4,7 +4,7 @@ import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
 import RegisterApplication from './RegisterApplication'
-import {registerApp, cancel} from './actions'
+import {registerApp} from './actions'
 import constants from './constants'
 import {REGISTER_APP} from './mutations'
 
@@ -16,15 +16,6 @@ const validate = values => {
     return validator.errors.all()
 }
 
-const mapDispatchToProps = dispatch => ({
-    cancel() {
-        return dispatch(cancel())
-    },
-    registerApplication(app) {
-        return dispatch(registerApp(app))
-    }
-})
-
 const FormedApplication = reduxForm({
     validate,
     fields: ['name', 'redirect'],
@@ -35,9 +26,9 @@ const RegisterApplicationWithData = graphql(REGISTER_APP, {
     props: ({mutate, ownProps}) => ({
         async tryRegisterApp(app) {
             const success = await mutate({variables: app})
-            if (success) ownProps.registerApplication(app)
+            if (success) ownProps.registerApp(app)
         }
     })
 })(FormedApplication)
 
-export default connect(null, mapDispatchToProps)(RegisterApplicationWithData)
+export default connect(null, {registerApp})(RegisterApplicationWithData)

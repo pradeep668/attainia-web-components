@@ -130,6 +130,16 @@ export default (
                 ...state,
                 rememberMe: !state.rememberMe
             }
+        case types.PARSED_TOKEN:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    token: {
+                        access_token: token
+                    }
+                }
+            }
         case types.UPDATED_TOKEN:
             return {
                 ...state,
