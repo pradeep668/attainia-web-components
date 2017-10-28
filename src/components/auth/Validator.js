@@ -1,49 +1,45 @@
-import {path} from 'ramda'
-import React from 'react'
+import {PureComponent} from 'react'
 import PropTypes from 'prop-types'
-import Login from './Login.container'
-import {GET_TOKEN_INFO} from './queries'
+import {VALIDATE_TOKEN} from './queries'
+import {removeToken} from './helpers'
 
-async function getTokenInfo({client, token, login, logout, handleError}) {
+const validateToken = async ({token, client, logout, handleError}) => {
     try {
         const {data} = await client.query({
-            query: GET_TOKEN_INFO,
+            query: VALIDATE_TOKEN,
             variables: {token}
         })
 
-        if (path(['getTokenInfo', 'user'], data)) {
-            login({
-                ...data.getTokenInfo.user,
-                token: {
-                    access_token: token
-                }
-            })
-        } else {
+        if (!data.validateToken) {
             logout(token)
+            removeToken(token)
         }
     } catch (e) {
         handleError(e)
     }
 }
 
-const Validator = (props) => {
-    const {noUserId, data: {validateToken}, children} = props
-
-    if (validateToken) {
-        if (noUserId) getTokenInfo(props)
-        return children
+class Validator extends PureComponent {
+    componentDidMount() {
+        if (this.props.token) {
+            validateToken(this.props)
+        }
     }
 
-    return <Login {...props} />
+    componentWillUpdate(nextProps) {
+        if (nextProps.token && nextProps.token !== this.props.token) {
+            validateToken(nextProps)
+        }
+    }
+
+    render() {
+        return this.props.children
+    }
 }
 
 Validator.propTypes = {
-    children: PropTypes.node,
     token: PropTypes.string,
-    noUserId: PropTypes.bool,
-    data: PropTypes.shape({
-        validateToken: PropTypes.bool
-    })
+    children: PropTypes.node
 }
 
 export default Validator

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 
 import AuthStatus from './AuthStatus.container'
 import Refresher from './Refresher.container'
-import Routes from './Routes.container'
 import Validator from './Validator.container'
 import {getAccessTokenFromStorage, removeToken, setToken} from './helpers'
 
@@ -63,7 +62,7 @@ const Auth = props => {
         onLogout()
     }
 
-    return <Routes {...props} />
+    return children
 }
 
 Auth.propTypes = {

@@ -7,9 +7,9 @@ import ContentWrapper from './components/layout/ContentWrapper'
 
 const App = () =>
     <ContentWrapper>
-        <ContentHeader resourceCount={42} resourceType="component" />
+        <ContentHeader resourceCount={42} resourceType="category" />
         <ContentCentered>
-            <h1>I know its you</h1>
+            <h1>Welcome to our site!</h1>
         </ContentCentered>
     </ContentWrapper>
 

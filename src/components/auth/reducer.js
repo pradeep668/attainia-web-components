@@ -17,17 +17,9 @@ export default (
 ) => {
     switch (type) {
         case types.CANCEL:
-            return {
-                ...state,
-                route: 'login',
-                status: ''
-            }
+            return {...state}
         case types.CLEAR_ERROR:
-            return {
-                ...state,
-                error: '',
-                status: ''
-            }
+            return {...state, error: ''}
         case types.CLEAR_REFRESH:
             return {
                 ...state,
@@ -42,7 +34,6 @@ export default (
             return {
                 ...state,
                 error: parseError(error),
-                status: '',
                 loading: false
             }
         case types.GET_USER_NAV_MENU:
@@ -53,83 +44,39 @@ export default (
                     navigation: navigation.map(label => ({label}))
                 }
             }
-        case types.GOTO_APP_REGISTRATION:
-            return {
-                ...state,
-                route: 'application',
-                status: ''
-            }
-        case types.GOTO_PASSWORD_HELP:
-            return {
-                ...state,
-                route: 'password-help',
-                status: ''
-            }
-        case types.GOTO_REGISTRATION:
-            return {
-                ...state,
-                route: 'registration',
-                status: ''
-            }
         case types.LOADING_FINISHED:
-            return {
-                ...state,
-                loading: false
-            }
+            return {...state, loading: false}
         case types.LOADING_STARTED:
-            return {
-                ...state,
-                loading: true
-            }
+            return {...state, loading: true}
         case types.LOGIN:
-            return {
-                ...state,
-                user,
-                route: 'home',
-                status: 'login'
-            }
-        case types.LOGOUT:
-            return {
-                ...omit(['refreshTimeout'], state),
-                ...omit(['baseUrl'], initialState),
-                status: 'logout'
-            }
-        case types.PASSWORD_HELP:
-            return {
-                ...state,
-                route: 'login',
-                status: 'password',
-                user: {email}
-            }
-        case types.REFRESH:
+            return {...state, user}
+        case types.LOGOUT: {
             if (state.refreshTimeout) clearTimeout(state.refreshTimeout)
 
             return {
-                ...state,
-                refreshTimeout
+                ...omit(['refreshTimeout'], state),
+                ...omit(['baseUrl'], initialState)
             }
+        }
+        case types.PASSWORD_HELP:
+            return {...state, user: {email}}
+        case types.REFRESH: {
+            if (state.refreshTimeout) clearTimeout(state.refreshTimeout)
+
+            return {...state, refreshTimeout}
+        }
         case types.REGISTER_APP:
-            return {
-                ...state,
-                app,
-                route: 'login',
-                status: ''
-            }
+            return {...state, app}
         case types.REGISTER_USER:
             return {
                 ...state,
-                route: 'login',
-                status: '',
                 user: {
                     name: user.name,
                     email: user.email
                 }
             }
         case types.REMEMBER_ME:
-            return {
-                ...state,
-                rememberMe: !state.rememberMe
-            }
+            return {...state, rememberMe: !state.rememberMe}
         case types.PARSED_TOKEN:
             return {
                 ...state,

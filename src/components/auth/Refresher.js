@@ -1,20 +1,44 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
+import {REFRESH_TOKEN} from './mutations'
+
+const tryRefresh = async ({token, handleError, updatedToken, client}) => {
+    try {
+        const {data: {error, refreshUser}} = await client.mutate({
+            mutation: REFRESH_TOKEN,
+            variables: {token}
+        })
+        if (error) {
+            throw new Error(error)
+        }
+        if (refreshUser) {
+            const refreshInMs = Math.max((Number(refreshUser.expires_in || 3600) - 10) * 1000, 0)
+            updatedToken({
+                ...refreshUser,
+                refreshInMs,
+                refreshAt: new Date(Date.now() + refreshInMs)
+            })
+        }
+    } catch (err) {
+        handleError(err)
+    }
+}
 
 class Refresher extends Component {
-    componentWillMount() {
-        const {tryRefresh, refreshInMs, token, refresh} = this.props
-        refresh(setTimeout(() => token && refreshInMs && tryRefresh(token), refreshInMs))
+    componentDidMount() {
+        if (this.props.token) {
+            const {refreshInMs, refresh, ...refreshProps} = this.props
+            refresh(setTimeout(() => this.props.token && refreshInMs && tryRefresh(refreshProps), refreshInMs))
+        }
     }
 
     componentWillUpdate(nextProps) {
-        const {tryRefresh, refresh} = this.props
-        const {refreshInMs, token} = nextProps
-        refresh(setTimeout(() => token && refreshInMs && tryRefresh(token), refreshInMs))
-    }
-
-    componentWillUnmount() {
-        this.props.clearRefresh()
+        if (nextProps.token) {
+            const {refreshInMs, refresh, ...refreshProps} = nextProps
+            this.props.refresh(
+                setTimeout(() => nextProps.token && refreshInMs && tryRefresh(refreshProps), refreshInMs)
+            )
+        }
     }
 
     render() {
@@ -24,11 +48,9 @@ class Refresher extends Component {
 
 Refresher.propTypes = {
     children: PropTypes.node,
-    clearRefresh: PropTypes.func,
     refresh: PropTypes.func,
     refreshInMs: PropTypes.number,
-    token: PropTypes.string,
-    tryRefresh: PropTypes.func
+    token: PropTypes.string
 }
 
 Refresher.defaultProps = {

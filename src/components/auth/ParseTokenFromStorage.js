@@ -5,7 +5,9 @@ import {getAccessTokenFromStorage} from './helpers'
 class ParseTokenFromStorage extends Component {
     componentWillMount() {
         const token = getAccessTokenFromStorage()
-        if (token) this.props.parsedToken(token)
+        if (token && token !== '[object Object]') {
+            this.props.parsedToken(token)
+        }
     }
 
     render() {

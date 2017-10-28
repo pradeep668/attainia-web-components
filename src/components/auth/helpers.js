@@ -10,19 +10,24 @@ export const getAccessTokenFromStorage = storage => {
     }
     return localStorage.getItem('token') || sessionStorage.getItem('token')
 }
-export const removeToken = () => {
-    localStorage.removeItem('token')
-    sessionStorage.removeItem('token')
+export const removeToken = storage => {
+    if (/(local|session)/i.test(storage)) {
+        if (/local/i.test(storage)) {
+            localStorage.removeItem('token')
+        } else if (/session/i.test(storage)) {
+            sessionStorage.removeItem('token')
+        }
+    } else {
+        localStorage.removeItem('token')
+        sessionStorage.removeItem('token')
+    }
 }
-export const setToken = props => {
-    if (/(local|session)/i.test(props.storage)) {
-        const access_token = getAccessToken(props)
-        if (access_token) {
-            if (/local/i.test(props.storage)) {
-                localStorage.setItem('token', access_token)
-            } else if (/session/i.test(props.storage)) {
-                sessionStorage.setItem('token', access_token)
-            }
+export const setToken = (token, storage = 'local') => {
+    if (/(local|session)/i.test(storage) && token) {
+        if (/local/i.test(storage)) {
+            localStorage.setItem('token', token)
+        } else if (/session/i.test(storage)) {
+            sessionStorage.setItem('token', token)
         }
     }
 }

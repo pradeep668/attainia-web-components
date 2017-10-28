@@ -1,45 +1,52 @@
 import {path} from 'ramda'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {graphql} from 'react-apollo'
-import {renderConditional} from '../common/Conditional'
+import {withApollo, compose} from 'react-apollo'
 
 import Refresher from './Refresher'
-import {REFRESH_TOKEN} from './mutations'
-import {handleError, updatedToken, refresh, clearRefresh} from './actions'
+import {handleError, updatedToken, refresh} from './actions'
 
 const mapStateToProps = store => ({
-    refreshInMs: Number(path(['auth', 'user', 'token', 'refreshInMs'], store)),
-    condition: store.auth.status === 'login'
+    token: path(['auth', 'user', 'token', 'access_token'], store),
+    refreshInMs: Number(path(['auth', 'user', 'token', 'refreshInMs'], store) || 3600)
 })
 
-const withMutation = graphql(REFRESH_TOKEN, {
-    props: ({ownProps, mutate}) => ({
-        async tryRefresh(token) {
-            try {
-                const {data: {error, refreshUser}} = await mutate({variables: {token}})
-                if (error) {
-                    throw new Error(error)
-                }
-                if (refreshUser) {
-                    const refreshInMs = Math.max((Number(refreshUser.expires_in) - 10) * 1000, 0)
-                    ownProps.updatedToken({
-                        ...refreshUser,
-                        refreshInMs,
-                        refreshAt: new Date(Date.now() + refreshInMs)
-                    })
-                }
-            } catch (err) {
-                ownProps.handleError(err)
-            }
-        }
-    })
-})(Refresher)
+const withReduxConnect = () => connect(mapStateToProps, {handleError, updatedToken, refresh})
 
-const withReduxProps = connect(mapStateToProps, {
-    clearRefresh,
-    handleError,
-    updatedToken,
-    refresh
-})(withMutation)
+export const withTokenRefresh = (DecoratedComponent) => {
+    const WithTokenRefresh = ({
+        token,
+        handleError: hError,
+        updatedToken: uToken,
+        refresh: rfrsh,
+        refreshInMs: rInMs,
+        client,
+        ...passThroughProps
+    }) =>
+        <Refresher
+            refreshInMs={rInMs}
+            handleError={hError}
+            updatedToken={uToken}
+            token={token}
+            refresh={rfrsh}
+            client={client}
+        >
+            <DecoratedComponent {...passThroughProps} />
+        </Refresher>
 
-export default renderConditional(withReduxProps)
+    WithTokenRefresh.propTypes = {
+        handleError: PropTypes.func,
+        updatedToken: PropTypes.func,
+        refresh: PropTypes.func,
+        refreshInMs: PropTypes.number,
+        token: PropTypes.string,
+        client: PropTypes.shape({
+            query: PropTypes.func.isRequired
+        }).isRequired
+    }
+
+    return compose(withApollo, withReduxConnect())(WithTokenRefresh)
+}
+
+export default compose(withApollo, withReduxConnect())(Refresher)
