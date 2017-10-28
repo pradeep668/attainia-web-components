@@ -14,5 +14,6 @@ export default {
     REGISTER_APP: 'awc_register_app',
     REFRESH: 'awc_refresh',
     REMEMBER_ME: 'awc_remember_me',
+    USER_INFO_FROM_TOKEN: 'awc_user_info_from_token',
     UPDATED_TOKEN: 'awc_updated_token'
 }

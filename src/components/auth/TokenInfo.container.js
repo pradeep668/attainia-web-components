@@ -4,39 +4,47 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withApollo, compose} from 'react-apollo'
 
-import {handleError, login} from './actions'
+import {GET_TOKEN_INFO} from './queries'
+import {userInfoFromToken, handleError} from './actions'
 import TokenInfo from './TokenInfo'
 
 const mapStateToProps = state => ({
     token: path(['auth', 'user', 'token', 'access_token'], state)
 })
 
-const withReduxConnect = () => connect(mapStateToProps, {handleError, login})
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...ownProps,
+    token: stateProps.token,
+    async tryGetTokenInfo(token) {
+        try {
+            const {error, data} = await ownProps.client.query({
+                query: GET_TOKEN_INFO,
+                variables: {token}
+            })
+            if (error) {
+                throw new Error(error)
+            }
+            if (path(['getTokenInfo', 'user'], data)) {
+                dispatchProps.userInfoFromToken(data.getTokenInfo.user)
+            }
+        } catch (e) {
+            dispatchProps.handleError(e)
+        }
+    }
+})
+
+const withReduxConnect = () => connect(mapStateToProps, {userInfoFromToken, handleError}, mergeProps)
 
 export const withTokenInfo = (DecoratedComponent) => {
-    const WithTokenInfo = ({
-        token,
-        client,
-        handleError: hError,
-        login: lgn,
-        ...passThroughProps
-    }) =>
-        <TokenInfo
-            token={token}
-            client={client}
-            handleError={hError}
-            login={lgn}
-        >
+    const WithTokenInfo = ({token, tryGetTokenInfo, ...passThroughProps}) =>
+        <TokenInfo {...{token, tryGetTokenInfo}}>
             <DecoratedComponent {...passThroughProps} />
         </TokenInfo>
 
+    WithTokenInfo.displayName = `WithTokenInfo(${DecoratedComponent.displayName})`
     WithTokenInfo.propTypes = {
-        handleError: PropTypes.func,
-        login: PropTypes.func,
-        token: PropTypes.string,
-        client: PropTypes.shape({
-            query: PropTypes.func.isRequired
-        }).isRequired
+        tryGetTokenInfo: PropTypes.func,
+        token: PropTypes.string
     }
 
     return compose(withApollo, withReduxConnect())(WithTokenInfo)

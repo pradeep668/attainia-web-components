@@ -95,6 +95,14 @@ export default (
                     token
                 }
             }
+        case types.USER_INFO_FROM_TOKEN:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    ...user
+                }
+            }
         // no default
     }
 
