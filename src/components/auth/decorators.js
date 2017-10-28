@@ -8,6 +8,7 @@ import {withWriteTokenToStorage} from './WriteTokenToStorage.container'
 import {withTokenValidation} from './Validator.container'
 import {withTokenInfo} from './TokenInfo.container'
 import {withTokenRefresh} from './Refresher.container'
+import {withAuthStatusSubscription} from './AuthStatus.container'
 
 const locationHelper = locationHelperBuilder({})
 
@@ -40,6 +41,7 @@ export const withLoginDecorators = compose(
 )
 
 export default {
+    withAuthStatusSubscription,
     withTokenRefresh,
     withTokenInfo,
     withTokenValidation,
