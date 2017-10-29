@@ -12,7 +12,7 @@ export const NumberTooltipHeaderCell = styled(TooltipHeaderCell)`
 `
 
 NumberTooltipHeaderCell.propTypes = {
-    data: PropTypes.shape({
+    headerData: PropTypes.shape({
             name: PropTypes.string,
             toolTip: PropTypes.string,
             key: PropTypes.string,

@@ -1,16 +1,15 @@
 import React from 'react'
 
 import PropTypes from 'prop-types'
-
 import styled from 'styled-components'
 import {Cell} from 'fixed-data-table-2'
 
-import SimpleSvgIcon from '../SimpleSvgIcon'
+import SimpleSvgIcon from '../common/SimpleSvgIcon'
 
 
 export default class TooltipHeaderCell extends React.PureComponent {
     render() {
-        const {data, sortData, sortCallback, ...props} = this.props
+        const {headerData, sortData, sortCallback, ...props} = this.props
 
         const FlexDiv = styled.div`
             display: flex;
@@ -45,18 +44,18 @@ export default class TooltipHeaderCell extends React.PureComponent {
         const handleSort = () => {
             const sortDir = (sortIcon === 'arrow_down') ? 'desc' : 'asc'
 
-            sortCallback(data.key, sortDir)
+            sortCallback(headerData.key, sortDir)
         }
 
-        if (sortData.columnKey === data.key) {
+        if (sortData.columnKey === headerData.key) {
             sortIcon = (sortData.sortDirection === 'asc') ? 'arrow_down' : 'arrow_up'
         }
 
         return (
-            <Cell {...props} data-tip={data.toolTip} data-for={'header-tooltip'}>
+            <Cell {...props} data-tip={headerData.toolTip} data-for={'header-tooltip'}>
                 <FlexDiv>
                     <LeftFlexSpan>
-                        <HeaderLink onClick={handleSort}>{data.name}</HeaderLink>
+                        <HeaderLink onClick={handleSort}>{headerData.name}</HeaderLink>
                     </LeftFlexSpan>
                     <RightFlexSpan>
                         <SortIcon icon={sortIcon} />
@@ -68,7 +67,7 @@ export default class TooltipHeaderCell extends React.PureComponent {
 }
 
 TooltipHeaderCell.propTypes = {
-    data: PropTypes.shape({
+    headerData: PropTypes.shape({
             name: PropTypes.string,
             toolTip: PropTypes.string,
             key: PropTypes.string,

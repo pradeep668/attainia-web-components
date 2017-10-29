@@ -12,7 +12,7 @@ This means if you import a component that uses no dependencies it will be as sma
 
 In general you can expect to encounter a "missing dependency" error (which you solve by simply running an `npm install <some missing dependency>`) rarely if you are using a normal React/Redux application (these are the primary deps).
 
-Some components are meant to work with [react-apollo](https://github.com/apollographql/react-apollo) (such as the `AuthProvider`) and some components that collect user input are meant to work with [redux-form](https://github.com/erikras/redux-form) and [validatorjs](https://github.com/skaterdav85/validatorjs). Also, this library opts for [ramda](https://www.npmjs.com/package/ramda) [rather than lodash/underscore](https://www.youtube.com/watch?v=ixbJrJTOnF8) for many of the low-level JavaScript tasks.  
+Some components are meant to work with [react-apollo](https://github.com/apollographql/react-apollo) (such as the `AuthProvider`) and some components that collect user input are meant to work with [redux-form](https://github.com/erikras/redux-form) and [validatorjs](https://github.com/skaterdav85/validatorjs). Also, this library opts for [ramda](https://www.npmjs.com/package/ramda) [rather than lodash/underscore](https://www.youtube.com/watch?v=ixbJrJTOnF8) for many of the low-level JavaScript tasks.
 
 These components may or may not implement one or many of the following dependencies (most especially you'll find these used in the `.container` component wrappers):
 * [redux](https://github.com/reactjs/redux) - Unidirectional data flow in a React application
@@ -33,7 +33,7 @@ Additionally, certain low-level libraries are also servicing these components:
 npm install attainia-web-components
 ```
 
-## Usage 
+## Usage
 
 Many components in this library can be used in two ways. While the actual component is defined in just the JavaScript file after which it is named, there are supplementary files that expand on its functionality which you can choose to use as well.
 
@@ -208,6 +208,21 @@ Many/most of the components in this library attempt to parse themeing constants 
 }
 ```
 
+## Component Storybooks
+
+Using React Storybook, we can develop and design UI components outside of an application in an isolated environment.  For more information about Storybooks, see the links below.
+
+[Storybook Site](https://storybook.js.org/)
+[Storybook GitHub](https://github.com/storybooks/storybook)
+
+You can run the Storybooks using the following command:
+
+```bash
+npm run storybook
+```
+
+You can access your storybook from the browser at http://localhost:9001
+
 ## Component Table of Contents
 
 Auth Components:
@@ -229,9 +244,10 @@ Common Components:
 * [FormField](#form-field)
 * [Link](#link)
 * [LinkButton](#link-button)
-* [Conditional](#conditional-rendering) 
-* [ReduxFormField](#redux-form-field) 
+* [Conditional](#conditional-rendering)
+* [ReduxFormField](#redux-form-field)
 * [SimpleSvgIcon](#simple-svg-icon)
+* [DataTable](#data-table)
 
 ### Auth Provider
 
@@ -357,7 +373,7 @@ A simple, small styled HTML `<form>`
 
 ### Form Field
 
-A versatile HTML `<input />` (or `<textarea />`) field with (optional) `<label />` and field-level Error, meant to be used in an HTML form (preferrably alongside [redux-form](http://redux-form.com/)). It is driven by the `label` and `type` properties, with options to attach any standard event handler via the `handlers` property. It supports numerous `type='<input type'`, but defaults to a value of `type='text'`. Additionally, it supports `placeholder` and `label`, the latter of which will render a `<label />` element before the actual `<input />` tag (except in the case of `<input type=checkbox />`, where the label renders after). Make sure to set your `id` property if you _are_ setting a `label` property, since the label must refer to the associated `<input />` element by its unique id. 
+A versatile HTML `<input />` (or `<textarea />`) field with (optional) `<label />` and field-level Error, meant to be used in an HTML form (preferrably alongside [redux-form](http://redux-form.com/)). It is driven by the `label` and `type` properties, with options to attach any standard event handler via the `handlers` property. It supports numerous `type='<input type'`, but defaults to a value of `type='text'`. Additionally, it supports `placeholder` and `label`, the latter of which will render a `<label />` element before the actual `<input />` tag (except in the case of `<input type=checkbox />`, where the label renders after). Make sure to set your `id` property if you _are_ setting a `label` property, since the label must refer to the associated `<input />` element by its unique id.
 
 ### Link
 
@@ -386,3 +402,7 @@ The way to use it is like so:
 ### Redux Form Field
 
 A wrapper around [FormField](#form-field), for use _specifically_ in [redux-forms](http://redux-form.com/).
+
+### DataTable
+
+A basic abstraction for [Fixed Data Table 2 for React](https://github.com/schrodinger/fixed-data-table-2)
