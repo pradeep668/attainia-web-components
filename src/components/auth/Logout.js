@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from '../common/Button'
-import ButtonLink from '../common/ButtonLink'
+import {Button, ButtonLink} from '../common'
 
 const Logout = ({tryLogout, asLink}) => (
     asLink ? <ButtonLink onClick={tryLogout}>Logout</ButtonLink>

@@ -2,10 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import Button from '../common/Button'
-import Form from '../common/Form'
-import SimpleSvgIcon from '../common/SimpleSvgIcon'
-import ReduxFormField from '../common/ReduxFormField'
+import {Link} from 'react-router-dom'
+import {Button, LinkButton, Form, SimpleSvgIcon, ReduxFormField} from '../common'
 import {getThemeProp} from '../common/helpers'
 
 const StyledForm = styled(Form)`
@@ -71,24 +69,19 @@ const StyledForm = styled(Form)`
         }
     }
 `
-const Registration = ({handleSubmit, tryRegister, cancel}) =>
+const Registration = ({handleSubmit, tryRegister}) =>
     <StyledForm onSubmit={handleSubmit(tryRegister)}>
         <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="primary" />
         <p className="instructions">Register Your Account</p>
         <ReduxFormField className="name" placeholder="name" name="name" />
         <ReduxFormField className="email" placeholder="email" name="email" type="email" />
         <ReduxFormField className="password" placeholder="password" type="password" name="password" />
-        <Button className="registrationButton" type="submit">
-            Register
-        </Button>
-        <Button className="cancelButton" type="button" onClick={cancel}>
-            Cancel
-        </Button>
+        <Button className="registrationButton" type="submit">Register</Button>
+        <LinkButton className="cancelButton"><Link to="/">Cancel</Link></LinkButton>
     </StyledForm>
 
 Registration.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    cancel: PropTypes.func.isRequired,
     tryRegister: PropTypes.func.isRequired
 }
 

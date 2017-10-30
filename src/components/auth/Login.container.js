@@ -1,24 +1,14 @@
-import {path, toPairs, without} from 'ramda'
+import {is, path, toPairs, without} from 'ramda'
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
-import {graphql} from 'react-apollo'
+import {withApollo, compose} from 'react-apollo'
 import Validator from 'validatorjs'
 
 import Login from './Login'
-import {
-    handleError,
-    login,
-    refresh,
-    toggleRememberMe,
-    gotoRegistration,
-    gotoPasswordHelp,
-    updatedToken,
-    finishedLoading,
-    startedLoading
-} from './actions'
+import {handleError, login, toggleRememberMe, finishedLoading, startedLoading} from './actions'
 import constants from './constants'
-import {getAccessTokenFromStorage} from './helpers'
 import {LOGIN_USER} from './mutations'
+import {setToken} from './helpers'
 
 const {login: {rules, messages}} = constants
 
@@ -31,98 +21,62 @@ const validate = values => {
 const mapStateToProps = state => ({
     hasAuthError: Boolean(state.auth.error),
     email: path(['auth', 'user', 'email'], state),
-    name: path(['auth', 'user', 'name'], state),
     loading: state.auth.loading,
+    storageType: state.auth.storageType,
     rememberMe: state.auth.rememberMe
 })
 
-const mapDispatchToProps = dispatch => ({
-    handleError(error) {
-        return dispatch(handleError(error))
-    },
-    login(user) {
-        return dispatch(login(user))
-    },
-    startedLoading() {
-        return dispatch(startedLoading())
-    },
-    finishedLoading() {
-        return dispatch(finishedLoading())
-    },
-    getAccessTokenFromStorage() {
-        return getAccessTokenFromStorage()
-    },
-    gotoPasswordHelp(e) {
-        e.preventDefault()
-        return dispatch(gotoPasswordHelp())
-    },
-    gotoRegistration(e) {
-        e.preventDefault()
-        return dispatch(gotoRegistration())
-    },
-    refresh() {
-        return dispatch(refresh())
-    },
-    toggleRememberMe() {
-        return dispatch(toggleRememberMe())
-    },
-    parseToken(token) {
-        return dispatch(updatedToken(token))
+const mapDispatchToProps = {handleError, login, startedLoading, finishedLoading, toggleRememberMe}
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...ownProps,
+    ...stateProps,
+    toggleRememberMe: dispatchProps.toggleRememberMe,
+    async tryLogin({email, password}) {
+        try {
+            dispatchProps.startedLoading()
+
+            const {data: {error, loginUser}} = await ownProps.client.mutate({
+                mutation: LOGIN_USER,
+                variables: {email, password}
+            })
+            if (error) {
+                throw new Error(error)
+            }
+            if (loginUser) {
+                if (is(Function, ownProps.onLogin)) {
+                    const deferred = ownProps.onLogin(loginUser)
+                    if (deferred && deferred.then) {
+                        await deferred
+                    }
+                }
+
+                dispatchProps.login(loginUser)
+
+                const {token} = loginUser
+
+                if (token.redirect_uris) {
+                    const redirect_uri = token.redirect_uris.split(' ')[0]
+                    window.location = `${redirect_uri}${redirect_uri.includes('?') ? '&' : '?'}${
+                        toPairs(without('redirect_uris', token)).map(([key, val]) => `${key}=${val}`).join('&')
+                    }`
+                } else if (stateProps.rememberMe) {
+                    setToken(token.access_token, ownProps.storageType)
+                }
+                dispatchProps.finishedLoading()
+            }
+        } catch (err) {
+            dispatchProps.handleError(err)
+        }
     }
 })
 
-const FormedLogin = reduxForm({
-    validate,
-    form: 'LoginForm',
-    fields: ['email', 'password']
-})(Login)
-
-const LoginWithData = graphql(LOGIN_USER, {
-    props: ({ownProps, mutate}) => ({
-        async tryLogin({email, password}) {
-            try {
-                ownProps.startedLoading()
-
-                const {data: {error, loginUser}} = await mutate({variables: {email, password}})
-                if (error) {
-                    throw new Error(error)
-                }
-                if (loginUser) {
-                    if (ownProps.onLogin) {
-                        const deferred = ownProps.onLogin(loginUser)
-                        if (deferred && deferred.then) {
-                            await deferred
-                        }
-                    }
-
-                    const {token} = loginUser
-                    if (ownProps.useRefresh && token) {
-                        const refreshInMs = Math.max((Number(token.expires_in) - 10) * 1000, 0)
-                        ownProps.login({
-                            ...loginUser,
-                            token: {
-                                ...token,
-                                refreshInMs,
-                                refreshAt: new Date(Date.now() + refreshInMs)
-                            }
-                        })
-                    } else {
-                        ownProps.login(loginUser)
-                    }
-
-                    if (token.redirect_uris) {
-                        const redirect_uri = token.redirect_uris.split(' ')[0]
-                        window.location = `${redirect_uri}${redirect_uri.includes('?') ? '&' : '?'}${
-                            toPairs(without('redirect_uris', token)).map(([key, val]) => `${key}=${val}`).join('&')
-                        }`
-                    }
-                    ownProps.finishedLoading()
-                }
-            } catch (err) {
-                ownProps.handleError(err)
-            }
-        }
-    })
-})(FormedLogin)
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginWithData)
+export default compose(
+    withApollo,
+    reduxForm({
+        validate,
+        form: 'LoginForm',
+        fields: ['email', 'password']
+    }),
+    connect(mapStateToProps, mapDispatchToProps, mergeProps)
+)(Login)

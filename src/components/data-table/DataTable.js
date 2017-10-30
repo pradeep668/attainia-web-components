@@ -10,7 +10,7 @@ import 'fixed-data-table-2/dist/fixed-data-table.css'
 
 import Button from '../common/Button'
 import TooltipHeaderCell from './TooltipHeaderCell'
-import {NumberTooltipHeaderCell} from './NumberTooltipHeaderCell'
+import NumberTooltipHeaderCell from './NumberTooltipHeaderCell'
 import TextCell from './TextCell'
 import LinkCell from './LinkCell'
 import NumberCell from './NumberCell'

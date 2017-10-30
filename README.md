@@ -18,6 +18,7 @@ These components may or may not implement one or many of the following dependenc
 * [redux](https://github.com/reactjs/redux) - Unidirectional data flow in a React application
 * [react-redux](https://github.com/reactjs/react-redux) - Bridges React to Redux
 * [react-apollo](https://github.com/apollographql/react-apollo) - Data provider to wrap around components that can run or subscribe to server queries
+* [redux-auth-wrapper](https://github.com/mjrussell/redux-auth-wrapper) - Higher order component used to decorate routable components with conditional rendering and/or redirector based on a redux selector
 * [redux-form](https://github.com/erikras/redux-form) - HTML Form helpers and validation that flow into a Redux store
 * [validatorjs](https://github.com/skaterdav85/validatorjs) - Build validation objects that Redux-Form can easily use
 * [styled-components](https://github.com/styled-components/styled-components) - Possibly the first truly elegant marriage of CSS and JavaScript that can (potentially) please developers who fall on either side of the CSS or JS development
@@ -229,25 +230,44 @@ Auth Components:
 
 * [AuthProvider](#auth-provider)
 * [AuthError](#auth-error)
+* [AuthStatus](#auth-status)
 * [Login](#login)
 * [Logout](#logout)
+* [ParseTokenFromStorage](#parse-token-from-storage)
 * [PasswordHelp](#password-help)
-* [Registration](#user-registration)
 * [RegisterApplication](#app-registration)
+* [Registration](#user-registration)
+* [TokenInfo](#token-info)
+* [Validator](#validator)
+* [WriteTokenToStorage](#write-token-to-storage)
 
 Common Components:
 
 * [Button](#button)
+* [ButtonLink](#button-link)
+* [CheckboxLabel](#checkbox-label)
+* [Conditional](#conditional-rendering)
 * [ErrorMessage](#error-message)
 * [FieldError](#field-error)
 * [Form](#form)
 * [FormField](#form-field)
 * [Link](#link)
 * [LinkButton](#link-button)
-* [Conditional](#conditional-rendering)
 * [ReduxFormField](#redux-form-field)
 * [SimpleSvgIcon](#simple-svg-icon)
+* [SpinningButton](#spinning-button)
+
+Data-Table Components:
+
 * [DataTable](#data-table)
+* [IconLinkCell](#icon-link-cell)
+* [ImageCell](#image-cell)
+* [InfoIconToolTipTextCell](#info-icon-tooltip-text-cell)
+* [LinkCell](#link-cell)
+* [NumberCell](#number-cell)
+* [NumberTooltipHeaderCell](#number-tooltip-header-cell)
+* [TextCell](#text-cell)
+* [TooltipHeaderCell](#tooltip-header-cell)
 
 ### Auth Provider
 
@@ -256,9 +276,6 @@ This is the recommended way to use the `auth` components. Rather than grafting t
 __options__:
 
 * `baseUrl` - [`String`] The most important piece: the URL to your GraphQL server (defaults to `localhost`)
-* `storage` - [`String`] Configures it to write tokens to and read them from browser storage. Current options are `session`, `local` and `none` (defaults to `local`) which leverages [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage), [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) or the in-memory Redux store.
-* `onLogout` - A [`Function`] which fires whenever a Logout action occurs.
-* `onLogin`  - A [`Function`] which passes you the `user` object on successful login attempts.
 
 ```javascript
 // A "user" object passed into your (optional) onLogin callback
@@ -296,9 +313,14 @@ export default (props) =>
 
 This wrapper around the [ErrorMessage](#error-message) component places it into an HTML element where users can close out the error by clicking on it. If you use the container component around this one, it will take advantage of Redux to pull in the error from the `auth` section of our the Redux store and to dispatch a `CLEAR_ERROR` action on click.
 
+### Auth Status
+
+A simple component that subscribes to any logout events from the AuthProvider's server-side counterpart.
+
 ### Error Message
 
 A very simple company branded (Attainia) styling around a basic `<div>` with error message text inside
+
 ### Login
 
 Renders the Attainia user authentication component, which expects an email and password to be provided. Additionally it links to [password reset](#password-help) and [user registration](#user-registration) components.
@@ -306,14 +328,35 @@ Renders the Attainia user authentication component, which expects an email and p
 __options__:
 * `email` - [`String`] Optionally you can pre-populate the email field on the Login form
 * `showRegistration` - [`Boolean`] Determines whether to display the Registration link (defaults to `false`)
+* `storageType` - [`String`] Configures it to write tokens to and read them from browser storage. Current options are `session`, `local` and `none` (defaults to `local`) which leverages [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage), [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) or the in-memory Redux store.
+* `onLogin`  - A [`Function`] which passes you the `user` object on successful login attempts.
 
 ### Logout
 
 Renders a Link which (on clicked) will log out the user
 
+__options__:
+* `onLogout` - A [`Function`] which fires whenever a Logout action occurs.
+
+### Parse Token From Storage
+
+A higher-order component that parses a `token` prop from `localStorage` or `sessionStorage` and pushes it into the Redux store.
+
 ### Password Help
 
 Collects a given user's registered email address, to trigger the password reset process defined in your application.
+
+### Token Info
+
+A higher-order component that takes the token parsed from storage and makes an API call to retrieve user info (id, email, etc.) from the token.
+
+### Validator
+
+A higher-order component that takes the token parsed from storage and makes an API call to validate the token. The user is logged out and the token removed from storage if it fails.
+
+### Write Token To Storage
+
+A higher-order component that takes the token from the Redux store (on `componentDidMount` and `componentWillUpdate`) and writes it to `localStorage` or `sessionStorage` to a key called "token"
 
 ### User Registration
 
@@ -363,6 +406,14 @@ export default renderConditional(
 
 A simple HTML button which has been styled according to company (Attainia) branding
 
+### Button Link
+
+An HTML anchor (link) element which has been styled to look and behave like a button
+
+### Checkbox Label
+
+A styled checkbox that is wrapped and the `onClick` is attached to the wrapper (value is still bound to the underlying `<input type=checkbox />`) to facilitate the checkbox behavior.
+
 ### Field Error
 
 An error message that attaches near the [FormField](#form-field)
@@ -377,11 +428,11 @@ A versatile HTML `<input />` (or `<textarea />`) field with (optional) `<label /
 
 ### Link
 
-An HTML `<a>` link which has been styled according to company (Attainia) branding
+An styled HTML anchor (link) element
 
 ### Link Button
 
-An HTML `<a>` link wrapping the styled Attainia Button
+An minimal HTML anchor (link) element wrapping the styled [Button](#button) component
 
 ### Simple Svg Icon
 
@@ -403,6 +454,42 @@ The way to use it is like so:
 
 A wrapper around [FormField](#form-field), for use _specifically_ in [redux-forms](http://redux-form.com/).
 
+### Spinning Button
+
+A simple CSS spinner driven by a toogle prop to show or hide
+
 ### DataTable
 
 A basic abstraction for [Fixed Data Table 2 for React](https://github.com/schrodinger/fixed-data-table-2)
+
+### Icon Link Cell
+
+A simple component that wraps an HTML anchor (link) element around a [SimpleSvgIcon](#simple-svg-icon) component inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Image Cell
+
+A simple component that places an HTML image element inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Info Icon Tooltip Text Cell
+
+A simple component that applies some simple styling (to make the HTML element `display: inline;`) around a [SimpleSvgIcon](#simple-svg-icon) component (set with the "info" icon type) inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library.
+
+### Link Cell
+
+A simple component that places an HTML anchor (link) element inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Number Cell
+
+A simple component that right-aligns numeric input inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Text Cell
+
+A simple component that places a text value inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Tooltip Header Cell
+
+A tooltip that can be attached to any header cell [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Number Tooltip Header Cell
+
+A tooltip (whose content is right-aligned) that can be attached to any header cell [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
