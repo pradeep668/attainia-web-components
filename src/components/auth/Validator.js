@@ -1,34 +1,16 @@
 import {PureComponent} from 'react'
 import PropTypes from 'prop-types'
-import {VALIDATE_TOKEN} from './queries'
-import {removeToken} from './helpers'
-
-const validateToken = async ({token, client, logout, handleError}) => {
-    try {
-        const {data} = await client.query({
-            query: VALIDATE_TOKEN,
-            variables: {token}
-        })
-
-        if (!data.validateToken) {
-            logout(token)
-            removeToken(token)
-        }
-    } catch (e) {
-        handleError(e)
-    }
-}
 
 class Validator extends PureComponent {
     componentDidMount() {
         if (this.props.token) {
-            validateToken(this.props)
+            this.props.tryValidateToken(this.props.token)
         }
     }
 
     componentWillUpdate(nextProps) {
         if (nextProps.token && nextProps.token !== this.props.token) {
-            validateToken(nextProps)
+            this.props.tryValidateToken(nextProps.token)
         }
     }
 
@@ -39,6 +21,7 @@ class Validator extends PureComponent {
 
 Validator.propTypes = {
     token: PropTypes.string,
+    tryValidateToken: PropTypes.func,
     children: PropTypes.node
 }
 

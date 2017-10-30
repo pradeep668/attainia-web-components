@@ -1,4 +1,4 @@
-import {pick, is} from 'ramda'
+import {pick} from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 import {ApolloProvider} from 'react-apollo'
@@ -9,8 +9,7 @@ import apolloClient from './apollo.client'
 
 const createClient = props =>
     props.ownClient({
-        ...pick(['baseUrl', 'storage'], props),
-        useSubscriptions: is(Function, props.onLogout)
+        ...pick(['baseUrl', 'storageType', 'useSubscriptions'], props)
     })
 
 const AuthProvider = props =>
@@ -19,19 +18,20 @@ const AuthProvider = props =>
     </ApolloProvider>
 
 AuthProvider.propTypes = {
+    apolloClientProps: PropTypes.shape({
+        connectToDevTools: PropTypes.bool
+    }),
     baseUrl: PropTypes.string,
     children: PropTypes.node,
-    onLogin: PropTypes.func,
-    onLogout: PropTypes.func,
     ownClient: PropTypes.func.isRequired,
-    storage: PropTypes.oneOf(['local', 'session', 'none']),
-    useRefresh: PropTypes.bool.isRequired
+    storageType: PropTypes.oneOf(['local', 'session', 'none']),
+    useSubscriptions: PropTypes.bool.isRequired
 }
 
 AuthProvider.defaultProps = {
-    storage: 'local',
+    storageType: 'local',
     ownClient: apolloClient,
-    useRefresh: true
+    useSubscriptions: false
 }
 
 export default connect(

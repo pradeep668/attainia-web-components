@@ -4,17 +4,18 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withApollo, compose} from 'react-apollo'
 
+import {withStatics} from '../common/helpers'
 import {GET_TOKEN_INFO} from './queries'
 import {userInfoFromToken, handleError} from './actions'
 import TokenInfo from './TokenInfo'
 
 const mapStateToProps = state => ({
-    token: path(['auth', 'user', 'token', 'access_token'], state)
+    token: path(['auth', 'parsed_token'], state)
 })
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     ...ownProps,
-    token: stateProps.token,
+    ...stateProps,
     async tryGetTokenInfo(token) {
         try {
             const {error, data} = await ownProps.client.query({
@@ -41,13 +42,15 @@ export const withTokenInfo = (DecoratedComponent) => {
             <DecoratedComponent {...passThroughProps} />
         </TokenInfo>
 
-    WithTokenInfo.displayName = `WithTokenInfo(${DecoratedComponent.displayName})`
     WithTokenInfo.propTypes = {
         tryGetTokenInfo: PropTypes.func,
         token: PropTypes.string
     }
 
-    return compose(withApollo, withReduxConnect())(WithTokenInfo)
+    return withStatics(
+        compose(withApollo, withReduxConnect())(WithTokenInfo),
+        DecoratedComponent
+    )
 }
 
 export default compose(withApollo, withReduxConnect())(TokenInfo)

@@ -1,5 +1,6 @@
 import {path} from 'ramda'
 
+export const isSupportedStorageType = storage => /(local|session)/i.test(storage)
 export const formatBaseUri = uri => (/^https?:\/\//i.test(uri) ? uri : `http://${uri}`)
 export const getAccessToken = props => path(['user', 'token', 'access_token'], props)
 export const getAccessTokenFromStorage = storage => {
@@ -11,7 +12,7 @@ export const getAccessTokenFromStorage = storage => {
     return localStorage.getItem('token') || sessionStorage.getItem('token')
 }
 export const removeToken = storage => {
-    if (/(local|session)/i.test(storage)) {
+    if (isSupportedStorageType(storage)) {
         if (/local/i.test(storage)) {
             localStorage.removeItem('token')
         } else if (/session/i.test(storage)) {
@@ -23,7 +24,7 @@ export const removeToken = storage => {
     }
 }
 export const setToken = (token, storage = 'local') => {
-    if (/(local|session)/i.test(storage) && token) {
+    if (isSupportedStorageType(storage) && token) {
         if (/local/i.test(storage)) {
             localStorage.setItem('token', token)
         } else if (/session/i.test(storage)) {

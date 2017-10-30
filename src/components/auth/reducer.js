@@ -1,14 +1,7 @@
-import {omit, compose, is, trim, toString} from 'ramda'
+import {omit} from 'ramda'
 import types from './types'
 import initialState from './initialState'
-
-const parseError = compose(
-    trim,
-    ([label, message]) => message || label,
-    str => str.split(/error:/i),
-    val => (is(String, val) ? val : toString(val)),
-    err => (is(Object, err) ? err.message : err)
-)
+import {parseError} from '../common/helpers'
 
 export default (
     state = initialState, {
@@ -26,10 +19,7 @@ export default (
                 refreshTimeout: clearTimeout(state.refreshTimeout)
             }
         case types.CLEAR_LOGIN:
-            return {
-                ...state,
-                ...omit(['baseUrl'], initialState)
-            }
+            return {...state, ...omit(['baseUrl'], initialState)}
         case types.ERROR:
             return {
                 ...state,
@@ -54,7 +44,7 @@ export default (
             if (state.refreshTimeout) clearTimeout(state.refreshTimeout)
 
             return {
-                ...omit(['refreshTimeout'], state),
+                ...omit(['refreshTimeout', 'parsed_token'], state),
                 ...omit(['baseUrl'], initialState)
             }
         }
@@ -78,26 +68,20 @@ export default (
         case types.REMEMBER_ME:
             return {...state, rememberMe: !state.rememberMe}
         case types.PARSED_TOKEN:
+            return {...state, parsed_token: token}
+        case types.VALIDATED_TOKEN:
+        case types.UPDATED_TOKEN: {
             return {
-                ...state,
-                user: {
-                    ...state.user,
-                    token: {
-                        access_token: token
-                    }
-                }
-            }
-        case types.UPDATED_TOKEN:
-            return {
-                ...state,
+                ...omit(['parsed_token'], state),
                 user: {
                     ...state.user,
                     token
                 }
             }
+        }
         case types.USER_INFO_FROM_TOKEN:
             return {
-                ...state,
+                ...omit(['parsed_token'], state),
                 user: {
                     ...state.user,
                     ...user

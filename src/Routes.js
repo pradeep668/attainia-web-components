@@ -5,7 +5,8 @@ import {ThemeProvider} from 'styled-components'
 
 import Login from './components/auth/Login.container'
 import AuthProvider from './components/auth/AuthProvider'
-import {withLoginDecorators, withAuthentication} from './components/auth/decorators'
+import {withAuthentication} from './components/auth/decorators'
+import {withLoginEnhancers} from './components/auth/enhancers'
 
 import Layout from './components/layout/Layout'
 import NotFound from './components/layout/NotFound'
@@ -26,7 +27,7 @@ export default (
                     <BrowserRouter>
                         <Switch>
                             <Route exact path="/" component={withAuthentication(Home)} />
-                            <Route exact path="/login" component={withLoginDecorators(Login)} />
+                            <Route exact path="/login" component={withLoginEnhancers(Login)} />
                             <Route exact path="/password-help" component={PasswordHelp} />
                             <Route exact path="/register" component={Registration} />
                             <Route exact path="/register-application" component={RegisterApplication} />

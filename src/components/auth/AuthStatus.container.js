@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withApollo, compose} from 'react-apollo'
 
+import {withStatics} from '../common/helpers'
 import AuthStatus from './AuthStatus'
 import {handleError, logout} from './actions'
 import IS_LOGGED_OUT from './subscriptions'
@@ -38,12 +39,14 @@ export const withAuthStatusSubscription = (DecoratedComponent) => {
             <DecoratedComponent {...passThroughProps} />
         </AuthStatus>
 
-    WithAuthStatus.displayName = `WithAuthStatus(${DecoratedComponent.displayName})`
     WithAuthStatus.propTypes = {
         startSubscription: PropTypes.func
     }
 
-    return compose(withApollo, withReduxConnect())(WithAuthStatus)
+    return withStatics(
+        compose(withApollo, withReduxConnect())(WithAuthStatus),
+        DecoratedComponent
+    )
 }
 
 export default compose(withApollo, withReduxConnect())(AuthStatus)

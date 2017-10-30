@@ -4,42 +4,59 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {compose, withApollo} from 'react-apollo'
 
-import {handleError, logout} from './actions'
+import {withStatics} from '../common/helpers'
+import {handleError, logout, validatedToken} from './actions'
+import {VALIDATE_TOKEN} from './queries'
+import {removeToken} from './helpers'
 import Validator from './Validator'
 
 const mapStateToProps = state => ({
-    token: path(['auth', 'user', 'token', 'access_token'], state)
+    token: path(['auth', 'parsed_token'], state)
 })
 
-const withReduxConnect = () => connect(mapStateToProps, {logout, handleError})
+const mapDispatchToProps = {logout, handleError, validatedToken}
+
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+    ...ownProps,
+    ...stateProps,
+    async tryValidateToken(token) {
+        try {
+            const {error, data} = await ownProps.client.query({
+                query: VALIDATE_TOKEN,
+                variables: {token}
+            })
+            if (error) {
+                throw new Error(error)
+            }
+            if (!data.validateToken) {
+                dispatchProps.logout(token)
+                removeToken(token)
+            } else {
+                dispatchProps.validatedToken(token)
+            }
+        } catch (e) {
+            dispatchProps.handleError(e)
+        }
+    }
+})
+
+const withReduxConnect = () => connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 export const withTokenValidation = (DecoratedComponent) => {
-    const WithTokenValidation = ({
-        client,
-        token,
-        logout: lgt,
-        handleError: hError,
-        ...passThroughProps
-    }) =>
-        <Validator
-            client={client}
-            logout={lgt}
-            handleError={hError}
-            token={token}
-        >
+    const WithTokenValidation = ({token, tryValidateToken, ...passThroughProps}) =>
+        <Validator {...{token, tryValidateToken}}>
             <DecoratedComponent {...passThroughProps} />
         </Validator>
 
     WithTokenValidation.propTypes = {
-        token: PropTypes.string,
-        logout: PropTypes.func,
-        handleError: PropTypes.func,
-        client: PropTypes.shape({
-            query: PropTypes.func.isRequired
-        }).isRequired
+        tryValidateToken: PropTypes.func,
+        token: PropTypes.string
     }
 
-    return compose(withApollo, withReduxConnect())(WithTokenValidation)
+    return withStatics(
+        compose(withApollo, withReduxConnect())(WithTokenValidation),
+        DecoratedComponent
+    )
 }
 
 export default compose(withApollo, withReduxConnect())(Validator)

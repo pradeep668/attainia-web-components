@@ -1,4 +1,4 @@
-import {compose, path, isNil} from 'ramda'
+import {path, isNil} from 'ramda'
 import {isNotNil} from 'ramda-adjunct'
 import {connectedRouterRedirect} from 'redux-auth-wrapper/history4/redirect'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
@@ -12,35 +12,27 @@ import {withAuthStatusSubscription} from './AuthStatus.container'
 
 const locationHelper = locationHelperBuilder({})
 
-export const withAuthentication = connectedRouterRedirect({
+const withAuthentication = connectedRouterRedirect({
     redirectPath: '/login',
     authenticatedSelector: state => isNotNil(path(['auth', 'user', 'id'], state)),
     wrapperDisplayName: 'Authenticator'
 })
 
-export const untilAuthenticatedAndThenRedirectBack = connectedRouterRedirect({
+const untilAuthenticatedAndThenRedirectBack = connectedRouterRedirect({
     redirectPath: (state, ownProps) => locationHelper.getRedirectQueryParam(ownProps) || '/',
     allowRedirectBack: false,
     authenticatedSelector: state => isNil(path(['auth', 'user', 'id'], state)),
     wrapperDisplayName: 'UntilAuthenticatedAndThenRedirectBack'
 })
 
-export const untilAuthenticated = connectedRouterRedirect({
+const untilAuthenticated = connectedRouterRedirect({
     redirectPath: '/',
     allowRedirectBack: false,
     authenticatedSelector: state => isNil(path(['auth', 'user', 'id'], state)),
     wrapperDisplayName: 'UntilAuthenticated'
 })
 
-export const withLoginDecorators = compose(
-    withTokenRefresh,
-    withTokenInfo,
-    withTokenValidation,
-    withTokenParsing,
-    untilAuthenticatedAndThenRedirectBack
-)
-
-export default {
+export {
     withAuthStatusSubscription,
     withTokenRefresh,
     withTokenInfo,

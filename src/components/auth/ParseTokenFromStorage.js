@@ -1,12 +1,16 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
-import {getAccessTokenFromStorage} from './helpers'
+import {getAccessTokenFromStorage, removeToken} from './helpers'
 
 class ParseTokenFromStorage extends Component {
     componentWillMount() {
         const token = getAccessTokenFromStorage()
-        if (token && token !== '[object Object]') {
-            this.props.parsedToken(token)
+        if (token) {
+            if (token !== '[object Object]') {
+                this.props.parsedToken(token)
+            } else {
+                removeToken()
+            }
         }
     }
 

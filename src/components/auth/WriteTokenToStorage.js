@@ -4,13 +4,13 @@ import {setToken, getAccessTokenFromStorage} from './helpers'
 
 class WriteTokenToStorage extends PureComponent {
     componentDidMount() {
-        if (this.props.canWriteToStorage && this.props.token) {
+        if (this.props.token) {
             setToken(this.props.token, this.props.storageType)
         }
     }
 
     componentWillUpdate(nextProps) {
-        if (nextProps.canWriteToStorage && nextProps.token) {
+        if (nextProps.token) {
             const existingTokenInStorage = getAccessTokenFromStorage(nextProps.storageType)
             if (existingTokenInStorage !== nextProps.token) {
                 setToken(this.props.token, this.props.storageType)
@@ -26,8 +26,7 @@ class WriteTokenToStorage extends PureComponent {
 WriteTokenToStorage.propTypes = {
     children: PropTypes.node,
     token: PropTypes.string,
-    storageType: PropTypes.oneOf(['local', 'session', 'none']),
-    canWriteToStorage: PropTypes.bool
+    storageType: PropTypes.oneOf(['local', 'session', 'none'])
 }
 
 export default WriteTokenToStorage

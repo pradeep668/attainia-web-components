@@ -3,36 +3,33 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 
+import {withStatics} from '../common/helpers'
 import WriteTokenToStorage from './WriteTokenToStorage'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
     token: path(['auth', 'user', 'token', 'access_token'], state),
-    canWriteToStorage: !!state.auth.rememberMe,
-    storageType: state.auth.storageType
+    storageType: ownProps.storageType || state.auth.storageType
 })
 
 export const withWriteTokenToStorage = (DecoratedComponent) => {
     const WithWriteTokenToStorage = ({
         token,
         storageType,
-        canWriteToStorage,
         ...passThroughProps
     }) =>
-        <WriteTokenToStorage
-            token={token}
-            storageType={storageType}
-            canWriteToStorage={canWriteToStorage}
-        >
+        <WriteTokenToStorage token={token} storageType={storageType}>
             <DecoratedComponent {...passThroughProps} />
         </WriteTokenToStorage>
 
     WithWriteTokenToStorage.propTypes = {
         token: PropTypes.string,
-        storageType: PropTypes.oneOf(['local', 'session', 'none']),
-        canWriteToStorage: PropTypes.bool
+        storageType: PropTypes.oneOf(['local', 'session', 'none'])
     }
 
-    return connect(mapStateToProps)(WithWriteTokenToStorage)
+    return withStatics(
+        connect(mapStateToProps)(WithWriteTokenToStorage),
+        DecoratedComponent
+    )
 }
 
 export default connect(mapStateToProps)(WriteTokenToStorage)
