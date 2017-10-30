@@ -2,6 +2,8 @@ import uuid from 'uuid/v4'
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
+import {SimpleSvgIcon} from '../common'
 import {getThemeProp} from '../common/helpers'
 
 const Li = styled.li` 
@@ -19,7 +21,7 @@ const Li = styled.li`
     border-left-style: solid;
 
     &:hover {
-        border-color: ${getThemeProp(['colors', 'secondary', 'dk'], 'darkblue')};
+        border-color: ${getThemeProp(['colors', 'secondary', 'default'], 'royalblue')};
         background: ${getThemeProp(['colors', 'grayscale', 'dk'], 'darkgray')};
     }
     & a {
@@ -36,29 +38,39 @@ const Ul = styled.ul`
     box-sizing: border-box;
 `
 
-const NavBarList = ({items}) => (
+const NavBarList = ({items, location: {pathname}}) => (
     <Ul>
-        {items.map(({imgSrc, uri, label}) =>
-            <Li key={uuid()} role="presentation">
-                <a href={uri}>
-                    {imgSrc && <img alt="left" src={imgSrc} />}
+        {items.map(({iconName, link, label}) =>
+            <Li
+                isSelected={link === pathname}
+                key={uuid()}
+                role="presentation"
+            >
+                <Link to={link}>
+                    {iconName && <SimpleSvgIcon icon={iconName} />}
                     <span>{label}</span>
-                </a>
+                </Link>
             </Li>
         )}
     </Ul>
 )
 
 NavBarList.propTypes = {
+    location: PropTypes.shape({
+        pathname: PropTypes.string
+    }),
     items: PropTypes.arrayOf(PropTypes.shape({
-        label: PropTypes.string,
-        imgSrc: PropTypes.string,
-        uri: PropTypes.string
+        iconName: PropTypes.string,
+        label: PropTypes.string.isRequired,
+        link: PropTypes.string.isRequired
     }))
 }
 
 NavBarList.defaultProps = {
-    items: []
+    items: [],
+    location: {
+        pathname: window.location.pathname
+    }
 }
 
 export default NavBarList

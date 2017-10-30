@@ -1,4 +1,4 @@
-import {ColumnType} from '../../src/components/data-table/DataTable'
+import {ColumnType} from '../../src/components/data-table'
 
 
 // Utility functions for generating mock data

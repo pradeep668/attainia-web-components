@@ -1,22 +1,14 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
 
+import {ContentFullSize} from '../layout'
 import AuthError from './AuthError.container'
-import SpinningButton from '../common/SpinningButton'
-import Form from '../common/Form'
-import Link from '../common/Link'
-import SimpleSvgIcon from '../common/SimpleSvgIcon'
-import ReduxFormField from '../common/ReduxFormField'
-import FormField from '../common/FormField'
+import {SpinningButton, Form, SimpleSvgIcon, ReduxFormField, FormField} from '../common'
 import {getThemeProp} from '../common/helpers'
 
-const FullPageWrapper = styled.div`
-    min-height: 100vh;
-    display: grid;
-    align-items: center;
-`
-const StyledForm = styled(Form)`
+const StyledLoginForm = styled(Form)`
     & > * {
         margin: ${getThemeProp(['forms', 'formItemMargin'], '5px')};
     }
@@ -83,22 +75,17 @@ const StyledForm = styled(Form)`
         }
     }
 `
-class Login extends Component {
-    componentDidMount() {
-        const token = this.props.getAccessTokenFromStorage()
-        if (token) this.props.parseToken(token)
-    }
-
+class Login extends PureComponent {
     render() {
         const {
-            handleSubmit, tryLogin, email, hasAuthError,
-            gotoPasswordHelp, gotoRegistration, rememberMe,
-            showPasswordHelp, showRegistration, toggleRememberMe, loading
+            handleSubmit, toggleRememberMe, tryLogin,
+            email, loginLabel, passwordHelpLabel, registrationLabel, rememberMeLabel,
+            hasAuthError, loading, rememberMe, showPasswordHelp, showRegistration
         } = this.props
 
         return (
-            <FullPageWrapper>
-                <StyledForm onSubmit={handleSubmit(tryLogin)} {...this.props}>
+            <ContentFullSize>
+                <StyledLoginForm onSubmit={handleSubmit(tryLogin)} {...this.props}>
                     <header className="loginHeader">
                         {hasAuthError ? <AuthError /> : <SimpleSvgIcon width="161" height="39" icon="primary" />}
                     </header>
@@ -117,53 +104,50 @@ class Login extends Component {
                     />
                     <FormField
                         className="rememberMe"
-                        label="Remember Me"
+                        label={rememberMeLabel}
                         type="checkbox"
                         name="rememberMe"
                         checked={rememberMe}
                         value={rememberMe}
                         handlers={{onChange: toggleRememberMe}}
                     />
-                    {showPasswordHelp && (
-                        <Link className="passwordHelp" href="#" onClick={gotoPasswordHelp}>
-                            Password Help
-                        </Link>
-                    )}
+                    {showPasswordHelp && <Link className="passwordHelp" to="password-help">{passwordHelpLabel}</Link>}
                     <SpinningButton inProgress={loading} className="loginButton" type="submit">
-                        Login
+                        {loginLabel}
                     </SpinningButton>
-                    {showRegistration && (
-                        <Link className="register" href="#" onClick={gotoRegistration}>
-                            Need an Account?
-                        </Link>
-                    )}
-                </StyledForm>
-            </FullPageWrapper>
+                    {showRegistration && <Link className="register" to="register">{registrationLabel}</Link>}
+                </StyledLoginForm>
+            </ContentFullSize>
         )
     }
 }
 
 Login.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    tryLogin: PropTypes.func.isRequired,
-    getAccessTokenFromStorage: PropTypes.func.isRequired,
-    gotoPasswordHelp: PropTypes.func.isRequired,
-    gotoRegistration: PropTypes.func.isRequired,
     email: PropTypes.string,
+    loginLabel: PropTypes.string.isRequired,
+    passwordHelpLabel: PropTypes.string.isRequired,
+    registrationLabel: PropTypes.string.isRequired,
+    rememberMeLabel: PropTypes.string.isRequired,
     hasAuthError: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,
-    parseToken: PropTypes.func.isRequired,
-    rememberMe: PropTypes.bool,
+    rememberMe: PropTypes.bool.isRequired,
     showPasswordHelp: PropTypes.bool.isRequired,
     showRegistration: PropTypes.bool.isRequired,
-    toggleRememberMe: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    toggleRememberMe: PropTypes.func.isRequired,
+    tryLogin: PropTypes.func.isRequired
 }
 
 Login.defaultProps = {
+    loginLabel: 'Login',
+    passwordHelpLabel: 'Password Help',
+    registrationLabel: 'Need an Account?',
+    rememberMeLabel: 'Remember Me',
     hasAuthError: false,
+    loading: false,
+    rememberMe: false,
     showPasswordHelp: true,
-    showRegistration: false,
-    loading: false
+    showRegistration: false
 }
 
 export default Login

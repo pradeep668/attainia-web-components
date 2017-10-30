@@ -5,7 +5,7 @@ import {graphql} from 'react-apollo'
 import Validator from 'validatorjs'
 
 import PasswordHelp from './PasswordHelp'
-import {handleError, cancel, passwordHelp} from './actions'
+import {handleError, passwordHelp} from './actions'
 import constants from './constants'
 import {PASSWORD_RESET} from './mutations'
 
@@ -19,18 +19,6 @@ const validate = (values) => {
 
 const mapStateToProps = store => ({
     email: path(['auth', 'user', 'email'], store)
-})
-
-const mapDispatchToProps = dispatch => ({
-    cancel() {
-        return dispatch(cancel())
-    },
-    handleError(error) {
-        return dispatch(handleError(error))
-    },
-    passwordHelp(user) {
-        return dispatch(passwordHelp(user))
-    }
 })
 
 const FormedPasswordHelp = reduxForm({
@@ -58,5 +46,5 @@ const PasswordHelpWithData = graphql(PASSWORD_RESET, {
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    {handleError, passwordHelp}
 )(PasswordHelpWithData)

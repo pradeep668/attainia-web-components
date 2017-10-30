@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled, {withTheme} from 'styled-components'
-import SimpleSvgIcon from '../common/SimpleSvgIcon'
+import {SimpleSvgIcon} from '../common'
 import {getThemeProp} from '../common/helpers'
-import Logout from '../auth/Logout.container'
+import {LogoutContainer} from '../auth'
 
 const Li = styled.div`
     color: ${getThemeProp(['colors', 'secondary', 'default'], 'royalblue')};
@@ -72,7 +72,7 @@ const Header = props =>
             />
         </Li>
         <Li className="profileMenu">
-            <Logout asLink>Logout</Logout>
+            <LogoutContainer asLink>Logout</LogoutContainer>
         </Li>
     </ListHeader>
 

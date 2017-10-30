@@ -15,8 +15,8 @@ const LogoutWithData = graphql(LOGOUT_USER, {
                 if (token) {
                     await mutate({variables: {token}})
                 }
-                ownProps.logoutUser()
                 removeToken()
+                ownProps.logout()
             } catch (err) {
                 ownProps.handleError(err)
             }
@@ -28,13 +28,6 @@ const mapStoreToProps = store => ({
     token: path(['auth', 'user', 'token', 'access_token'], store)
 })
 
-const mapDispatchToProps = dispatch => ({
-    handleError(err) {
-        return dispatch(handleError(err))
-    },
-    logoutUser() {
-        return dispatch(logout())
-    }
-})
+const mapDispatchToProps = {handleError, logout}
 
 export default connect(mapStoreToProps, mapDispatchToProps)(LogoutWithData)
