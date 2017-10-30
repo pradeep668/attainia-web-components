@@ -6,13 +6,13 @@ import {Cell} from 'fixed-data-table-2'
 
 export default class ImageCell extends React.PureComponent {
     render() {
-        const {cellData, ...props} = this.props
+        const {cellData: {imageSource, altText}, ...props} = this.props
         return (
             <Cell {...props}>
                 <img
-                    src={cellData.imageSource}
-                    alt={cellData.altText}
-                    title={cellData.altText}
+                    src={imageSource}
+                    alt={altText}
+                    title={altText}
                 />
             </Cell>
         )

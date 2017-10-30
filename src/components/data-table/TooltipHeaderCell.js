@@ -9,7 +9,7 @@ import SimpleSvgIcon from '../common/SimpleSvgIcon'
 
 export default class TooltipHeaderCell extends React.PureComponent {
     render() {
-        const {headerData, sortData, sortCallback, ...props} = this.props
+        const {headerData: {key, toolTip, name}, sortData, sortCallback, ...props} = this.props
 
         const FlexDiv = styled.div`
             display: flex;
@@ -44,18 +44,18 @@ export default class TooltipHeaderCell extends React.PureComponent {
         const handleSort = () => {
             const sortDir = (sortIcon === 'arrow_down') ? 'desc' : 'asc'
 
-            sortCallback(headerData.key, sortDir)
+            sortCallback(key, sortDir)
         }
 
-        if (sortData.columnKey === headerData.key) {
+        if (sortData.columnKey === key) {
             sortIcon = (sortData.sortDirection === 'asc') ? 'arrow_down' : 'arrow_up'
         }
 
         return (
-            <Cell {...props} data-tip={headerData.toolTip} data-for={'header-tooltip'}>
+            <Cell {...props} data-tip={toolTip} data-for={'header-tooltip'}>
                 <FlexDiv>
                     <LeftFlexSpan>
-                        <HeaderLink onClick={handleSort}>{headerData.name}</HeaderLink>
+                        <HeaderLink onClick={handleSort}>{name}</HeaderLink>
                     </LeftFlexSpan>
                     <RightFlexSpan>
                         <SortIcon icon={sortIcon} />

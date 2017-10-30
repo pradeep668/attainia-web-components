@@ -6,10 +6,10 @@ import {Cell} from 'fixed-data-table-2'
 
 export default class LinkCell extends React.PureComponent {
     render() {
-        const {cellData, ...props} = this.props
+        const {cellData: {link, label}, ...props} = this.props
         return (
             <Cell {...props}>
-                <a href={cellData.link}>{cellData.label}</a>
+                <a href={link}>{label}</a>
             </Cell>
         )
     }
