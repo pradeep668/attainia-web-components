@@ -1,9 +1,6 @@
 import React from 'react'
 
-import ContentCentered from './components/layout/ContentCentered'
-import ContentHeader from './components/layout/ContentHeader'
-import ContentWrapper from './components/layout/ContentWrapper'
-// import {DataTable} from './components/datatable/DataTable'
+import {ContentCentered, ContentHeader, ContentWrapper} from './components/layout'
 
 const App = () =>
     <ContentWrapper>

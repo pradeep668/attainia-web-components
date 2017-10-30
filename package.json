@@ -7,13 +7,14 @@
     "node": ">=6"
   },
   "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook",
     "babel": "BABEL_ENV=production babel src --out-dir ./ --ignore node_modules/ --copy-files",
     "prebuild": "npm run clean",
     "precommit-validate": "hooks/lint_js || (echo 'Please fix any of the above-mentioned linting errors before finalizing this commit.' && exit 1)",
     "build": "npm run build:dev && npm run build:prod",
     "build:dev": "react-scripts build",
     "build:prod": "NODE_ENV=production node config/build.js",
-    "clean": "node_modules/.bin/rimraf auth common layout datatable build",
+    "clean": "node_modules/.bin/rimraf auth common layout data-table build",
     "eject": "react-scripts eject",
     "prepublish": "npm run build:prod",
     "postpublish": "npm run clean",
@@ -78,6 +79,8 @@
     "validatorjs": "3.13.5"
   },
   "devDependencies": {
+    "@storybook/addon-info": "^3.2.13",
+    "@storybook/react": "^3.2.13",
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
     "babel-plugin-add-module-exports": "0.2.1",

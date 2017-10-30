@@ -1,6 +1,6 @@
 import {path} from 'ramda'
 import {connect} from 'react-redux'
-import {renderConditional} from '../common/Conditional'
+import {renderConditional} from '../common'
 
 import Header from './Header'
 

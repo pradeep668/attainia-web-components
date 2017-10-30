@@ -5,14 +5,14 @@ import styled from 'styled-components'
 import TooltipHeaderCell from './TooltipHeaderCell'
 
 
-export const NumberTooltipHeaderCell = styled(TooltipHeaderCell)`
+const NumberTooltipHeaderCell = styled(TooltipHeaderCell)`
     .public_fixedDataTableCell_cellContent span a {
         text-align: right;
     }
 `
 
 NumberTooltipHeaderCell.propTypes = {
-    data: PropTypes.shape({
+    headerData: PropTypes.shape({
             name: PropTypes.string,
             toolTip: PropTypes.string,
             key: PropTypes.string,

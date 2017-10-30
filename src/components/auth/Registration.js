@@ -3,11 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import {Link} from 'react-router-dom'
-import Button from '../common/Button'
-import LinkButton from '../common/LinkButton'
-import Form from '../common/Form'
-import SimpleSvgIcon from '../common/SimpleSvgIcon'
-import ReduxFormField from '../common/ReduxFormField'
+import {Button, LinkButton, Form, SimpleSvgIcon, ReduxFormField} from '../common'
 import {getThemeProp} from '../common/helpers'
 
 const StyledForm = styled(Form)`

@@ -4,8 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled, {withTheme} from 'styled-components'
 import {Link} from 'react-router-dom'
-import LinkButton from '../common/LinkButton'
-import SimpleSvgIcon from '../common/SimpleSvgIcon'
+import {LinkButton, SimpleSvgIcon} from '../common'
 import {getThemeProp} from '../common/helpers'
 
 const capitalize = str => str.replace(/(?:^|\s)\S/g, toUpper)

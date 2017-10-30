@@ -7,17 +7,15 @@ import {Cell} from 'fixed-data-table-2'
 
 export default class TextCell extends React.PureComponent {
     render() {
-        const {data, rowIndex, columnKey, ...props} = this.props
+        const {cellData, ...props} = this.props
         return (
             <Cell {...props}>
-                <span>{data[rowIndex][columnKey]}</span>
+                <span>{cellData}</span>
             </Cell>
         )
     }
 }
 
 TextCell.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
-    rowIndex: PropTypes.number,
-    columnKey: PropTypes.string
+    cellData: PropTypes.string.isRequired
 }

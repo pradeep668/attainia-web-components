@@ -1,17 +1,16 @@
 import React from 'react'
 
 import PropTypes from 'prop-types'
-
 import {Cell} from 'fixed-data-table-2'
 import SimpleSvgIcon from '../common/SimpleSvgIcon'
 
 export default class IconLinkCell extends React.PureComponent {
     render() {
-        const {data, rowIndex, columnKey, ...props} = this.props
+        const {cellData: {link, iconName}, ...props} = this.props
         return (
             <Cell {...props}>
-                <a href={data[rowIndex][columnKey].link}>
-                    <SimpleSvgIcon icon={data[rowIndex][columnKey].iconName} />
+                <a href={link}>
+                    <SimpleSvgIcon icon={iconName} />
                 </a>
             </Cell>
         )
@@ -19,7 +18,8 @@ export default class IconLinkCell extends React.PureComponent {
 }
 
 IconLinkCell.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
-    rowIndex: PropTypes.number,
-    columnKey: PropTypes.string
+    cellData: PropTypes.shape({
+        link: PropTypes.string.isRequired,
+        iconName: PropTypes.string.isRequired
+    }).isRequired
 }
