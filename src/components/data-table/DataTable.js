@@ -60,6 +60,11 @@ const LoadMoreButton = styled(Button)`
     height: 60px;
     margin-left: auto;
     margin-right: auto;
+
+    &:disabled {
+        background: #aaaaaa;
+        cursor: not-allowed;
+    }
 `
 
 const RenderColumns = (headers, data, sortData, getSortedData) => (
@@ -184,6 +189,12 @@ const RenderCheckColumn = (hasCheckColumn, rowSelected, data) => {
     return checkColumn
 }
 
+const handleNextPage = (pageData, pageCallBack) => {
+    if (pageData.page < pageData.pages) {
+        pageCallBack(pageData.page + 1)
+    }
+}
+
 export const DataTable = ({
     rowHeight,
     tableWidth,
@@ -211,7 +222,12 @@ export const DataTable = ({
         <ReactTooltip place="top" id="header-tooltip" effect="solid" />
         <ReactTooltip place="top" id="cell-tooltip" effect="solid" />
         <TableFooter>
-            <LoadMoreButton onClick={() => getNextPage(data.pageData.page)}>Load More</LoadMoreButton>
+            <LoadMoreButton
+                onClick={() => handleNextPage(data.pageData, getNextPage)}
+                disabled={data.pageData.pages === data.pageData.page}
+            >
+                Load More
+            </LoadMoreButton>
         </TableFooter>
     </div>
 
@@ -241,7 +257,9 @@ DataTable.propTypes = {
         }),
         pageData: PropTypes.shape({
             page: PropTypes.number,
-            total: PropTypes.number
+            pages: PropTypes.number,
+            pageSize: PropTypes.number,
+            totalResults: PropTypes.number
         }),
         rows: PropTypes.arrayOf(PropTypes.object).isRequired
     }).isRequired
