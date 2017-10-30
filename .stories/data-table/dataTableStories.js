@@ -25,10 +25,10 @@ const CenterDiv = styled.div`
 `
 
 storiesOf('DataTable', module)
-    .addDecorator((getStory) => (
+    .addDecorator(StoryComponent => (
         <ThemeProvider theme={theme}>
             <CenterDiv>
-                { getStory() }
+                <StoryComponent />
             </CenterDiv>
         </ThemeProvider>
     ))

@@ -6,11 +6,11 @@ import SimpleSvgIcon from '../common/SimpleSvgIcon'
 
 export default class IconLinkCell extends React.PureComponent {
     render() {
-        const {cellData, ...props} = this.props
+        const {cellData: {link, iconName}, ...props} = this.props
         return (
             <Cell {...props}>
-                <a href={cellData.link}>
-                    <SimpleSvgIcon icon={cellData.iconName} />
+                <a href={link}>
+                    <SimpleSvgIcon icon={iconName} />
                 </a>
             </Cell>
         )

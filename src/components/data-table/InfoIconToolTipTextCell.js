@@ -15,16 +15,16 @@ const InlineImg = styled(SimpleSvgIcon)`
 
 export default class InfoIconToolTipTextCell extends React.PureComponent {
     render() {
-        const {cellData, ...props} = this.props
+        const {cellData: {toolTip, altText, text}, ...props} = this.props
         return (
             <Cell {...props}>
                 <InlineImg
                     icon="info"
-                    data-tip={cellData.toolTip}
+                    data-tip={toolTip}
                     data-for={'cell-tooltip'}
-                    alt={cellData.altText}
+                    alt={altText}
                 />
-                <span>{cellData.text}</span>
+                <span>{text}</span>
             </Cell>
         )
     }
