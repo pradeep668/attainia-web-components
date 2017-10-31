@@ -7,7 +7,7 @@ import {
     untilAuthenticatedAndThenRedirectBack
 } from './decorators'
 
-const withLoginEnhancers = compose(
+export const withLoginEnhancers = compose(
     withTokenRefresh,
     withTokenInfo,
     withTokenValidation,
@@ -15,14 +15,9 @@ const withLoginEnhancers = compose(
     untilAuthenticatedAndThenRedirectBack
 )
 
-const withTokenHelpers = compose(
+export const withTokenHelpers = compose(
     withTokenRefresh,
     withTokenInfo,
     withTokenValidation,
     withTokenParsing
 )
-
-export {
-    withLoginEnhancers,
-    withTokenHelpers
-}

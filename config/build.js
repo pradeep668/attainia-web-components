@@ -12,6 +12,7 @@ const json = require('rollup-plugin-json')
 const replace = require('rollup-plugin-replace')
 const svg = require('rollup-plugin-svg')
 const visualizer = require('rollup-plugin-visualizer')
+const uglify = require('rollup-plugin-uglify')
 const pkg = require('../package.json')
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -19,14 +20,14 @@ const processShim = '\0process-shim'
 
 async function build() {
     try {
-        const files = glob.sync(`${process.cwd()}/src/components/**/*.js`)
+        const files = glob.sync(`${process.cwd()}/src/components/**/index.js`)
             .map(path => path.split('src/components/')[1].split('/'))
             .filter(([module, filename]) => module && filename)
-            .map(([module, filename, subfilename]) => ({module, filename, subfilename}))
+            .map(([module, filename]) => ({module, filename}))
 
-        await Promise.all(files.map(async ({module, filename, subfilename}) => {
+        await Promise.all(files.map(async ({module, filename}) => {
             const bundle = await rollup({
-                input: `src/components/${module}/${filename}${subfilename ? `/${subfilename}` : ''}`,
+                input: `src/components/${module}/${filename}`,
                 external: Object.keys(pkg.dependencies),
                 globals: {react: 'React'},
                 plugins: [
@@ -72,14 +73,15 @@ async function build() {
                             Object.assign(require('babel-plugin-transform-runtime'), {polyfill: true})
                         ].filter(Boolean)
                     }),
+                    uglify(),
                     visualizer()
                 ].filter(Boolean)
             })
 
             return bundle.write({
-                format: 'es', // umd || cjs
+                format: 'cjs', // umd || es
                 sourcemap: true,
-                file: `${module}/${filename}${subfilename ? `/${subfilename}` : ''}`
+                file: `${module}/${filename}`
             })
         }))
         process.exit(0)
