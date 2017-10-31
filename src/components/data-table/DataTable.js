@@ -255,8 +255,8 @@ DataTable.propTypes = {
         }),
         pageData: PropTypes.shape({
             page: PropTypes.number,
-            pages: PropTypes.number,
-            pageSize: PropTypes.number,
+            totalPages: PropTypes.number,
+            perPage: PropTypes.number,
             totalResults: PropTypes.number
         }),
         rows: PropTypes.arrayOf(PropTypes.object).isRequired
