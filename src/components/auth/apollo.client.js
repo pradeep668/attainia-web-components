@@ -1,30 +1,38 @@
 import {path} from 'ramda'
 import {ApolloClient, createNetworkInterface} from 'react-apollo'
 import {SubscriptionClient, addGraphQLSubscriptions} from 'subscriptions-transport-ws'
-import {getAccessTokenFromStorage} from './helpers'
+import {isSupportedStorageType, getAccessTokenFromStorage, formatBaseUri} from './helpers'
 
 export default ({
     baseUrl = 'localhost',
-    storage = 'local',
+    storageType = 'local',
     useSubscriptions = true,
     apolloClientProps = {}
 } = {}) => {
-    const networkInterface = createNetworkInterface({uri: `http://${baseUrl}/graphql`})
+    if (apolloClientProps.networkInterface) {
+        return new ApolloClient(apolloClientProps)
+    }
 
-    if (/(local|session)/i.test(storage)) {
+    const uri = `${formatBaseUri(baseUrl)}/graphql`
+    const networkInterface = createNetworkInterface({uri})
+
+    if (isSupportedStorageType(storageType)) {
         networkInterface.use([{
             applyMiddleware(req, next) {
                 if (!path(['options', 'headers'], req)) {
                     req.options.headers = {}
                 }
-                req.options.headers.Authorization = `Bearer ${getAccessTokenFromStorage(storage)}`
+                req.options.headers.Authorization = `Bearer ${getAccessTokenFromStorage(storageType)}`
                 next()
             }
         }])
     }
 
     if (useSubscriptions) {
-        const wsClient = new SubscriptionClient(`ws://${baseUrl}/subscriptions`, {reconnect: true})
+        const wsClient = new SubscriptionClient(
+            `ws://${uri.split('://')[1]}/subscriptions`,
+            {reconnect: true}
+        )
         return new ApolloClient({
             networkInterface: addGraphQLSubscriptions(networkInterface, wsClient),
             ...apolloClientProps

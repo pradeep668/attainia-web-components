@@ -2,15 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import Button from '../common/Button'
-import Form from '../common/Form'
-import Logo from '../common/Logo'
-import ReduxFormField from '../common/ReduxFormField'
-import {breakpoints, forms} from '../common/constants'
+import {Link} from 'react-router-dom'
+import {Button, LinkButton, Form, SimpleSvgIcon, ReduxFormField} from '../common'
+import {getThemeProp} from '../common/helpers'
 
 const StyledForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin};
+        margin: ${getThemeProp(['forms', 'formItemMargin'], '5px')};
     }
 
     & .attainiaLogo {
@@ -31,7 +29,7 @@ const StyledForm = styled(Form)`
     }
 
     @supports (display: grid) {
-        @media ${breakpoints.desktop} {
+        @media ${getThemeProp(['breakpoints', 'tablet'], 'screen and (min-width: 768px)')} {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-areas: 'header header' 'instructions instructions' 'name name' 'grant grant'
@@ -67,24 +65,19 @@ const StyledForm = styled(Form)`
         }
     }
 `
-const RegisterApplication = ({handleSubmit, tryRegisterApp, cancel}) =>
+const RegisterApplication = ({handleSubmit, tryRegisterApp}) =>
     <StyledForm onSubmit={handleSubmit(tryRegisterApp)}>
-        <Logo className="attainiaLogo" />
+        <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="primary" />
         <p className="instructions">Register Your Application</p>
         <ReduxFormField className="applicationName" placeholder="name" name="name" />
         <ReduxFormField className="grantType" placeholder="grant type" name="grantType" />
         <ReduxFormField className="redirect" placeholder="redirects to" name="redirect" type="url" />
-        <Button className="registerApplicationButton" type="submit">
-            Register
-        </Button>
-        <Button className="cancelButton" type="button" onClick={cancel}>
-            Cancel
-        </Button>
+        <Button className="registerApplicationButton" type="submit">Register</Button>
+        <LinkButton className="cancelButton"><Link to="/">Cancel</Link></LinkButton>
     </StyledForm>
 
 RegisterApplication.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    cancel: PropTypes.func.isRequired,
     tryRegisterApp: PropTypes.func.isRequired
 }
 

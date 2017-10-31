@@ -1,13 +1,7 @@
-import {compose, is, toString} from 'ramda'
+import {omit} from 'ramda'
 import types from './types'
 import initialState from './initialState'
-
-const parseError = compose(
-    ([label, message]) => message || label,
-    str => str.split(/error:/i),
-    toString,
-    err => (is(Object, err) ? err.message : err)
-)
+import {parseError} from '../common/helpers'
 
 export default (
     state = initialState, {
@@ -16,29 +10,21 @@ export default (
 ) => {
     switch (type) {
         case types.CANCEL:
-            return {
-                ...state,
-                route: 'login',
-                status: ''
-            }
+            return {...state}
         case types.CLEAR_ERROR:
-            return {
-                ...state,
-                error: '',
-                status: ''
-            }
+            return {...state, error: ''}
         case types.CLEAR_REFRESH:
             return {
                 ...state,
                 refreshTimeout: clearTimeout(state.refreshTimeout)
             }
         case types.CLEAR_LOGIN:
-            return {...initialState}
+            return {...state, ...omit(['baseUrl'], initialState)}
         case types.ERROR:
             return {
                 ...state,
                 error: parseError(error),
-                status: ''
+                loading: false
             }
         case types.GET_USER_NAV_MENU:
             return {
@@ -48,78 +34,57 @@ export default (
                     navigation: navigation.map(label => ({label}))
                 }
             }
-        case types.GOTO_APP_REGISTRATION:
-            return {
-                ...state,
-                route: 'application',
-                status: ''
-            }
-        case types.GOTO_PASSWORD_HELP:
-            return {
-                ...state,
-                route: 'password-help',
-                status: ''
-            }
-        case types.GOTO_REGISTRATION:
-            return {
-                ...state,
-                route: 'registration',
-                status: ''
-            }
+        case types.LOADING_FINISHED:
+            return {...state, loading: false}
+        case types.LOADING_STARTED:
+            return {...state, loading: true}
         case types.LOGIN:
-            return {
-                ...state,
-                user,
-                route: 'home',
-                status: 'login'
-            }
-        case types.LOGOUT:
-            return {
-                ...initialState,
-                status: 'logout'
-            }
-        case types.PASSWORD_HELP:
-            return {
-                ...state,
-                route: 'login',
-                status: 'password',
-                user: {email}
-            }
-        case types.REFRESH:
+            return {...state, user}
+        case types.LOGOUT: {
             if (state.refreshTimeout) clearTimeout(state.refreshTimeout)
 
             return {
-                ...state,
-                refreshTimeout
+                ...omit(['refreshTimeout', 'parsed_token'], state),
+                ...omit(['baseUrl'], initialState)
             }
+        }
+        case types.PASSWORD_HELP:
+            return {...state, user: {email}}
+        case types.REFRESH: {
+            if (state.refreshTimeout) clearTimeout(state.refreshTimeout)
+
+            return {...state, refreshTimeout}
+        }
         case types.REGISTER_APP:
-            return {
-                ...state,
-                app,
-                route: 'login',
-                status: ''
-            }
+            return {...state, app}
         case types.REGISTER_USER:
             return {
                 ...state,
-                route: 'login',
-                status: '',
                 user: {
                     name: user.name,
                     email: user.email
                 }
             }
         case types.REMEMBER_ME:
+            return {...state, rememberMe: !state.rememberMe}
+        case types.PARSED_TOKEN:
+            return {...state, parsed_token: token}
+        case types.VALIDATED_TOKEN:
+        case types.UPDATED_TOKEN: {
             return {
-                ...state,
-                rememberMe: !state.rememberMe
-            }
-        case types.UPDATED_TOKEN:
-            return {
-                ...state,
+                ...omit(['parsed_token'], state),
                 user: {
                     ...state.user,
                     token
+                }
+            }
+        }
+        case types.USER_INFO_FROM_TOKEN:
+            return {
+                ...omit(['parsed_token'], state),
+                user: {
+                    ...state.user,
+                    ...user
                 }
             }
         // no default

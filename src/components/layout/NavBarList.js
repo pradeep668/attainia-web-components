@@ -2,63 +2,75 @@ import uuid from 'uuid/v4'
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import {colors} from '../common/constants'
+import {Link} from 'react-router-dom'
+import {SimpleSvgIcon} from '../common'
+import {getThemeProp} from '../common/helpers'
 
 const Li = styled.li` 
     transition: background 0.1s ease;
     cursor: pointer;
-    color: white;
+    color: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
     list-style: none;
     font-size: 16px;
     line-height: 19px;
     padding-top: 10px;
     padding-bottom: 7px;
-    background: ${props => props.isSelected && colors.cornflowerBlue};
+    background: ${props => props.isSelected && getThemeProp(['colors', 'secondary', 'default'], 'royalblue')(props)};
     border-left-width: 5px;
     border-color: transparent;
     border-left-style: solid;
 
     &:hover {
-        border-color: ${colors.lapisLazuli};
-        background: ${colors.jet};
+        border-color: ${getThemeProp(['colors', 'secondary', 'default'], 'royalblue')};
+        background: ${getThemeProp(['colors', 'grayscale', 'dk'], 'darkgray')};
     }
     & a {
         padding: 10px 15px;
-        color: white;
+        color: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
         text-decoration: none;
     }
 `
 const Ul = styled.ul`
-    background-color: ${colors.outerSpace};
+    background-color: ${getThemeProp(['colors', 'grayscale', 'dk'], 'darkgray')};
     padding: 0;
     margin: 0;
     width: 200px;
     box-sizing: border-box;
 `
 
-const NavBarList = ({items}) => (
+const NavBarList = ({items, location: {pathname}}) => (
     <Ul>
-        {items.map(({imgSrc, uri, label}) =>
-            <Li key={uuid()} role="presentation">
-                <a href={uri}>
-                    {imgSrc && <img alt="left" src={imgSrc} />}
+        {items.map(({iconName, link, label}) =>
+            <Li
+                isSelected={link === pathname}
+                key={uuid()}
+                role="presentation"
+            >
+                <Link to={link}>
+                    {iconName && <SimpleSvgIcon icon={iconName} />}
                     <span>{label}</span>
-                </a>
+                </Link>
             </Li>
         )}
     </Ul>
 )
 
 NavBarList.propTypes = {
+    location: PropTypes.shape({
+        pathname: PropTypes.string
+    }),
     items: PropTypes.arrayOf(PropTypes.shape({
-        label: PropTypes.string,
-        imgSrc: PropTypes.string,
-        uri: PropTypes.string
+        iconName: PropTypes.string,
+        label: PropTypes.string.isRequired,
+        link: PropTypes.string.isRequired
     }))
 }
 
 NavBarList.defaultProps = {
-    items: []
+    items: [],
+    location: {
+        pathname: window.location.pathname
+    }
 }
 
 export default NavBarList

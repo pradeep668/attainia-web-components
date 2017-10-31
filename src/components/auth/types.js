@@ -1,19 +1,20 @@
 export default {
-    CANCEL: 'awc_cancel',
     CLEAR_LOGIN: 'awc_clear_login',
     CLEAR_ERROR: 'awc_error_clear',
     CLEAR_REFRESH: 'awc_clear_refresh',
     ERROR: 'awc_error',
     GET_USER_NAV_MENU: 'awc_get_user_menu',
-    GOTO_PASSWORD_HELP: 'awc_goto_password_help',
-    GOTO_REGISTRATION: 'awc_goto_registration',
-    GOTO_APP_REGISTRATION: 'awc_goto_app_registration',
     LOGIN: 'awc_login',
+    LOADING_STARTED: 'awc_started_loading',
+    LOADING_FINISHED: 'awc_finished_loading',
     LOGOUT: 'awc_logout',
+    PARSED_TOKEN: 'awc_parsed_token',
     PASSWORD_HELP: 'awc_password_help',
     REGISTER_USER: 'awc_register_user',
     REGISTER_APP: 'awc_register_app',
     REFRESH: 'awc_refresh',
     REMEMBER_ME: 'awc_remember_me',
-    UPDATED_TOKEN: 'awc_updated_token'
+    USER_INFO_FROM_TOKEN: 'awc_user_info_from_token',
+    UPDATED_TOKEN: 'awc_updated_token',
+    VALIDATED_TOKEN: 'awc_validated_token'
 }

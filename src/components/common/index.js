@@ -1,4 +1,5 @@
 import Button from './Button'
+import ButtonLink from './ButtonLink'
 import CheckboxLabel from './CheckboxLabel'
 import {renderConditional, Conditional} from './Conditional'
 import ErrorMessage from './ErrorMessage'
@@ -8,11 +9,13 @@ import FormField from './FormField'
 import InputField from './InputField'
 import Link from './Link'
 import LinkButton from './LinkButton'
-import Logo from './Logo'
 import ReduxFormField from './ReduxFormField'
+import SimpleSvgIcon from './SimpleSvgIcon'
+import SpinningButton from './SpinningButton'
 
-export default {
+export {
     Button,
+    ButtonLink,
     CheckboxLabel,
     Conditional,
     ErrorMessage,
@@ -22,7 +25,8 @@ export default {
     InputField,
     Link,
     LinkButton,
-    Logo,
     ReduxFormField,
-    renderConditional
+    renderConditional,
+    SimpleSvgIcon,
+    SpinningButton
 }

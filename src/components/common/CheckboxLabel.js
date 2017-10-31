@@ -3,7 +3,7 @@ import {isNotNil} from 'ramda-adjunct'
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import {colors} from './constants'
+import {getThemeProp} from './helpers'
 
 const Span = ({className, children}) =>
     <span className={className}>{children}</span>
@@ -47,7 +47,7 @@ const CheckboxLabel = styled(Label)`
         position: absolute;
         top: 4px;
         left: 4px;
-        border: 3px solid ${colors.rossoCorsa};
+        border: 3px solid ${getThemeProp(['colors', 'primary', 'default'], 'crimson')};
         border-top: none;
         border-right: none;
         background: transparent;

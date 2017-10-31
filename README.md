@@ -12,12 +12,13 @@ This means if you import a component that uses no dependencies it will be as sma
 
 In general you can expect to encounter a "missing dependency" error (which you solve by simply running an `npm install <some missing dependency>`) rarely if you are using a normal React/Redux application (these are the primary deps).
 
-Some components are meant to work with [react-apollo](https://github.com/apollographql/react-apollo) (such as the `AuthProvider`) and some components that collect user input are meant to work with [redux-form](https://github.com/erikras/redux-form) and [validatorjs](https://github.com/skaterdav85/validatorjs). Also, this library opts for [ramda](https://www.npmjs.com/package/ramda) [rather than lodash/underscore](https://www.youtube.com/watch?v=ixbJrJTOnF8) for many of the low-level JavaScript tasks.  
+Some components are meant to work with [react-apollo](https://github.com/apollographql/react-apollo) (such as the `AuthProvider`) and some components that collect user input are meant to work with [redux-form](https://github.com/erikras/redux-form) and [validatorjs](https://github.com/skaterdav85/validatorjs). Also, this library opts for [ramda](https://www.npmjs.com/package/ramda) [rather than lodash/underscore](https://www.youtube.com/watch?v=ixbJrJTOnF8) for many of the low-level JavaScript tasks.
 
 These components may or may not implement one or many of the following dependencies (most especially you'll find these used in the `.container` component wrappers):
 * [redux](https://github.com/reactjs/redux) - Unidirectional data flow in a React application
 * [react-redux](https://github.com/reactjs/react-redux) - Bridges React to Redux
 * [react-apollo](https://github.com/apollographql/react-apollo) - Data provider to wrap around components that can run or subscribe to server queries
+* [redux-auth-wrapper](https://github.com/mjrussell/redux-auth-wrapper) - Higher order component used to decorate routable components with conditional rendering and/or redirector based on a redux selector
 * [redux-form](https://github.com/erikras/redux-form) - HTML Form helpers and validation that flow into a Redux store
 * [validatorjs](https://github.com/skaterdav85/validatorjs) - Build validation objects that Redux-Form can easily use
 * [styled-components](https://github.com/styled-components/styled-components) - Possibly the first truly elegant marriage of CSS and JavaScript that can (potentially) please developers who fall on either side of the CSS or JS development
@@ -33,7 +34,7 @@ Additionally, certain low-level libraries are also servicing these components:
 npm install attainia-web-components
 ```
 
-## Usage 
+## Usage
 
 Many components in this library can be used in two ways. While the actual component is defined in just the JavaScript file after which it is named, there are supplementary files that expand on its functionality which you can choose to use as well.
 
@@ -102,14 +103,126 @@ export default (
 );
 ```
 
-### Importing non-Transpiled JavaScript Components
+## Configuring a Theme
 
-In case you wish to import the pre-transpiled components, you can change your import path (for _any_ component) to pull from the `src/` folder rather than the `/` root directory of the project.
-
+It is best to follow official styled-components guidelines for themeing, but you can leverage many `<ThemeProvider />` components or just one that wraps the entire React application (usually the same place you create your Redux `<Provider />`). If you _are_ using the [styled-components ThemeProvider](https://www.styled-components.com/docs/advanced#theming) you can pass the theme into it like this:
 
 ```javascript
-import Login from 'attainia-web-components/src/auth/Login';
+<ThemeProvider theme={theme.catalog}>
+   // All your application components which need to use the theme
+</ThemeProvider>
 ```
+
+Any of the children components to `<ThemeProvider />` in your application can then access the theme:
+
+```javascript
+import styled from 'styled-components'
+
+export default styled.button`
+    border-radius: 5px;
+    background-color: ${props => props.theme.colors.primary.default || 'black'}
+    color: ${props => props.theme.colors.secondary.default || 'white'}
+`
+```
+
+Many/most of the components in this library attempt to parse themeing constants from the `theme` object passed in via the React `context`. The structure of the theme object which many of these components are expecting can be defined like this:
+
+```javascript
+{
+  // simple svg icons who require only an array of coordinates to be mapped to a <g><path d="path1" /><path d="path2" /> ...</g>
+  icons: {
+    // Always set a primary icon
+    primary: {
+      paths: [
+        "M56 403 ..."
+      ]
+    },
+    delete: {
+      paths: [
+        "M37 47403 ..."
+      ]
+    },
+    edit: {
+      paths: [
+        "M37 47403 ...",
+        "M47 238 3834..."
+      ]
+    }
+  },
+  fonts: {
+    fontSize: "12px",
+    fontFamily: "Lato, Helvetica, sans-serif"
+    // define any other font related theme-wide styles in camelcased equivalents of the native CSS properties
+    ...
+  },
+  breakpoints: {
+    phone: "screen and (min-width: 544px)",
+    tablet: "screen and (min-width: 768px)",
+    desktop: "screen and (min-width: 992px)",
+    largeDesktop: "screen and (min-width: 1200px)"
+  },
+  colors: {
+    primary: {
+      default: "#E10600", // set a "default" value in case of simple themes OR if a non-existent property is called
+      red: {
+        lt: "#F0887D",
+        md: "#E10600",
+        dk: "#FF0700"
+      },
+      // define any other necessary blue, green, orange, purple, yellow, or gray ranges
+      ...
+    },
+    secondary: {
+      default: "#1b6595", // set a "default" value in case of simple themes OR if a non-existent property is called
+      blue: {
+        lt: "#227fbb",
+        md: "#1b6595",
+        dk: "#1F74B2"
+      },
+      // define any other red, green, orange, purple, yellow, or gray ranges
+      ...
+    },
+    status: {
+      error: "#E10600",
+      warning: "#FFF59D",
+      ok: "#64DD17"
+    },
+    grayscale: {
+      white: "", // defaults to #ffffff
+      black: "", // defaults to #000000
+      // Always set a lt, md, and dk
+      lt: "",
+      md: "",
+      dk: "",
+      // If necessary, set an entire scale
+      100: "",
+      200: "",
+      300: "",
+      400: "",
+      500: "",
+      600: "",
+      700: "",
+      800: "",
+      900: ""
+    }
+  }
+}
+```
+
+## Component Storybooks
+
+Using React Storybook, we can develop and design UI components outside of an application in an isolated environment.  For more information about Storybooks, see the links below.
+
+[Storybook Site](https://storybook.js.org/)
+[Storybook GitHub](https://github.com/storybooks/storybook)
+
+You can run the Storybooks using the following command:
+
+```bash
+npm run storybook
+```
+
+You can access your storybook from the browser at http://localhost:9001
 
 ## Component Table of Contents
 
@@ -117,24 +230,44 @@ Auth Components:
 
 * [AuthProvider](#auth-provider)
 * [AuthError](#auth-error)
+* [AuthStatus](#auth-status)
 * [Login](#login)
 * [Logout](#logout)
+* [ParseTokenFromStorage](#parse-token-from-storage)
 * [PasswordHelp](#password-help)
-* [Registration](#user-registration)
 * [RegisterApplication](#app-registration)
+* [Registration](#user-registration)
+* [TokenInfo](#token-info)
+* [Validator](#validator)
+* [WriteTokenToStorage](#write-token-to-storage)
 
 Common Components:
 
 * [Button](#button)
+* [ButtonLink](#button-link)
+* [CheckboxLabel](#checkbox-label)
+* [Conditional](#conditional-rendering)
 * [ErrorMessage](#error-message)
 * [FieldError](#field-error)
 * [Form](#form)
 * [FormField](#form-field)
 * [Link](#link)
 * [LinkButton](#link-button)
-* [Conditional](#conditional-rendering) 
-* [ReduxFormField](#redux-form-field) 
-* [Logo](#attainia-logo)
+* [ReduxFormField](#redux-form-field)
+* [SimpleSvgIcon](#simple-svg-icon)
+* [SpinningButton](#spinning-button)
+
+Data-Table Components:
+
+* [DataTable](#data-table)
+* [IconLinkCell](#icon-link-cell)
+* [ImageCell](#image-cell)
+* [InfoIconToolTipTextCell](#info-icon-tooltip-text-cell)
+* [LinkCell](#link-cell)
+* [NumberCell](#number-cell)
+* [NumberTooltipHeaderCell](#number-tooltip-header-cell)
+* [TextCell](#text-cell)
+* [TooltipHeaderCell](#tooltip-header-cell)
 
 ### Auth Provider
 
@@ -143,9 +276,6 @@ This is the recommended way to use the `auth` components. Rather than grafting t
 __options__:
 
 * `baseUrl` - [`String`] The most important piece: the URL to your GraphQL server (defaults to `localhost`)
-* `storage` - [`String`] Configures it to write tokens to and read them from browser storage. Current options are `session`, `local` and `none` (defaults to `local`) which leverages [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage), [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) or the in-memory Redux store.
-* `onLogout` - A [`Function`] which fires whenever a Logout action occurs.
-* `onLogin`  - A [`Function`] which passes you the `user` object on successful login attempts.
 
 ```javascript
 // A "user" object passed into your (optional) onLogin callback
@@ -183,9 +313,14 @@ export default (props) =>
 
 This wrapper around the [ErrorMessage](#error-message) component places it into an HTML element where users can close out the error by clicking on it. If you use the container component around this one, it will take advantage of Redux to pull in the error from the `auth` section of our the Redux store and to dispatch a `CLEAR_ERROR` action on click.
 
+### Auth Status
+
+A simple component that subscribes to any logout events from the AuthProvider's server-side counterpart.
+
 ### Error Message
 
 A very simple company branded (Attainia) styling around a basic `<div>` with error message text inside
+
 ### Login
 
 Renders the Attainia user authentication component, which expects an email and password to be provided. Additionally it links to [password reset](#password-help) and [user registration](#user-registration) components.
@@ -193,14 +328,35 @@ Renders the Attainia user authentication component, which expects an email and p
 __options__:
 * `email` - [`String`] Optionally you can pre-populate the email field on the Login form
 * `showRegistration` - [`Boolean`] Determines whether to display the Registration link (defaults to `false`)
+* `storageType` - [`String`] Configures it to write tokens to and read them from browser storage. Current options are `session`, `local` and `none` (defaults to `local`) which leverages [sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage), [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) or the in-memory Redux store.
+* `onLogin`  - A [`Function`] which passes you the `user` object on successful login attempts.
 
 ### Logout
 
 Renders a Link which (on clicked) will log out the user
 
+__options__:
+* `onLogout` - A [`Function`] which fires whenever a Logout action occurs.
+
+### Parse Token From Storage
+
+A higher-order component that parses a `token` prop from `localStorage` or `sessionStorage` and pushes it into the Redux store.
+
 ### Password Help
 
 Collects a given user's registered email address, to trigger the password reset process defined in your application.
+
+### Token Info
+
+A higher-order component that takes the token parsed from storage and makes an API call to retrieve user info (id, email, etc.) from the token.
+
+### Validator
+
+A higher-order component that takes the token parsed from storage and makes an API call to validate the token. The user is logged out and the token removed from storage if it fails.
+
+### Write Token To Storage
+
+A higher-order component that takes the token from the Redux store (on `componentDidMount` and `componentWillUpdate`) and writes it to `localStorage` or `sessionStorage` to a key called "token"
 
 ### User Registration
 
@@ -250,6 +406,14 @@ export default renderConditional(
 
 A simple HTML button which has been styled according to company (Attainia) branding
 
+### Button Link
+
+An HTML anchor (link) element which has been styled to look and behave like a button
+
+### Checkbox Label
+
+A styled checkbox that is wrapped and the `onClick` is attached to the wrapper (value is still bound to the underlying `<input type=checkbox />`) to facilitate the checkbox behavior.
+
 ### Field Error
 
 An error message that attaches near the [FormField](#form-field)
@@ -260,20 +424,72 @@ A simple, small styled HTML `<form>`
 
 ### Form Field
 
-A versatile HTML `<input />` (or `<textarea />`) field with (optional) `<label />` and field-level Error, meant to be used in an HTML form (preferrably alongside [redux-form](http://redux-form.com/)). It is driven by the `label` and `type` properties, with options to attach any standard event handler via the `handlers` property. It supports numerous `type='<input type'`, but defaults to a value of `type='text'`. Additionally, it supports `placeholder` and `label`, the latter of which will render a `<label />` element before the actual `<input />` tag (except in the case of `<input type=checkbox />`, where the label renders after). Make sure to set your `id` property if you _are_ setting a `label` property, since the label must refer to the associated `<input />` element by its unique id. 
+A versatile HTML `<input />` (or `<textarea />`) field with (optional) `<label />` and field-level Error, meant to be used in an HTML form (preferrably alongside [redux-form](http://redux-form.com/)). It is driven by the `label` and `type` properties, with options to attach any standard event handler via the `handlers` property. It supports numerous `type='<input type'`, but defaults to a value of `type='text'`. Additionally, it supports `placeholder` and `label`, the latter of which will render a `<label />` element before the actual `<input />` tag (except in the case of `<input type=checkbox />`, where the label renders after). Make sure to set your `id` property if you _are_ setting a `label` property, since the label must refer to the associated `<input />` element by its unique id.
 
 ### Link
 
-An HTML `<a>` link which has been styled according to company (Attainia) branding
+An styled HTML anchor (link) element
 
 ### Link Button
 
-An HTML `<a>` link wrapping the styled Attainia Button
+An minimal HTML anchor (link) element wrapping the styled [Button](#button) component
 
-### Attainia Logo
+### Simple Svg Icon
 
-The current Attainia branded logo, in component form.
+This component parses stringified paths from the `icons` object passed into your styled-components `<ThemeProvider theme={theme} />`. Just set the `icon` property and it will look for a `paths` array inside the matching icon. _Note_ this component handles simple SVGs and renders as
+
+```
+<g><path d={...} /><path d={...} /> ... </g>
+```
+
+Therefore it is not meant for complex SVGs with the myriad of other tags that can go inside of a `<svg></svg>` wrapper.
+
+The way to use it is like so:
+
+```javascript
+<SimpleSvgIcon icon="notification" fill="crimson" width="10" height="10" />
+```
 
 ### Redux Form Field
 
 A wrapper around [FormField](#form-field), for use _specifically_ in [redux-forms](http://redux-form.com/).
+
+### Spinning Button
+
+A simple CSS spinner driven by a toogle prop to show or hide
+
+### DataTable
+
+A basic abstraction for [Fixed Data Table 2 for React](https://github.com/schrodinger/fixed-data-table-2)
+
+### Icon Link Cell
+
+A simple component that wraps an HTML anchor (link) element around a [SimpleSvgIcon](#simple-svg-icon) component inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Image Cell
+
+A simple component that places an HTML image element inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Info Icon Tooltip Text Cell
+
+A simple component that applies some simple styling (to make the HTML element `display: inline;`) around a [SimpleSvgIcon](#simple-svg-icon) component (set with the "info" icon type) inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library.
+
+### Link Cell
+
+A simple component that places an HTML anchor (link) element inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Number Cell
+
+A simple component that right-aligns numeric input inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Text Cell
+
+A simple component that places a text value inside of a `<Cell>` component from the [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Tooltip Header Cell
+
+A tooltip that can be attached to any header cell [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library
+
+### Number Tooltip Header Cell
+
+A tooltip (whose content is right-aligned) that can be attached to any header cell [fixed-data-table-2](https://github.com/schrodinger/fixed-data-table-2) library

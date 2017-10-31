@@ -1,24 +1,16 @@
-import React from 'react'
+import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
 
+import {ContentFullSize} from '../layout'
 import AuthError from './AuthError.container'
-import Button from '../common/Button'
-import Form from '../common/Form'
-import Link from '../common/Link'
-import Logo from '../common/Logo'
-import ReduxFormField from '../common/ReduxFormField'
-import FormField from '../common/FormField'
-import {forms} from '../common/constants'
+import {SpinningButton, Form, SimpleSvgIcon, ReduxFormField, FormField} from '../common'
+import {getThemeProp} from '../common/helpers'
 
-const FullPageWrapper = styled.div`
-    min-height: 100vh;
-    display: grid;
-    align-items: center;
-`
-const StyledForm = styled(Form)`
+const StyledLoginForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin};
+        margin: ${getThemeProp(['forms', 'formItemMargin'], '5px')};
     }
 
     & .loginHeader > * {
@@ -50,7 +42,8 @@ const StyledForm = styled(Form)`
     @supports (display: grid) {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-areas: 'header header' 'email email' 'password password' 'remember-me password-help'
+        grid-template-areas: 'header header' 'email email' 'password password'
+            ${props => (props.showPasswordHelp ? '"remember-me password-help"' : '"remember-me remember-me"')}
             'login-button login-button' ${props => props.showRegistration && '"register register"'};
 
         & .loginHeader {
@@ -82,52 +75,78 @@ const StyledForm = styled(Form)`
         }
     }
 `
-const Login = ({
-    handleSubmit, tryLogin, email, hasAuthError,
-    gotoPasswordHelp, gotoRegistration, rememberMe,
-    showRegistration, toggleRememberMe
-}) =>
-    <FullPageWrapper>
-        <StyledForm onSubmit={handleSubmit(tryLogin)}>
-            <header className="loginHeader">{hasAuthError ? <AuthError /> : <Logo />}</header>
-            <ReduxFormField className="email" placeholder="email" name="email" type="email" value={email} />
-            <ReduxFormField className="password" placeholder="password" type="password" name="password" />
-            <FormField
-                className="rememberMe"
-                label="Remember Me"
-                type="checkbox"
-                name="rememberMe"
-                checked={rememberMe}
-                handlers={{onChange: toggleRememberMe}}
-            />
-            <Link className="passwordHelp" href="#" onClick={gotoPasswordHelp}>
-                Password Help
-            </Link>
-            <Button className="loginButton" type="submit">
-                Login
-            </Button>
-            {showRegistration && (
-                <Link className="register" href="#" onClick={gotoRegistration}>
-                    Need an Account?
-                </Link>
-            )}
-        </StyledForm>
-    </FullPageWrapper>
+class Login extends PureComponent {
+    render() {
+        const {
+            handleSubmit, toggleRememberMe, tryLogin,
+            email, loginLabel, passwordHelpLabel, registrationLabel, rememberMeLabel,
+            hasAuthError, loading, rememberMe, showPasswordHelp, showRegistration
+        } = this.props
+
+        return (
+            <ContentFullSize>
+                <StyledLoginForm onSubmit={handleSubmit(tryLogin)} {...this.props}>
+                    <header className="loginHeader">
+                        {hasAuthError ? <AuthError /> : <SimpleSvgIcon width="161" height="39" icon="primary" />}
+                    </header>
+                    <ReduxFormField
+                        className="email"
+                        placeholder="email"
+                        name="email"
+                        type="email"
+                        value={email}
+                    />
+                    <ReduxFormField
+                        className="password"
+                        placeholder="password"
+                        type="password"
+                        name="password"
+                    />
+                    <FormField
+                        className="rememberMe"
+                        label={rememberMeLabel}
+                        type="checkbox"
+                        name="rememberMe"
+                        checked={rememberMe}
+                        value={rememberMe}
+                        handlers={{onChange: toggleRememberMe}}
+                    />
+                    {showPasswordHelp && <Link className="passwordHelp" to="password-help">{passwordHelpLabel}</Link>}
+                    <SpinningButton inProgress={loading} className="loginButton" type="submit">
+                        {loginLabel}
+                    </SpinningButton>
+                    {showRegistration && <Link className="register" to="register">{registrationLabel}</Link>}
+                </StyledLoginForm>
+            </ContentFullSize>
+        )
+    }
+}
 
 Login.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    tryLogin: PropTypes.func.isRequired,
-    gotoPasswordHelp: PropTypes.func.isRequired,
-    gotoRegistration: PropTypes.func.isRequired,
     email: PropTypes.string,
+    loginLabel: PropTypes.string.isRequired,
+    passwordHelpLabel: PropTypes.string.isRequired,
+    registrationLabel: PropTypes.string.isRequired,
+    rememberMeLabel: PropTypes.string.isRequired,
     hasAuthError: PropTypes.bool.isRequired,
-    rememberMe: PropTypes.bool,
+    loading: PropTypes.bool.isRequired,
+    rememberMe: PropTypes.bool.isRequired,
+    showPasswordHelp: PropTypes.bool.isRequired,
     showRegistration: PropTypes.bool.isRequired,
-    toggleRememberMe: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    toggleRememberMe: PropTypes.func.isRequired,
+    tryLogin: PropTypes.func.isRequired
 }
 
 Login.defaultProps = {
+    loginLabel: 'Login',
+    passwordHelpLabel: 'Password Help',
+    registrationLabel: 'Need an Account?',
+    rememberMeLabel: 'Remember Me',
     hasAuthError: false,
+    loading: false,
+    rememberMe: false,
+    showPasswordHelp: true,
     showRegistration: false
 }
 
