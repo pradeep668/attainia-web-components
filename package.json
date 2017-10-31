@@ -1,6 +1,6 @@
 {
   "name": "attainia-web-components",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A collection of Attainia branded web components to be used in an Attainia React.js web application.",
   "main": "index.js",
   "engines": {
@@ -115,6 +115,7 @@
     "rollup-plugin-postcss": "0.5.5",
     "rollup-plugin-replace": "2.0.0",
     "rollup-plugin-svg": "1.0.1",
+    "rollup-plugin-uglify": "2.0.1",
     "rollup-plugin-visualizer": "0.3.1"
   },
   "babel": {

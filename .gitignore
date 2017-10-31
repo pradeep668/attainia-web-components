@@ -7,7 +7,7 @@ package-lock.json
 /auth/
 /common/
 /layout/
-/resources/
+/data-table/
 
 # Mac files
 .DS_Store
