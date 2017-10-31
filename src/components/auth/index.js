@@ -26,6 +26,8 @@ export {default as WriteTokenToStorageContainer} from './WriteTokenToStorage.con
 
 export * from './enhancers'
 export * from './decorators'
+export * from './helpers'
 export {default as reducer} from './reducer'
+export {default as initialState} from './initialState'
 export {default as types} from './types'
 

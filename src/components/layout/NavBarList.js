@@ -38,11 +38,11 @@ const Ul = styled.ul`
     box-sizing: border-box;
 `
 
-const NavBarList = ({items, location: {pathname}}) => (
+const NavBarList = ({items}) => (
     <Ul>
         {items.map(({iconName, link, label}) =>
             <Li
-                isSelected={link === pathname}
+                isSelected={link === window.location.pathname}
                 key={uuid()}
                 role="presentation"
             >
@@ -56,9 +56,6 @@ const NavBarList = ({items, location: {pathname}}) => (
 )
 
 NavBarList.propTypes = {
-    location: PropTypes.shape({
-        pathname: PropTypes.string
-    }),
     items: PropTypes.arrayOf(PropTypes.shape({
         iconName: PropTypes.string,
         label: PropTypes.string.isRequired,
@@ -67,10 +64,7 @@ NavBarList.propTypes = {
 }
 
 NavBarList.defaultProps = {
-    items: [],
-    location: {
-        pathname: window.location.pathname
-    }
+    items: []
 }
 
 export default NavBarList
