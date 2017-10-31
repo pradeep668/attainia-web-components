@@ -190,9 +190,7 @@ const RenderCheckColumn = (hasCheckColumn, rowSelected, data) => {
 }
 
 const handleNextPage = (pageData, pageCallBack) => {
-    if (pageData.page < pageData.pages) {
-        pageCallBack(pageData.page + 1)
-    }
+    pageCallBack(pageData.page + 1)
 }
 
 export const DataTable = ({
