@@ -23,8 +23,8 @@ export default (
     <ThemeProvider theme={theme}>
         <Provider store={store}>
             <AuthProvider>
-                <Layout>
-                    <BrowserRouter>
+                <BrowserRouter>
+                    <Layout>
                         <Switch>
                             <Route exact path="/" component={withAuthentication(Home)} />
                             <Route exact path="/login" component={withLoginEnhancers(LoginContainer)} />
@@ -33,8 +33,8 @@ export default (
                             <Route exact path="/register-application" component={RegisterApplicationContainer} />
                             <Route component={NotFound} />
                         </Switch>
-                    </BrowserRouter>
-                </Layout>
+                    </Layout>
+                </BrowserRouter>
             </AuthProvider>
         </Provider>
     </ThemeProvider>
