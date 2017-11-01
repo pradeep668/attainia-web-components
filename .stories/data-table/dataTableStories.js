@@ -6,7 +6,8 @@ import {ThemeProvider} from 'styled-components'
 import styled from 'styled-components'
 
 import theme from '../../src/theme'
-import {DataTable, ColumnType} from '../../src/components/data-table'
+import DataTable from '../../src/components/data-table/DataTable'
+import ColumnType from '../../src/components/data-table/ColumnType'
 import {
     getMockDataNoneSelected,
     getMockDataFirstSelected,

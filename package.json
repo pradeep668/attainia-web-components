@@ -1,6 +1,6 @@
 {
   "name": "attainia-web-components",
-  "version": "0.2.2",
+  "version": "0.2.5",
   "description": "A collection of Attainia branded web components to be used in an Attainia React.js web application.",
   "main": "index.js",
   "engines": {
@@ -54,7 +54,7 @@
     "history": "4.7.2",
     "hoist-non-react-statics": "2.3.1",
     "pluralize": "7.0.0",
-    "prop-types": "15.5.10",
+    "prop-types": "15.6.0",
     "ramda": "0.24.1",
     "ramda-adjunct": "1.15.0",
     "react": "16.0.0",
