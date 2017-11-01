@@ -4,7 +4,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import {ThemeProvider} from 'styled-components'
 
 import Home from './App'
-import {Layout, NotFound} from './components/layout'
+import {withLayout, NotFound} from './components/layout'
 import {
     AuthProvider,
     LoginContainer,
@@ -23,18 +23,16 @@ export default (
     <ThemeProvider theme={theme}>
         <Provider store={store}>
             <AuthProvider>
-                <Layout>
-                    <BrowserRouter>
-                        <Switch>
-                            <Route exact path="/" component={withAuthentication(Home)} />
-                            <Route exact path="/login" component={withLoginEnhancers(LoginContainer)} />
-                            <Route exact path="/password-help" component={PasswordHelpContainer} />
-                            <Route exact path="/register" component={RegistrationContainer} />
-                            <Route exact path="/register-application" component={RegisterApplicationContainer} />
-                            <Route component={NotFound} />
-                        </Switch>
-                    </BrowserRouter>
-                </Layout>
+                <BrowserRouter>
+                    <Switch>
+                        <Route exact path="/" component={withAuthentication(withLayout(Home))} />
+                        <Route exact path="/login" component={withLoginEnhancers(LoginContainer)} />
+                        <Route exact path="/password-help" component={PasswordHelpContainer} />
+                        <Route exact path="/register" component={RegistrationContainer} />
+                        <Route exact path="/register-application" component={RegisterApplicationContainer} />
+                        <Route component={NotFound} />
+                    </Switch>
+                </BrowserRouter>
             </AuthProvider>
         </Provider>
     </ThemeProvider>

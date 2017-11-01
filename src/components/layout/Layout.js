@@ -19,4 +19,10 @@ Layout.propTypes = {
     children: PropTypes.node
 }
 
+export const withLayout = (WrappedComponent) =>
+    (props) =>
+        <Layout>
+            <WrappedComponent {...props} />
+        </Layout>
+
 export default Layout
