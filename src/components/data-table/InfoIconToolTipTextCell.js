@@ -11,6 +11,7 @@ const InlineImg = styled(SimpleSvgIcon)`
     display: inline;
     margin-right: 16px;
     vertical-align: middle;
+    fill: #2F81B7;
 `
 
 export default class InfoIconToolTipTextCell extends React.PureComponent {
@@ -19,6 +20,7 @@ export default class InfoIconToolTipTextCell extends React.PureComponent {
         return (
             <Cell {...props}>
                 <InlineImg
+                    fill="#2F81B7"
                     icon="info"
                     data-tip={toolTip}
                     data-for={'cell-tooltip'}
