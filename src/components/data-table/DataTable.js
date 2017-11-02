@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import {Table, Column, Cell} from 'fixed-data-table-2'
 import 'fixed-data-table-2/dist/fixed-data-table.css'
 
+import ColumnType from './ColumnType'
 import Button from '../common/Button'
 import TooltipHeaderCell from './TooltipHeaderCell'
 import NumberTooltipHeaderCell from './NumberTooltipHeaderCell'
@@ -18,15 +19,6 @@ import InfoIconToolTipTextCell from './InfoIconToolTipTextCell'
 import ImageCell from './ImageCell'
 import IconLinkCell from './IconLinkCell'
 
-
-export const ColumnType = {
-    TEXT: Symbol('TEXT'),
-    NUMBER: Symbol('NUMBER'),
-    LINK: Symbol('LINK'),
-    IMAGE: Symbol('IMAGE'),
-    ICON_LINK: Symbol('ICON'),
-    INFO_TEXT: Symbol('INFO_TEXT')
-}
 
 const StyledTable = styled(Table)`
     .fixedDataTableCellLayout_wrap1 {
@@ -193,7 +185,7 @@ const handleNextPage = (pageData, pageCallBack) => {
     pageCallBack(pageData.page + 1)
 }
 
-export const DataTable = ({
+const DataTable = ({
     rowHeight,
     tableWidth,
     tableHeight,
@@ -229,6 +221,7 @@ export const DataTable = ({
         </TableFooter>
     </div>
 
+DataTable.displayName = 'DataTable'
 DataTable.propTypes = {
     rowHeight: PropTypes.number.isRequired,
     tableWidth: PropTypes.number.isRequired,
@@ -263,4 +256,4 @@ DataTable.propTypes = {
     }).isRequired
 }
 
-export default {DataTable, ColumnType}
+export default DataTable
