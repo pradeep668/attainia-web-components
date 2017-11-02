@@ -1,4 +1,5 @@
-export {DataTable, ColumnType} from './DataTable'
+export {default as DataTable} from './DataTable'
+export {default as ColumnType} from './ColumnType'
 export {default as IconLinkCell} from './IconLinkCell'
 export {default as ImageCell} from './ImageCell'
 export {default as InfoIconToolTipTextCell} from './InfoIconToolTipTextCell'
