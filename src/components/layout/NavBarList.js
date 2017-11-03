@@ -1,6 +1,6 @@
 import uuid from 'uuid/v4'
 import React from 'react'
-import styled from 'styled-components'
+import styled, {withTheme} from 'styled-components'
 import PropTypes from 'prop-types'
 import {NavLink} from 'react-router-dom'
 import {SimpleSvgIcon} from '../common'
@@ -25,7 +25,15 @@ const Li = styled.li`
         padding: 10px 15px;
         color: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
         text-decoration: none;
-        display: block;
+        @supports not (display: grid) {
+            display: block;
+        }
+        @supports (display: grid) {
+            display: grid;
+            grid-column-gap: 8px;
+            grid-template-areas: "icon text";
+        }
+        justify-content: start;
     }
 
     & a.active {
@@ -40,12 +48,17 @@ const Ul = styled.ul`
     box-sizing: border-box;
 `
 
-const NavBarList = ({items}) => (
+const NavBarList = ({items, theme}) => (
     <Ul>
         {items.map(({iconName, link, label}) =>
             <Li key={uuid()} role="presentation">
                 <NavLink to={link}>
-                    {iconName && <SimpleSvgIcon icon={iconName} />}
+                    {iconName &&
+                        <SimpleSvgIcon
+                            icon={iconName}
+                            fill={getThemeProp(['colors', 'grayscale', 'white'], 'white')({theme})}
+                        />
+                    }
                     <span>{label}</span>
                 </NavLink>
             </Li>
@@ -54,6 +67,13 @@ const NavBarList = ({items}) => (
 )
 
 NavBarList.propTypes = {
+    theme: PropTypes.shape({
+        colors: PropTypes.shape({
+            grayscale: PropTypes.shape({
+                white: PropTypes.string
+            })
+        })
+    }),
     items: PropTypes.arrayOf(PropTypes.shape({
         iconName: PropTypes.string,
         label: PropTypes.string.isRequired,
@@ -65,4 +85,4 @@ NavBarList.defaultProps = {
     items: []
 }
 
-export default NavBarList
+export default withTheme(NavBarList)
