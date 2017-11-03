@@ -37,10 +37,10 @@ const SortIcon = styled(SimpleSvgIcon)`
 
 const flip = ({sortDirection = 'asc'} = {}, needIconName = false) => {
     if (sortDirection === 'asc') {
-        return needIconName ? 'arrow_down' : 'desc'
+        return needIconName ? 'triangle_down' : 'desc'
     }
 
-    return needIconName ? 'arrow_up' : 'asc'
+    return needIconName ? 'triangle_up' : 'asc'
 }
 
 export default class TooltipHeaderCell extends React.PureComponent {
@@ -54,7 +54,7 @@ export default class TooltipHeaderCell extends React.PureComponent {
                         <HeaderLink onClick={() => sortCallback(key, flip(sortData))}>{name}</HeaderLink>
                     </LeftFlexSpan>
                     <RightFlexSpan>
-                        {sortData.columnKey === key ? <SortIcon icon={flip(sortData, true)} /> : null}
+                        {sortData.columnKey === key ? <SortIcon icon={flip(sortData, true)} fill="#2F81B7" /> : null}
                     </RightFlexSpan>
                 </FlexDiv>
             </Cell>

@@ -1,7 +1,6 @@
 import uuid from 'uuid/v4'
 
 import React from 'react'
-
 import ReactTooltip from 'react-tooltip'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -48,14 +47,17 @@ const TableFooter = styled.div`
 `
 
 const LoadMoreButton = styled(Button)`
-    width: 120px;
-    height: 60px;
+    width: 50%;
+    height: 40px;
     margin-left: auto;
     margin-right: auto;
+    padding: 10px 0;
+    background-color: #2F81B7;
 
     &:disabled {
-        background: #aaaaaa;
+        background: #A0B0BA;
         cursor: not-allowed;
+        opacity: 0.5;
     }
 `
 
