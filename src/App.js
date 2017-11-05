@@ -4,7 +4,7 @@ import {ContentCentered, ContentHeader, ContentWrapper} from './components/layou
 
 const App = () =>
     <ContentWrapper>
-        <ContentHeader resourceCount={42} resourceType="category" />
+        <ContentHeader hasAddButton />
         <ContentCentered>
             <h1>Welcome to our site!</h1>
         </ContentCentered>
