@@ -1,5 +1,5 @@
 import {path, pick, trim, compose, is, toString} from 'ramda'
-import hoistStatitsToEnhancer from 'hoist-non-react-statics'
+import hoistStaticsToEnhancer from 'hoist-non-react-statics'
 
 export const parseError = compose(
     trim,
@@ -45,5 +45,5 @@ export function withStatics(EnhancerComponent, WrappedComponent) {
         displayName
     })
 
-    return hoistStatitsToEnhancer(EnhancerComponent, WrappedComponent)
+    return hoistStaticsToEnhancer(EnhancerComponent, WrappedComponent)
 }

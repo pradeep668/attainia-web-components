@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import {Link} from 'react-router-dom'
+import Link from 'react-router-dom/Link'
 
 import {ContentFullSize} from '../layout'
 import AuthError from './AuthError.container'

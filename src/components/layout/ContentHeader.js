@@ -2,7 +2,7 @@ import React from 'react'
 import uuid from 'uuid/v4'
 import pluralize from 'pluralize'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
+import Link from 'react-router-dom/Link'
 import {isNotNil} from 'ramda-adjunct'
 import styled, {withTheme} from 'styled-components'
 import {compose, pick, pickBy, replace, toUpper, toLower} from 'ramda'
@@ -80,7 +80,7 @@ const ContentHeader = ({
             className,
             alignTitle,
             hasAddButton,
-            hasSubtitle: resourceSubtitle
+            hasSubtitle: isNotNil(resourceSubtitle)
         })}
         numOfIconButtons={iconsButtons.length}
     >

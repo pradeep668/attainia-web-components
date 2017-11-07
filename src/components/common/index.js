@@ -1,15 +1,34 @@
-export {default as Button} from './Button'
-export {default as ButtonLink} from './ButtonLink'
-export {default as CheckboxLabel} from './CheckboxLabel'
-export {renderConditional, Conditional} from './Conditional'
-export {default as ErrorMessage} from './ErrorMessage'
-export {default as FieldError} from './FieldError'
-export {default as Form} from './Form'
-export {default as FormField} from './FormField'
-export {default as InputField} from './InputField'
-export {default as Link} from './Link'
-export {default as LinkButton} from './LinkButton'
-export {default as ReduxFormField} from './ReduxFormField'
-export {default as SimpleSvgIcon} from './SimpleSvgIcon'
-export {default as SpinningButton} from './SpinningButton'
+import Button from './Button'
+import ButtonLink from './ButtonLink'
+import CheckboxLabel from './CheckboxLabel'
+import {renderConditional, Conditional} from './Conditional'
+import ErrorMessage from './ErrorMessage'
+import FieldError from './FieldError'
+import Form from './Form'
+import FormField from './FormField'
+import InputField from './InputField'
+import Link from './Link'
+import LinkButton from './LinkButton'
+import ReduxFormField from './ReduxFormField'
+import SimpleSvgIcon from './SimpleSvgIcon'
+import SpinningButton from './SpinningButton'
+
 export * from './helpers'
+
+export {
+    Button,
+    ButtonLink,
+    CheckboxLabel,
+    Conditional,
+    ErrorMessage,
+    FieldError,
+    Form,
+    FormField,
+    InputField,
+    Link,
+    LinkButton,
+    ReduxFormField,
+    SimpleSvgIcon,
+    SpinningButton,
+    renderConditional
+}
