@@ -2,7 +2,7 @@ import uuid from 'uuid/v4'
 import React from 'react'
 import styled, {withTheme} from 'styled-components'
 import PropTypes from 'prop-types'
-import {NavLink} from 'react-router-dom'
+import NavLink from 'react-router-dom/NavLink'
 import {SimpleSvgIcon} from '../common'
 import {getThemeProp} from '../common/helpers'
 

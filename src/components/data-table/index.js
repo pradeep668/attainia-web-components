@@ -1,10 +1,23 @@
-export {default as DataTable} from './DataTable'
-export {default as ColumnType} from './ColumnType'
-export {default as IconLinkCell} from './IconLinkCell'
-export {default as ImageCell} from './ImageCell'
-export {default as InfoIconToolTipTextCell} from './InfoIconToolTipTextCell'
-export {default as LinkCell} from './LinkCell'
-export {default as NumberCell} from './NumberCell'
-export {default as NumberTooltipHeaderCell} from './NumberTooltipHeaderCell'
-export {default as TextCell} from './TextCell'
-export {default as TooltipHeaderCell} from './TooltipHeaderCell'
+import DataTable from './DataTable'
+import ColumnType from './ColumnType'
+import IconLinkCell from './IconLinkCell'
+import ImageCell from './ImageCell'
+import InfoIconToolTipTextCell from './InfoIconToolTipTextCell'
+import LinkCell from './LinkCell'
+import NumberCell from './NumberCell'
+import NumberTooltipHeaderCell from './NumberTooltipHeaderCell'
+import TextCell from './TextCell'
+import TooltipHeaderCell from './TooltipHeaderCell'
+
+export {
+    DataTable,
+    ColumnType,
+    IconLinkCell,
+    ImageCell,
+    InfoIconToolTipTextCell,
+    LinkCell,
+    NumberCell,
+    NumberTooltipHeaderCell,
+    TextCell,
+    TooltipHeaderCell
+}
