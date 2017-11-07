@@ -4,10 +4,7 @@
 package-lock.json
 *.log
 /build/
-/auth/
-/common/
-/layout/
-/resources/
+/dist/
 
 # Mac files
 .DS_Store

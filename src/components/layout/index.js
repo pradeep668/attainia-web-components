@@ -6,7 +6,7 @@ import Footer from './Footer'
 import FooterContainer from './Footer.container'
 import Header from './Header'
 import HeaderContainer from './Header.container'
-import Layout from './Layout'
+import Layout, {withLayout} from './Layout'
 import Main from './Main'
 import NavBarListContainer from './NavBarList.container'
 import NavBarList from './NavBarList'
@@ -27,5 +27,6 @@ export {
     NavBarListContainer,
     NavBarList,
     NotFound,
-    Page
+    Page,
+    withLayout
 }

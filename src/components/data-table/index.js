@@ -1,4 +1,5 @@
-import {DataTable, ColumnType} from './DataTable'
+import DataTable from './DataTable'
+import ColumnType from './ColumnType'
 import IconLinkCell from './IconLinkCell'
 import ImageCell from './ImageCell'
 import InfoIconToolTipTextCell from './InfoIconToolTipTextCell'
@@ -9,8 +10,8 @@ import TextCell from './TextCell'
 import TooltipHeaderCell from './TooltipHeaderCell'
 
 export {
-    ColumnType,
     DataTable,
+    ColumnType,
     IconLinkCell,
     ImageCell,
     InfoIconToolTipTextCell,

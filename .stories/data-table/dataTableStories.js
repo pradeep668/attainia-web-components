@@ -6,7 +6,8 @@ import {ThemeProvider} from 'styled-components'
 import styled from 'styled-components'
 
 import theme from '../../src/theme'
-import {DataTable, ColumnType} from '../../src/components/data-table'
+import DataTable from '../../src/components/data-table/DataTable'
+import ColumnType from '../../src/components/data-table/ColumnType'
 import {
     getMockDataNoneSelected,
     getMockDataFirstSelected,
@@ -48,7 +49,8 @@ storiesOf('DataTable', module)
                     sortData: {},
                     pageData: {
                         page: 1,
-                        total: 10
+                        pages: 10,
+                        totalResults: 10
                     },
                     rows: getMockDataNoneSelected(10)
                 }}
@@ -71,7 +73,8 @@ storiesOf('DataTable', module)
                     sortData: {},
                     pageData: {
                         page: 1,
-                        total: 10
+                        pages: 10,
+                        totalResults: 10
                     },
                     rows: getMockDataNoneSelected(10)
                 }}
@@ -94,7 +97,8 @@ storiesOf('DataTable', module)
                     sortData: {},
                     pageData: {
                         page: 1,
-                        total: 10
+                        pages: 10,
+                        totalResults: 10
                     },
                     rows: getMockDataNoneSelected(10)
                 }}
@@ -117,7 +121,8 @@ storiesOf('DataTable', module)
                     sortData: {},
                     pageData: {
                         page: 1,
-                        total: 10
+                        pages: 10,
+                        totalResults: 10
                     },
                     rows: getMockDataFirstSelected(10)
                 }}
@@ -140,7 +145,8 @@ storiesOf('DataTable', module)
                     sortData: {},
                     pageData: {
                         page: 1,
-                        total: 10
+                        pages: 10,
+                        totalResults: 10
                     },
                     rows: getMockDataAllSelected(10)
                 }}
@@ -163,7 +169,8 @@ storiesOf('DataTable', module)
                     sortData: getSortDataFirstAsc(),
                     pageData: {
                         page: 1,
-                        total: 10
+                        pages: 10,
+                        totalResults: 10
                     },
                     rows: getMockDataNoneSelected(10)
                 }}
@@ -186,7 +193,8 @@ storiesOf('DataTable', module)
                     sortData: getSortDataFirstDesc(),
                     pageData: {
                         page: 1,
-                        total: 10
+                        pages: 10,
+                        totalResults: 10
                     },
                     rows: getMockDataNoneSelected(10)
                 }}
@@ -209,7 +217,8 @@ storiesOf('DataTable', module)
                     sortData: getSortDataThirdAsc(),
                     pageData: {
                         page: 1,
-                        total: 10
+                        pages: 10,
+                        totalResults: 10
                     },
                     rows: getMockDataNoneSelected(10)
                 }}
@@ -232,10 +241,35 @@ storiesOf('DataTable', module)
                     sortData: getSortDataThirdDesc(),
                     pageData: {
                         page: 1,
-                        total: 10
+                        pages: 10,
+                        totalResults: 10
                     },
                     rows: getMockDataNoneSelected(10)
                 }}
             />
         )
     )
+    .add('Check column, number col sorted desc, disabled load more button',
+    withInfo('A DataTable with a checkbox column and no sorting data for any column, and the check and name columns are fixed.  Also, the number column is sorted, descending and the load more button is disabled.')(() =>
+        <DataTable
+            rowHeight={50}
+            tableWidth={1253}
+            tableHeight={500}
+            headerHeight={50}
+            hasCheckColumn={true}
+            getNextPage={action('nextPage')}
+            rowSelected={action('selectRow')}
+            getSortedData={action('sortData')}
+            headers={getMockHeadersFirstFixed()}
+            data={{
+                sortData: getSortDataThirdDesc(),
+                pageData: {
+                    page: 10,
+                    pages: 10,
+                    totalResults: 10
+                },
+                rows: getMockDataNoneSelected(10)
+            }}
+        />
+    )
+)

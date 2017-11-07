@@ -13,6 +13,8 @@ import ReduxFormField from './ReduxFormField'
 import SimpleSvgIcon from './SimpleSvgIcon'
 import SpinningButton from './SpinningButton'
 
+export * from './helpers'
+
 export {
     Button,
     ButtonLink,
@@ -26,7 +28,7 @@ export {
     Link,
     LinkButton,
     ReduxFormField,
-    renderConditional,
     SimpleSvgIcon,
-    SpinningButton
+    SpinningButton,
+    renderConditional
 }

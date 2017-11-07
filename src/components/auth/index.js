@@ -24,10 +24,17 @@ import ValidatorContainer from './Validator.container'
 import WriteTokenToStorage from './WriteTokenToStorage'
 import WriteTokenToStorageContainer from './WriteTokenToStorage.container'
 
+export * from './enhancers'
+export * from './decorators'
+export * from './helpers'
+export {default as reducer} from './reducer'
+export {default as initialState} from './initialState'
+export {default as types} from './types'
+
 export {
+    AuthProvider,
     AuthErrorContainer,
     AuthError,
-    AuthProvider,
     AuthStatus,
     AuthStatusContainer,
     LoginContainer,
@@ -40,10 +47,10 @@ export {
     PasswordHelp,
     Refresher,
     RefresherContainer,
-    RegisterApplicationContainer,
-    RegisterApplication,
     RegistrationContainer,
     Registration,
+    RegisterApplicationContainer,
+    RegisterApplication,
     TokenInfo,
     TokenInfoContainer,
     Validator,

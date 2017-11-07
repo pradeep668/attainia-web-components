@@ -1,13 +1,13 @@
 import uuid from 'uuid/v4'
 
 import React from 'react'
-
 import ReactTooltip from 'react-tooltip'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {Table, Column, Cell} from 'fixed-data-table-2'
 import 'fixed-data-table-2/dist/fixed-data-table.css'
 
+import ColumnType from './ColumnType'
 import Button from '../common/Button'
 import TooltipHeaderCell from './TooltipHeaderCell'
 import NumberTooltipHeaderCell from './NumberTooltipHeaderCell'
@@ -18,15 +18,6 @@ import InfoIconToolTipTextCell from './InfoIconToolTipTextCell'
 import ImageCell from './ImageCell'
 import IconLinkCell from './IconLinkCell'
 
-
-export const ColumnType = {
-    TEXT: Symbol('TEXT'),
-    NUMBER: Symbol('NUMBER'),
-    LINK: Symbol('LINK'),
-    IMAGE: Symbol('IMAGE'),
-    ICON_LINK: Symbol('ICON'),
-    INFO_TEXT: Symbol('INFO_TEXT')
-}
 
 const StyledTable = styled(Table)`
     .fixedDataTableCellLayout_wrap1 {
@@ -56,10 +47,18 @@ const TableFooter = styled.div`
 `
 
 const LoadMoreButton = styled(Button)`
-    width: 120px;
-    height: 60px;
+    width: 50%;
+    height: 40px;
     margin-left: auto;
     margin-right: auto;
+    padding: 10px 0;
+    background-color: #2F81B7;
+
+    &:disabled {
+        background: #A0B0BA;
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
 `
 
 const RenderColumns = (headers, data, sortData, getSortedData) => (
@@ -184,7 +183,11 @@ const RenderCheckColumn = (hasCheckColumn, rowSelected, data) => {
     return checkColumn
 }
 
-export const DataTable = ({
+const handleNextPage = (pageData, pageCallBack) => {
+    pageCallBack(pageData.page + 1)
+}
+
+const DataTable = ({
     rowHeight,
     tableWidth,
     tableHeight,
@@ -211,10 +214,16 @@ export const DataTable = ({
         <ReactTooltip place="top" id="header-tooltip" effect="solid" />
         <ReactTooltip place="top" id="cell-tooltip" effect="solid" />
         <TableFooter>
-            <LoadMoreButton onClick={() => getNextPage(data.pageData.page)}>Load More</LoadMoreButton>
+            <LoadMoreButton
+                onClick={() => handleNextPage(data.pageData, getNextPage)}
+                disabled={data.pageData.pages === data.pageData.page}
+            >
+                Load More
+            </LoadMoreButton>
         </TableFooter>
     </div>
 
+DataTable.displayName = 'DataTable'
 DataTable.propTypes = {
     rowHeight: PropTypes.number.isRequired,
     tableWidth: PropTypes.number.isRequired,
@@ -241,10 +250,12 @@ DataTable.propTypes = {
         }),
         pageData: PropTypes.shape({
             page: PropTypes.number,
-            total: PropTypes.number
+            totalPages: PropTypes.number,
+            perPage: PropTypes.number,
+            totalResults: PropTypes.number
         }),
         rows: PropTypes.arrayOf(PropTypes.object).isRequired
     }).isRequired
 }
 
-export default {DataTable, ColumnType}
+export default DataTable

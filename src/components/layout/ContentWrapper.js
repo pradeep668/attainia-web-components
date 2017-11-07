@@ -10,6 +10,5 @@ export default styled.section`
     @supports (display: grid) {
         display: grid;
         grid-auto-rows: max-content;
-        height: 100%;
     }
 `

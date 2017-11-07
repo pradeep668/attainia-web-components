@@ -1,8 +1,8 @@
 import uuid from 'uuid/v4'
 import React from 'react'
-import styled from 'styled-components'
+import styled, {withTheme} from 'styled-components'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
+import NavLink from 'react-router-dom/NavLink'
 import {SimpleSvgIcon} from '../common'
 import {getThemeProp} from '../common/helpers'
 
@@ -13,9 +13,6 @@ const Li = styled.li`
     list-style: none;
     font-size: 16px;
     line-height: 19px;
-    padding-top: 10px;
-    padding-bottom: 7px;
-    background: ${props => props.isSelected && getThemeProp(['colors', 'secondary', 'default'], 'royalblue')(props)};
     border-left-width: 5px;
     border-color: transparent;
     border-left-style: solid;
@@ -28,6 +25,19 @@ const Li = styled.li`
         padding: 10px 15px;
         color: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
         text-decoration: none;
+        @supports not (display: grid) {
+            display: block;
+        }
+        @supports (display: grid) {
+            display: grid;
+            grid-column-gap: 8px;
+            grid-template-areas: "icon text";
+        }
+        justify-content: start;
+    }
+
+    & a.active {
+        background: ${getThemeProp(['colors', 'secondary', 'default'], 'royalblue')};
     }
 `
 const Ul = styled.ul`
@@ -38,26 +48,31 @@ const Ul = styled.ul`
     box-sizing: border-box;
 `
 
-const NavBarList = ({items, location: {pathname}}) => (
+const NavBarList = ({items, theme}) => (
     <Ul>
         {items.map(({iconName, link, label}) =>
-            <Li
-                isSelected={link === pathname}
-                key={uuid()}
-                role="presentation"
-            >
-                <Link to={link}>
-                    {iconName && <SimpleSvgIcon icon={iconName} />}
+            <Li key={uuid()} role="presentation">
+                <NavLink to={link}>
+                    {iconName &&
+                        <SimpleSvgIcon
+                            icon={iconName}
+                            fill={getThemeProp(['colors', 'grayscale', 'white'], 'white')({theme})}
+                        />
+                    }
                     <span>{label}</span>
-                </Link>
+                </NavLink>
             </Li>
         )}
     </Ul>
 )
 
 NavBarList.propTypes = {
-    location: PropTypes.shape({
-        pathname: PropTypes.string
+    theme: PropTypes.shape({
+        colors: PropTypes.shape({
+            grayscale: PropTypes.shape({
+                white: PropTypes.string
+            })
+        })
     }),
     items: PropTypes.arrayOf(PropTypes.shape({
         iconName: PropTypes.string,
@@ -67,10 +82,7 @@ NavBarList.propTypes = {
 }
 
 NavBarList.defaultProps = {
-    items: [],
-    location: {
-        pathname: window.location.pathname
-    }
+    items: []
 }
 
-export default NavBarList
+export default withTheme(NavBarList)

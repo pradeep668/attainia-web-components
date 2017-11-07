@@ -1,4 +1,12 @@
-src/
-public/
+build/
 config/
-README.md
+hooks/
+public/
+node_modules/
+src/
+.stories/
+.storybook/
+**/.DS_Store
+.env
+.npmrc
+*.log

@@ -3,7 +3,7 @@ import {getThemeProp} from '../common/helpers'
 
 const fadeIn = keyframes`
     from {
-        opacity: 0.5;
+        opacity: 0.9;
     }
 
     to {
@@ -12,7 +12,7 @@ const fadeIn = keyframes`
 `
 export default styled.div`
     height: 100%;
-    animation: ${fadeIn} .5s ease;
+    animation: ${fadeIn} .2s ease;
 
     @supports not (display: grid) {
         .header,
