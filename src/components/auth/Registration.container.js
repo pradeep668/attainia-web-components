@@ -1,20 +1,13 @@
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import {graphql} from 'react-apollo'
-import Validator from 'validatorjs'
 
 import Registration from './Registration'
 import {handleError, register} from './actions'
-import constants from './constants'
+import validators from './validators'
 import {REGISTER_USER} from './mutations'
 
-const {userRegistration: {rules, messages}} = constants
-
-const validate = values => {
-    const validator = new Validator(values, rules, messages)
-    validator.passes()
-    return validator.errors.all()
-}
+const {userRegistration: {validate}} = validators
 
 const FormedRegistration = reduxForm({
     validate,

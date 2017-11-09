@@ -2,21 +2,14 @@ import {is, path, toPairs, without} from 'ramda'
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import {withApollo, compose} from 'react-apollo'
-import Validator from 'validatorjs'
 
 import Login from './Login'
 import {handleError, login, toggleRememberMe, finishedLoading, startedLoading} from './actions'
-import constants from './constants'
+import validators from './validators'
 import {LOGIN_USER} from './mutations'
 import {setToken} from './helpers'
 
-const {login: {rules, messages}} = constants
-
-const validate = values => {
-    const validator = new Validator(values, rules, messages)
-    validator.passes()
-    return validator.errors.all()
-}
+const {login: {validate}} = validators
 
 const mapStateToProps = state => ({
     hasAuthError: Boolean(state.auth.error),

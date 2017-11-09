@@ -11,6 +11,9 @@ import {getThemeProp} from '../common/helpers'
 const StyledLoginForm = styled(Form)`
     & > * {
         margin: ${getThemeProp(['forms', 'formItemMargin'], '5px')};
+        &:focus {
+            outline: none;
+        }
     }
 
     & .loginHeader > * {
