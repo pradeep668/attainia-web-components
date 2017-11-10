@@ -2,20 +2,13 @@ import {path} from 'ramda'
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import {graphql} from 'react-apollo'
-import Validator from 'validatorjs'
 
 import PasswordHelp from './PasswordHelp'
 import {handleError, passwordHelp} from './actions'
-import constants from './constants'
+import validators from './validators'
 import {PASSWORD_RESET} from './mutations'
 
-const {passwordHelp: {rules, messages}} = constants
-
-const validate = (values) => {
-    const validator = new Validator(values, rules, messages)
-    validator.passes()
-    return validator.errors.all()
-}
+const {passwordHelp: {validate}} = validators
 
 const mapStateToProps = store => ({
     email: path(['auth', 'user', 'email'], store)
