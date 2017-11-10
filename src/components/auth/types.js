@@ -3,6 +3,7 @@ export default {
     CLEAR_ERROR: 'awc_error_clear',
     CLEAR_REFRESH: 'awc_clear_refresh',
     ERROR: 'awc_error',
+    DECODED_JWT: 'awc_jwt_decoded',
     GET_USER_NAV_MENU: 'awc_get_user_menu',
     LOGIN: 'awc_login',
     LOADING_STARTED: 'awc_started_loading',

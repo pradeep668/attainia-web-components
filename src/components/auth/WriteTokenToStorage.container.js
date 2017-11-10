@@ -6,9 +6,8 @@ import {connect} from 'react-redux'
 import {withStatics} from '../common/helpers'
 import WriteTokenToStorage from './WriteTokenToStorage'
 
-const mapStateToProps = (state, ownProps) => ({
-    token: path(['auth', 'user', 'token', 'access_token'], state),
-    storageType: ownProps.storageType || state.auth.storageType
+const mapStateToProps = ({auth: {user}}) => ({
+    token: path(['token', 'access_token'], user)
 })
 
 export const withWriteTokenToStorage = (DecoratedComponent) => {

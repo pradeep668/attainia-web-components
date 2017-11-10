@@ -338,6 +338,10 @@ Renders a Link which (on clicked) will log out the user
 __options__:
 * `onLogout` - A [`Function`] which fires whenever a Logout action occurs.
 
+### Decode Jwt
+
+A higher-order component that parses the `access_token` for those implementations where the token is a base64 encoded Jwt string. This component decodes it and merges it into the `auth.user` prop of the Redux store
+
 ### Parse Token From Storage
 
 A higher-order component that parses a `token` prop from `localStorage` or `sessionStorage` and pushes it into the Redux store.

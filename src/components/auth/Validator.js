@@ -20,9 +20,9 @@ class Validator extends PureComponent {
 }
 
 Validator.propTypes = {
+    children: PropTypes.node,
     token: PropTypes.string,
-    tryValidateToken: PropTypes.func,
-    children: PropTypes.node
+    tryValidateToken: PropTypes.func.isRequired
 }
 
 export default Validator
