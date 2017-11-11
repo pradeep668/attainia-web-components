@@ -3,6 +3,8 @@ import AuthErrorContainer from './AuthError.container'
 import AuthError from './AuthError'
 import AuthStatus from './AuthStatus'
 import AuthStatusContainer from './AuthStatus.container'
+import JwtDecode from './JwtDecode'
+import JwtDecodeContainer from './JwtDecode.container'
 import LoginContainer from './Login.container'
 import Login from './Login'
 import LogoutContainer from './Logout.container'
@@ -37,6 +39,8 @@ export {
     AuthError,
     AuthStatus,
     AuthStatusContainer,
+    JwtDecode,
+    JwtDecodeContainer,
     LoginContainer,
     Login,
     LogoutContainer,

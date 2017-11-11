@@ -3,6 +3,7 @@ import {isNotNil} from 'ramda-adjunct'
 import {connectedRouterRedirect} from 'redux-auth-wrapper/history4/redirect'
 import locationHelperBuilder from 'redux-auth-wrapper/history4/locationHelper'
 
+export {withJwtDecode} from './JwtDecode.container'
 export {withTokenParsing} from './ParseTokenFromStorage.container'
 export {withWriteTokenToStorage} from './WriteTokenToStorage.container'
 export {withTokenValidation} from './Validator.container'

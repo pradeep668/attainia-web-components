@@ -5,7 +5,7 @@ import {parseError} from '../common/helpers'
 
 export default (
     state = initialState, {
-        type, app, email, user, error, token, refreshTimeout, navigation
+        type, app, email, user, jwt, error, token, refreshTimeout, navigation
     }
 ) => {
     switch (type) {
@@ -32,6 +32,14 @@ export default (
                 menu: {
                     ...state.menu,
                     navigation: navigation.map(label => ({label}))
+                }
+            }
+        case types.DECODED_JWT:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    ...(jwt || {})
                 }
             }
         case types.LOADING_FINISHED:

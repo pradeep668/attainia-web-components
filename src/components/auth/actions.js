@@ -2,6 +2,7 @@ import types from './types'
 
 export const handleError = error => ({error, type: types.ERROR})
 export const clearError = () => ({type: types.CLEAR_ERROR})
+export const decodedJwt = jwt => ({jwt, type: types.DECODED_JWT})
 export const getUserNavMenu = navigation => ({navigation, type: types.GET_USER_NAV_MENU})
 export const passwordHelp = email => ({email, type: types.PASSWORD_HELP})
 export const refresh = refreshTimeout => ({refreshTimeout, type: types.REFRESH})

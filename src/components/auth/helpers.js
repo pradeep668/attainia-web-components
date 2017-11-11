@@ -1,6 +1,11 @@
-import {path} from 'ramda'
+import {path, is, allPass} from 'ramda'
 
 export const isSupportedStorageType = storage => /(local|session)/i.test(storage)
+export const isValidToken = allPass([
+    token => !/\s/.test(token),
+    token => token !== '[object Object]',
+    is(String)
+])
 export const formatBaseUri = uri => (/^https?:\/\//i.test(uri) ? uri : `http://${uri}`)
 export const getAccessToken = props => path(['user', 'token', 'access_token'], props)
 export const getAccessTokenFromStorage = storage => {
