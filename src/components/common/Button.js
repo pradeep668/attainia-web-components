@@ -1,14 +1,24 @@
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import {getThemeProp, getProp} from './helpers'
 
-export default styled.button`
-    background-color: ${getThemeProp(['colors', 'primary', 'default'], 'crimson')};
-    color: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
+const Button = styled.button`
+    background-color: ${
+        props => props.styles.backgroundColor ||
+        getThemeProp(['colors', 'primary', 'default'], 'crimson')(props)
+    };
+    color: ${
+        props => props.styles.color ||
+        getThemeProp(['colors', 'grayscale', 'white'], 'white')(props)
+    };
+    ${props => props.disabled && 'background-color: grey;'}
     cursor: pointer;
     border: none;
     border-radius: 5px;
     font-family: ${getThemeProp(['fonts', 'fontFamily'], 'Arial')};
-    font-size: 15px;
+    font-size: ${
+        props => props.styles.fontSize || '15px'
+    };
     font-weight: 700;
     padding: ${getProp(['style', 'padding'], '18px 0')};
     text-align: center;
@@ -17,3 +27,17 @@ export default styled.button`
         outline: none;
     }
 `
+Button.propTypes = {
+    disabled: PropTypes.bool,
+    styles: PropTypes.shape({
+        fontSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+        color: PropTypes.string,
+        backgroundColor: PropTypes.string
+    })
+}
+
+Button.defaultProps = {
+    styles: {}
+}
+
+export default Button
