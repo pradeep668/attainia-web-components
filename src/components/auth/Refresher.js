@@ -22,7 +22,7 @@ class Refresher extends Component {
 Refresher.propTypes = {
     children: PropTypes.node,
     token: PropTypes.string,
-    queueNextRefresh: PropTypes.func
+    queueNextRefresh: PropTypes.func.isRequired
 }
 
 export default Refresher

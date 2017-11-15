@@ -1,3 +1,3 @@
-import auth from './components/auth/types'
+import authDucks from './components/auth/ducks'
 
-export default {auth}
+export default {auth: authDucks.types}

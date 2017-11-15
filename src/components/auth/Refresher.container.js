@@ -1,4 +1,3 @@
-import {path} from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
@@ -7,24 +6,22 @@ import {withApollo, compose} from 'react-apollo'
 import {withStatics} from '../common/helpers'
 import {REFRESH_TOKEN} from './mutations'
 import Refresher from './Refresher'
-import {handleError, updatedToken, refresh} from './actions'
+import {setToken} from './helpers'
+import ducks from './ducks'
 
-const ONE_HOUR = 3600000
-
-const mapStateToProps = store => ({
-    token: path(['auth', 'user', 'token', 'access_token'], store),
-    refreshInMs: Number(path(['auth', 'user', 'token', 'refreshInMs'], store) || 3600)
+const {selectors, creators: {handleError, updatedToken, refresh}} = ducks
+const mapStateToProps = state => ({
+    token: selectors.token(state),
+    refreshInMs: selectors.refreshInMs(state)
 })
-
 const mapDispatchToProps = {handleError, updatedToken, refresh}
-
 const mergeProps = (storeProps, dispatchProps, ownProps) => ({
     ...ownProps,
     ...storeProps,
-    queueNextRefresh({tryRefresh, token, refreshInMs = ONE_HOUR} = {}) {
-        dispatchProps.refresh(setTimeout(() => tryRefresh(token), refreshInMs))
+    queueNextRefresh({tryWriteTokenToStorage, tryRefresh, token, refreshInMs}) {
+        dispatchProps.refresh(setTimeout(() => tryRefresh(token, tryWriteTokenToStorage), refreshInMs))
     },
-    async tryRefresh(token) {
+    async tryRefresh(token, tryWriteTokenToStorage) {
         try {
             const {data: {error, refreshUser}} = await ownProps.client.mutate({
                 mutation: REFRESH_TOKEN,
@@ -34,12 +31,10 @@ const mergeProps = (storeProps, dispatchProps, ownProps) => ({
                 throw new Error(error)
             }
             if (refreshUser) {
-                const refreshInMs = Math.max((Number(refreshUser.expires_in || ONE_HOUR) - 10) * 1000, 0)
-                dispatchProps.updatedToken({
-                    ...refreshUser,
-                    refreshInMs,
-                    refreshAt: new Date(Date.now() + refreshInMs)
-                })
+                dispatchProps.updatedToken(refreshUser)
+                if (tryWriteTokenToStorage) {
+                    tryWriteTokenToStorage(token)
+                }
             }
         } catch (err) {
             dispatchProps.handleError(err)
@@ -55,19 +50,27 @@ export const withTokenRefresh = (DecoratedComponent) => {
         tryRefresh,
         queueNextRefresh,
         client,
+        refreshInMs,
+        tryWriteTokenToStorage,
         ...passThroughProps
     }) =>
-        <Refresher {...{token, tryRefresh, queueNextRefresh, client}}>
+        <Refresher {...{token, tryRefresh, tryWriteTokenToStorage, queueNextRefresh, client, refreshInMs}}>
             <DecoratedComponent {...passThroughProps} />
         </Refresher>
 
     WithTokenRefresh.propTypes = {
         queueNextRefresh: PropTypes.func,
-        tryRefresh: PropTypes.func,
+        tryRefresh: PropTypes.func.isRequired,
+        tryWriteTokenToStorage: PropTypes.func,
+        refreshInMs: PropTypes.number,
         token: PropTypes.string,
         client: PropTypes.shape({
             query: PropTypes.func.isRequired
         }).isRequired
+    }
+
+    WithTokenRefresh.defaultProps = {
+        tryWriteTokenToStorage: setToken
     }
 
     return withStatics(

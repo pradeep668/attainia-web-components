@@ -1,16 +1,14 @@
 import {Component} from 'react'
 import PropTypes from 'prop-types'
-import {getAccessTokenFromStorage, removeToken} from './helpers'
+import {getAccessTokenFromStorage, isValidToken, removeToken} from './helpers'
 
 class ParseTokenFromStorage extends Component {
     componentWillMount() {
-        const token = getAccessTokenFromStorage()
-        if (token) {
-            if (token !== '[object Object]') {
-                this.props.parsedToken(token)
-            } else {
-                removeToken()
-            }
+        const token = this.props.tryParseTokenFromStorage()
+        if (this.props.isValidToken(token)) {
+            this.props.parsedToken(token)
+        } else if (this.props.removeToken) {
+             this.props.removeToken(token)
         }
     }
 
@@ -21,7 +19,16 @@ class ParseTokenFromStorage extends Component {
 
 ParseTokenFromStorage.propTypes = {
     children: PropTypes.node,
-    parsedToken: PropTypes.func.isRequired
+    isValidToken: PropTypes.func.isRequired,
+    parsedToken: PropTypes.func.isRequired,
+    removeToken: PropTypes.func,
+    tryParseTokenFromStorage: PropTypes.func.isRequired
+}
+
+ParseTokenFromStorage.defaultProps = {
+    removeToken,
+    isValidToken,
+    tryParseTokenFromStorage: getAccessTokenFromStorage
 }
 
 export default ParseTokenFromStorage

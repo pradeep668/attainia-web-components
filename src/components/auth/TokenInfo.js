@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 
 class TokenInfo extends PureComponent {
     componentDidMount() {
-        if (this.props.token) this.props.tryGetTokenInfo(this.props.token)
+        if (this.props.token) {
+            this.props.tryGetTokenInfo(this.props.token)
+        }
     }
 
     componentWillUpdate(nextProps) {
@@ -19,8 +21,8 @@ class TokenInfo extends PureComponent {
 
 TokenInfo.propTypes = {
     children: PropTypes.node,
-    tryGetTokenInfo: PropTypes.func,
-    token: PropTypes.string
+    token: PropTypes.string,
+    tryGetTokenInfo: PropTypes.func.isRequired
 }
 
 export default TokenInfo

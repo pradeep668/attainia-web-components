@@ -1,28 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Footer from './Footer.container'
-import Header from './Header.container'
+import Footer from './Footer'
+import Header from './Header'
 import Main from './Main'
 import Page from './Page'
 import NavBarList from './NavBarList.container'
 
-const Layout = ({children}) =>
+const Layout = ({children, navItems}) =>
     <Page>
         <Header className="header" />
-        <NavBarList className="sidebar" />
+        <NavBarList items={navItems} className="sidebar" />
         <Main className="main">{children}</Main>
         <Footer className="footer" />
     </Page>
 
 Layout.propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
+    navItems: PropTypes.arrayOf(PropTypes.object)
 }
 
-export const withLayout = (WrappedComponent) =>
-    (props) =>
-        <Layout>
-            <WrappedComponent {...props} />
+export const withLayout = (WrappedComponent) => {
+    const WithLayout = ({navItems, ...passThroughProps}) =>
+        <Layout navItems={navItems}>
+            <WrappedComponent {...passThroughProps} />
         </Layout>
+
+    WithLayout.propTypes = {
+        navItems: PropTypes.arrayOf(PropTypes.object)
+    }
+
+    return WithLayout
+}
 
 export default Layout
