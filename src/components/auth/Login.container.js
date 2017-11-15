@@ -1,22 +1,23 @@
-import {is, path, toPairs, without} from 'ramda'
+import {is, toPairs, without} from 'ramda'
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import {withApollo, compose} from 'react-apollo'
 
 import Login from './Login'
-import {handleError, login, toggleRememberMe, finishedLoading, startedLoading} from './actions'
 import validators from './validators'
 import {LOGIN_USER} from './mutations'
 import {setToken} from './helpers'
+import ducks from './ducks'
 
 const {login: {validate}} = validators
+const {selectors, creators: {handleError, login, toggleRememberMe, finishedLoading, startedLoading}} = ducks
 
 const mapStateToProps = state => ({
-    hasAuthError: Boolean(state.auth.error),
-    email: path(['auth', 'user', 'email'], state),
+    email: selectors.email(state),
+    hasAuthError: selectors.hasAuthError(state),
     loading: state.auth.loading,
-    storageType: state.auth.storageType,
-    rememberMe: state.auth.rememberMe
+    rememberMe: state.auth.rememberMe,
+    storageType: state.auth.storageType
 })
 
 const mapDispatchToProps = {handleError, login, startedLoading, finishedLoading, toggleRememberMe}

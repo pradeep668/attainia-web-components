@@ -1,14 +1,12 @@
-import {path} from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 
 import {withStatics} from '../common/helpers'
 import WriteTokenToStorage from './WriteTokenToStorage'
+import ducks from './ducks'
 
-const mapStateToProps = ({auth: {user}}) => ({
-    token: path(['token', 'access_token'], user)
-})
+const mapStateToProps = state => ({token: ducks.selectors.token(state)})
 
 export const withWriteTokenToStorage = (DecoratedComponent) => {
     const WithWriteTokenToStorage = ({

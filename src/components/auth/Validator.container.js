@@ -1,21 +1,17 @@
-import {path} from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {compose, withApollo} from 'react-apollo'
 
 import {withStatics} from '../common/helpers'
-import {handleError, logout, validatedToken} from './actions'
 import {VALIDATE_TOKEN} from './queries'
 import {removeToken} from './helpers'
 import Validator from './Validator'
+import ducks from './ducks'
 
-const mapStateToProps = state => ({
-    token: path(['auth', 'parsed_token'], state)
-})
-
+const {selectors, creators: {logout, handleError, validatedToken}} = ducks
+const mapStateToProps = state => ({token: selectors.parsedToken(state)})
 const mapDispatchToProps = {logout, handleError, validatedToken}
-
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     ...ownProps,
     ...stateProps,

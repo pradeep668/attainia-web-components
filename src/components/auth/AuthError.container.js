@@ -1,9 +1,8 @@
 import {connect} from 'react-redux'
-import {clearError} from './actions'
 import AuthError from './AuthError'
+import ducks from './ducks'
 
-const mapStateToProps = state => ({
-    error: state.auth.error
-})
+const {selectors, creators: {clearError}} = ducks
+const mapStateToProps = state => ({error: selectors.error(state)})
 
 export default connect(mapStateToProps, {clearError})(AuthError)

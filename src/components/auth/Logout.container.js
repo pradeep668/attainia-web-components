@@ -1,11 +1,14 @@
-import {path} from 'ramda'
 import {graphql} from 'react-apollo'
 import {connect} from 'react-redux'
 
 import Logout from './Logout'
-import {logout, handleError} from './actions'
 import {LOGOUT_USER} from './mutations'
 import {removeToken, getAccessTokenFromStorage} from './helpers'
+import ducks from './ducks'
+
+const {selectors, creators: {logout, handleError}} = ducks
+const mapStoreToProps = state => ({token: selectors.token(state)})
+const mapDispatchToProps = {handleError, logout}
 
 const LogoutWithData = graphql(LOGOUT_USER, {
     props: ({mutate, ownProps}) => ({
@@ -23,11 +26,5 @@ const LogoutWithData = graphql(LOGOUT_USER, {
         }
     })
 })(Logout)
-
-const mapStoreToProps = store => ({
-    token: path(['auth', 'user', 'token', 'access_token'], store)
-})
-
-const mapDispatchToProps = {handleError, logout}
 
 export default connect(mapStoreToProps, mapDispatchToProps)(LogoutWithData)

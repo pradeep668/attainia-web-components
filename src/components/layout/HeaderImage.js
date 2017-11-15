@@ -6,6 +6,7 @@ const HeaderImage = styled.div`
     background: transparent;
     width: 100%;
     min-height: ${props => props.height || '110px'};
+    ${props => props.boxShadow && `box-shadow: ${props.boxShadow};`} 
 
     &::after {
         content: "";
@@ -35,6 +36,7 @@ const HeaderImage = styled.div`
 
 HeaderImage.propTypes = {
     backgroundImage: PropTypes.string,
+    boxShadow: PropTypes.string,
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     opacity: PropTypes.number
 }

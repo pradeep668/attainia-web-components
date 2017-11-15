@@ -1,19 +1,15 @@
-import {path} from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import jwtDecode from 'jwt-decode'
 
 import {withStatics} from '../common/helpers'
-import {decodedJwt} from './actions'
 import JwtDecode from './JwtDecode'
+import ducks from './ducks'
 
-const mapStateToProps = ({auth: {user, parsed_token}}) => ({
-    jwt: path(['token', 'access_token'], user) || parsed_token
-})
-
+const {selectors, creators: {decodedJwt}} = ducks
+const mapStateToProps = state => ({jwt: selectors.storedToken(state)})
 const mapDispatchToProps = {decodedJwt}
-
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     ...stateProps,
     ...ownProps,

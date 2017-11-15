@@ -1,3 +1,3 @@
-import auth from './components/auth/initialState'
+import authDucks from './components/auth/ducks'
 
-export default {auth}
+export default {auth: authDucks.initialState}

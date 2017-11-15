@@ -4,12 +4,11 @@ import {isNotNil, isString, isNumber} from 'ramda-adjunct'
 import LocalizedStrings from 'react-localization'
 import spected from 'spected'
 
-const isNotBlankString = s => not(/^\s*$/.test(s))
-const isValid = allPass([isNotBlankString, either(isNumber, isString), isNotNil])
-const isValidEmail = s => /^[^\\.\\s@:][^\\s@:]*(?!\\.)@[^\\.\\s@]+(?:\\.[^\\.\\s@]+)*$/.test(s)
-const isValidPassword = s => /^([A-Z]|[a-z])([a-z]|[0-9]|[!@#$%^&*()[\];:,.<>?*^+=_-]){6,50}$/.test(s)
-
-const createValidator = rules => {
+export const isNotBlankString = s => not(/^\s*$/.test(s))
+export const isStringieThingie = allPass([isNotBlankString, either(isNumber, isString), isNotNil])
+export const isValidEmail = s => /^[^\\.\\s@:][^\\s@:]*(?!\\.)@[^\\.\\s@]+(?:\\.[^\\.\\s@]+)*$/.test(s)
+export const isValidPassword = s => /^([A-Z]|[a-z])([a-z]|[0-9]|[!@#$%^&*()[\];:,.<>?*^+=_-]){6,50}$/.test(s)
+export const createValidator = rules => {
     const fields = Object.keys(rules)
     return compose(
         pickBy(val => val !== true),
@@ -24,7 +23,7 @@ export default {
     passwordHelp: {
         validate: createValidator({
             email: [
-                [isValid, new LocalizedStrings({
+                [isStringieThingie, new LocalizedStrings({
                     en: {email: 'Please enter your email'},
                     fr: {email: 'Entrez votre adresse e-mail'},
                     es: {email: 'Por favor, introduzca su dirección de correo electrónico'}
@@ -35,14 +34,14 @@ export default {
     login: {
         validate: createValidator({
             password: [
-                [isValid, new LocalizedStrings({
+                [isStringieThingie, new LocalizedStrings({
                     en: {password: 'Please enter your password'},
                     fr: {password: 's\'il vous plait entrez votre mot de passe'},
                     es: {password: 'Por favor, introduzca su contraseña'}
                 }).password]
             ],
             email: [
-                [isValid, new LocalizedStrings({
+                [isStringieThingie, new LocalizedStrings({
                     en: {email: 'Please enter your email'},
                     fr: {email: 'Entrez votre adresse e-mail'},
                     es: {email: 'Por favor, introduzca su dirección de correo electrónico'}
@@ -53,14 +52,14 @@ export default {
     applicationRegistration: {
         validate: createValidator({
             name: [
-                [isValid, new LocalizedStrings({
+                [isStringieThingie, new LocalizedStrings({
                     en: {name: 'Please enter your name'},
                     fr: {name: 'S\'il vous plaît entrez votre nom'},
                     es: {name: 'por favor, escriba su nombre'}
                 }).name]
             ],
             redirect: [
-                [isValid, new LocalizedStrings({
+                [isStringieThingie, new LocalizedStrings({
                     en: {redirect: 'Please enter a URL'},
                     fr: {redirect: 'Entrez une URL'},
                     es: {redirect: 'Ingrese una URL'}
@@ -71,14 +70,14 @@ export default {
     userRegistration: {
         validate: createValidator({
             name: [
-                [isValid, new LocalizedStrings({
+                [isStringieThingie, new LocalizedStrings({
                     en: {name: 'Please enter your name'},
                     fr: {name: 'S\'il vous plaît entrez votre nom'},
                     es: {name: 'por favor, escriba su nombre'}
                 }).name]
             ],
             email: [
-                [isValid, new LocalizedStrings({
+                [isStringieThingie, new LocalizedStrings({
                     en: {email: 'Please enter your email address'},
                     fr: {email: 'Entrez votre adresse e-mail'},
                     es: {email: 'Por favor, introduzca su dirección de correo electrónico'}
@@ -90,7 +89,7 @@ export default {
                 }).email]
             ],
             password: [
-                [isValid, new LocalizedStrings({
+                [isStringieThingie, new LocalizedStrings({
                     en: {password: 'Please enter your password'},
                     fr: {password: 's\'il vous plait entrez votre mot de passe'},
                     es: {password: 'Por favor, introduzca su contraseña'}
