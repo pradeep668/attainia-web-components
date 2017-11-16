@@ -54,7 +54,7 @@ export default class TooltipHeaderCell extends React.PureComponent {
                         <HeaderLink onClick={() => sortCallback(key, flip(sortData))}>{name}</HeaderLink>
                     </LeftFlexSpan>
                     <RightFlexSpan>
-                        {sortData.columnKey === key ? <SortIcon icon={flip(sortData, true)} fill="#2F81B7" /> : null}
+                        {sortData.columnKey === key ? <SortIcon icon={flip(sortData, true)} fill="#0072CE" /> : null}
                     </RightFlexSpan>
                 </FlexDiv>
             </Cell>
