@@ -59,9 +59,8 @@ const LoadMoreButton = styled(Button)`
     background-color: #0072CE;
 
     &:disabled {
-        background: #A0B0BA;
+        background: #C1CDD7;
         cursor: not-allowed;
-        opacity: 0.5;
     }
 `
 
