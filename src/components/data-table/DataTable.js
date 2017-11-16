@@ -216,7 +216,7 @@ const DataTable = ({
         <TableFooter>
             <LoadMoreButton
                 onClick={() => handleNextPage(data.pageData, getNextPage)}
-                disabled={data.pageData.pages === data.pageData.page}
+                disabled={data.pageData.totalPages === data.pageData.page}
             >
                 Load More
             </LoadMoreButton>
