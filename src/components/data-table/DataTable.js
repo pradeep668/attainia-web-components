@@ -23,9 +23,12 @@ const StyledTable = styled(Table)`
     .fixedDataTableCellLayout_wrap1 {
         height: 100%;
     }
+    .fixedDataTableCellLayout_wrap1 span::selection {
+        background-color: #FF2A23;
+        color: #FFFFFF;
+    }
     .public_fixedDataTable_bodyRow:hover .public_fixedDataTableCell_main {
         background-color:  #E4E8E4;
-        color: #FF2A23;
     }
     .public_fixedDataTableRow_highlighted {
         background-color: #F0F0F0;
