@@ -14,10 +14,12 @@ import {
 } from './components/auth'
 
 import {withLoginEnhancers} from './components/auth/enhancers'
-import {withAuthentication} from './components/auth/decorators'
+import {withAuthentication, declarePermissionRestrictions} from './components/auth/decorators'
 
 import store from './store'
 import theme from './theme'
+
+const withPermission = declarePermissionRestrictions(['app', 'admin'])
 
 export default (
     <ThemeProvider theme={theme}>
@@ -25,7 +27,7 @@ export default (
             <AuthProvider>
                 <BrowserRouter>
                     <Switch>
-                        <Route exact path="/" component={withAuthentication(withLayout(Home))} />
+                        <Route exact path="/" component={withAuthentication(withPermission(withLayout(Home)))} />
                         <Route exact path="/login" component={withLoginEnhancers(LoginContainer)} />
                         <Route exact path="/password-help" component={PasswordHelpContainer} />
                         <Route exact path="/register" component={RegistrationContainer} />

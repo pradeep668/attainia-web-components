@@ -13,6 +13,14 @@ export {withAuthStatusSubscription} from './AuthStatus.container'
 const {selectors} = ducks
 const locationHelper = locationHelperBuilder({})
 
+export const declarePermissionRestrictions = permissions =>
+    connectedRouterRedirect({
+        authenticatedSelector: state => selectors.permissions(state, {permissions}),
+        redirectPath: '/',
+        allowRedirectBack: false,
+        wrapperDisplayName: 'AskPermission'
+    })
+
 export const withAuthentication = connectedRouterRedirect({
     redirectPath: '/login',
     authenticatedSelector: state => selectors.isAuthenticated(state),

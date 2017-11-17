@@ -1,5 +1,5 @@
 import Duck from 'extensible-duck'
-import {complement, omit, converge, memoize, last, init, path, trim, compose, is, toString} from 'ramda'
+import {complement, omit, converge, memoize, last, init, intersection, path, trim, compose, is, toString} from 'ramda'
 
 import {isStringieThingie} from './validators'
 
@@ -71,6 +71,8 @@ export default new Duck({
         isAuthenticated: new Duck.Selector(selectors => createSelector(selectors.id, isStringieThingie)),
         isNotAuthenticated: new Duck.Selector(selectors => createSelector(selectors.id, complement(isStringieThingie))),
         expires_in: state => path(['auth', 'user', 'token', 'expires_in'], state),
+        permissions: (state, {permissions = []} = {}) =>
+            !!intersection(permissions, (path(['auth', 'user', 'scopes'], state) || [])).length,
         refreshInMs: new Duck.Selector(selectors =>
             createSelector(
                 selectors.expires_in,
