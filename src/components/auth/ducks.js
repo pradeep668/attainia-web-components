@@ -1,11 +1,7 @@
-import Duck from 'extensible-duck'
-import {complement, omit, converge, memoize, last, init, intersection, path, trim, compose, is, toString} from 'ramda'
-
-import {isStringieThingie} from './validators'
-
-const ONE_HOUR = 3600000
-
-const createSelector = (...selectors) => memoize(converge(last(selectors), init(selectors)))
+/* eslint "max-len": "off" */
+import Duck, {createSelector, createValidator, isStringieThingie} from 'extensible-duck'
+import {complement, omit, intersection, path, trim, compose, is, toString} from 'ramda'
+import LocalizedStrings from 'react-localization'
 
 const parseError = compose(
     trim,
@@ -39,6 +35,11 @@ export default new Duck({
         'USER_INFO_FROM_TOKEN',
         'VALIDATED_TOKEN'
     ],
+    consts: {
+        ONE_HOUR: 3600000,
+        EMAIL_REGEX: new RegExp(/^[^\\.\\s@:][^\\s@:]*(?!\\.)@[^\\.\\s@]+(?:\\.[^\\.\\s@]+)*$/),
+        PASSWORD_REGEX: new RegExp(/^([A-Z]|[a-z])([a-z]|[0-9]|[!@#$%^&*()[\];:,.<>?*^+=_-]){6,50}$/)
+    },
     initialState: {
         app: {},
         baseUrl: 'localhost',
@@ -52,7 +53,7 @@ export default new Duck({
         storageType: 'local',
         user: {}
     },
-    selectors: {
+    selectors: ({consts}) => ({
         root: state => state,
         error: state => state.auth.error,
         parsedToken: state => state.auth.parsed_token,
@@ -76,7 +77,7 @@ export default new Duck({
         refreshInMs: new Duck.Selector(selectors =>
             createSelector(
                 selectors.expires_in,
-                expiresIn => Math.max((Number(expiresIn || ONE_HOUR) - 10) * 1000, 0)
+                expiresIn => Math.max((Number(expiresIn || consts.ONE_HOUR) - 10) * 1000, 0)
             )
         ),
         refreshAt: new Duck.Selector(selectors =>
@@ -85,7 +86,7 @@ export default new Duck({
                 refreshInMs => new Date(Date.now() + refreshInMs)
             )
         )
-    },
+    }),
     creators: ({types}) => ({
         handleError: error => ({error, type: types.ERROR}),
         clearError: () => ({type: types.CLEAR_ERROR}),
@@ -105,6 +106,90 @@ export default new Duck({
         userInfoFromToken: user => ({user, type: types.USER_INFO_FROM_TOKEN}),
         startedLoading: () => ({type: types.LOADING_STARTED}),
         finishedLoading: () => ({type: types.LOADING_FINISHED})
+    }),
+    validators: ({consts}) => ({
+        passwordHelp: {
+            validate: createValidator({
+                email: [
+                    [isStringieThingie, new LocalizedStrings({
+                        en: {email: 'Please enter your email'},
+                        fr: {email: 'Entrez votre adresse e-mail'},
+                        es: {email: 'Por favor, introduzca su dirección de correo electrónico'}
+                    }).email]
+                ]
+            })
+        },
+        login: {
+            validate: createValidator({
+                password: [
+                    [isStringieThingie, new LocalizedStrings({
+                        en: {password: 'Please enter your password'},
+                        fr: {password: 's\'il vous plait entrez votre mot de passe'},
+                        es: {password: 'Por favor, introduzca su contraseña'}
+                    }).password]
+                ],
+                email: [
+                    [isStringieThingie, new LocalizedStrings({
+                        en: {email: 'Please enter your email'},
+                        fr: {email: 'Entrez votre adresse e-mail'},
+                        es: {email: 'Por favor, introduzca su dirección de correo electrónico'}
+                    }).email]
+                ]
+            })
+        },
+        applicationRegistration: {
+            validate: createValidator({
+                name: [
+                    [isStringieThingie, new LocalizedStrings({
+                        en: {name: 'Please enter your name'},
+                        fr: {name: 'S\'il vous plaît entrez votre nom'},
+                        es: {name: 'por favor, escriba su nombre'}
+                    }).name]
+                ],
+                redirect: [
+                    [isStringieThingie, new LocalizedStrings({
+                        en: {redirect: 'Please enter a URL'},
+                        fr: {redirect: 'Entrez une URL'},
+                        es: {redirect: 'Ingrese una URL'}
+                    }).redirect]
+                ]
+            })
+        },
+        userRegistration: {
+            validate: createValidator({
+                name: [
+                    [isStringieThingie, new LocalizedStrings({
+                        en: {name: 'Please enter your name'},
+                        fr: {name: 'S\'il vous plaît entrez votre nom'},
+                        es: {name: 'por favor, escriba su nombre'}
+                    }).name]
+                ],
+                email: [
+                    [isStringieThingie, new LocalizedStrings({
+                        en: {email: 'Please enter your email address'},
+                        fr: {email: 'Entrez votre adresse e-mail'},
+                        es: {email: 'Por favor, introduzca su dirección de correo electrónico'}
+                    }).email],
+                    [s => consts.EMAIL_REGEX.test(s), new LocalizedStrings({
+                        en: {email: 'Invalid email address'},
+                        fr: {email: 'Adresse e-mail invalide'},
+                        es: {email: 'Dirección de correo electrónico no válida'}
+                    }).email]
+                ],
+                password: [
+                    [isStringieThingie, new LocalizedStrings({
+                        en: {password: 'Please enter your password'},
+                        fr: {password: 's\'il vous plait entrez votre mot de passe'},
+                        es: {password: 'Por favor, introduzca su contraseña'}
+                    }).password],
+                    [s => consts.PASSWORD_REGEX.test(s), new LocalizedStrings({
+                        en: {password: 'Passwords should be greater than 6 alphanumeric characters. Some special characters are allowed.'},
+                        fr: {password: 'Les mots de passe doivent être supérieurs à 6 caractères. Algunos caracteres especiales están permitidos.'},
+                        es: {password: 'Las contraseñas deben tener más de 6 caracteres. Certains caractères spéciaux sont autorisés.'}
+                    }).password]
+                ]
+            })
+        }
     }),
     reducer(state, action, {types, initialState}) {
         switch (action.type) {
