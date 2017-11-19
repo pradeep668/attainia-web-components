@@ -5,12 +5,14 @@ import styled from 'styled-components'
 import {Cell} from 'fixed-data-table-2'
 
 import SimpleSvgIcon from '../common/SimpleSvgIcon'
+import {getThemeProp} from '../common/helpers'
 
 
 const InlineImg = styled(SimpleSvgIcon)`
     display: inline;
     margin-right: 16px;
     vertical-align: middle;
+    fill: ${getThemeProp(['colors', 'secondary', 'default'])};
 `
 
 export default class InfoIconToolTipTextCell extends React.PureComponent {
@@ -19,7 +21,6 @@ export default class InfoIconToolTipTextCell extends React.PureComponent {
         return (
             <Cell {...props}>
                 <InlineImg
-                    fill="#0072CE"
                     icon="info"
                     data-tip={toolTip}
                     data-for={'cell-tooltip'}
