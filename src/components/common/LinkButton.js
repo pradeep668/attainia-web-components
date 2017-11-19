@@ -5,7 +5,7 @@ import {getThemeProp} from './helpers'
 export default styled(Button)`
     & > a {
         text-decoration: none;
-        color: ${getThemeProp(['grayscale', 'white'], 'white')};
+        color: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
         font-size: ${getThemeProp(['fonts', 'fontSize'], '12px')};
     }
 `

@@ -30,7 +30,7 @@ const ListHeader = styled.ul`
     list-style: none;
     margin: 0;
     padding: 12px;
-    background: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
+    background: ${getThemeProp(['colors', 'grayscale', 'lt'], 'lightgray')};
 
     @supports not (display: grid) {
         & > * {
@@ -59,7 +59,7 @@ const ListHeader = styled.ul`
                 padding-right: 10px; 
             }
             .subtitle {
-                color: ${getThemeProp(['colors', 'grayscale', 'lt'], 'mediumgray')}
+                color: ${getThemeProp(['colors', 'grayscale', 'md'], 'mediumgray')}
             }
         }
     }
