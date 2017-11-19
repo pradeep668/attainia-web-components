@@ -23,8 +23,15 @@ const StyledTable = styled(Table)`
     .fixedDataTableCellLayout_wrap1 {
         height: 100%;
     }
-    .fixedDataTableRowLayout_rowWrapper:hover .public_fixedDataTableCell_main {
-        background-color: #d4e1f7;
+    .fixedDataTableCellLayout_wrap1 span::selection {
+        background-color: #FF2A23;
+        color: #FFFFFF;
+    }
+    .public_fixedDataTable_bodyRow:hover .public_fixedDataTableCell_main {
+        background-color:  #E4E8E4;
+    }
+    .public_fixedDataTableRow_highlighted {
+        background-color: #F0F0F0;
     }
 `
 
@@ -52,12 +59,11 @@ const LoadMoreButton = styled(Button)`
     margin-left: auto;
     margin-right: auto;
     padding: 10px 0;
-    background-color: #2F81B7;
+    background-color: #0072CE;
 
     &:disabled {
-        background: #A0B0BA;
+        background: #C1CDD7;
         cursor: not-allowed;
-        opacity: 0.5;
     }
 `
 
