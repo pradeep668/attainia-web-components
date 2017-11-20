@@ -8,7 +8,11 @@ export default styled.button`
     border: none;
     cursor: pointer;
     padding: 0;
-    font-size: ${getThemeProp(['fonts', 'fontSize'], '12px')};
+    font-size: ${
+        props => getThemeProp(['fonts', 'fontSize', '12px'])(props) ||
+        props.styles.fontSize
+        };
+    } 
     &:focus {
         outline: none;
     }
