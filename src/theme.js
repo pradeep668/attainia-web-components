@@ -3,21 +3,21 @@ import icons from './icons'
 export const colors = {
     primary: {
         default: '#E10600',
-        lt: '#F0887D',
-        md: '#FF0700',
-        dk: '#E10600'
+        lt: '#FF2A23',
+        md: '#E10600',
+        dk: '#FF0700'
     },
     secondary: {
-        default: '#227FBB',
-        lt: '#60AFFF',
-        md: '#227FBB',
-        dk: '#1B6595'
+        default: '#0072CE',
+        lt: '#328ED7',
+        md: '#0072CE',
+        dk: '#005BA4'
     },
     grayscale: {
-        white: '#ebebeb',
+        white: '#ffffff',
         black: '#1E1E1E',
-        lt: '#cacaca',
-        md: '#464646',
+        lt: '#ebebeb',
+        md: '#cacaca',
         dk: '#333333'
     },
     status: {

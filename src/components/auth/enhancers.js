@@ -4,12 +4,14 @@ import {
     withTokenInfo,
     withTokenValidation,
     withTokenParsing,
+    withJwtDecode,
     untilAuthenticatedAndThenRedirectBack
 } from './decorators'
 
 export const withLoginEnhancers = compose(
     withTokenRefresh,
     withTokenInfo,
+    withJwtDecode,
     withTokenValidation,
     withTokenParsing,
     untilAuthenticatedAndThenRedirectBack
@@ -17,6 +19,7 @@ export const withLoginEnhancers = compose(
 
 export const withTokenHelpers = compose(
     withTokenRefresh,
+    withJwtDecode,
     withTokenInfo,
     withTokenValidation,
     withTokenParsing

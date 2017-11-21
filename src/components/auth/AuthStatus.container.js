@@ -1,4 +1,3 @@
-import {path} from 'ramda'
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
@@ -6,13 +5,12 @@ import {withApollo, compose} from 'react-apollo'
 
 import {withStatics} from '../common/helpers'
 import AuthStatus from './AuthStatus'
-import {handleError, logout} from './actions'
 import IS_LOGGED_OUT from './subscriptions'
+import ducks from './ducks'
 
-const mapStateToProps = state => ({
-    token: path(['auth', 'user', 'token', 'access_token'], state)
-})
-
+const {selectors, creators: {handleError, logout}} = ducks
+const mapStateToProps = state => ({token: selectors.token(state)})
+const mapDispatchToProps = {handleError, logout}
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     ...ownProps,
     startSubscription() {
@@ -31,7 +29,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     }
 })
 
-const withReduxConnect = () => connect(mapStateToProps, {logout, handleError}, mergeProps)
+const withReduxConnect = () => connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 export const withAuthStatusSubscription = (DecoratedComponent) => {
     const WithAuthStatus = ({startSubscription, ...passThroughProps}) =>

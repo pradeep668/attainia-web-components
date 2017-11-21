@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import {getThemeProp} from './helpers'
 
 export default styled.form`
-    background: ${getThemeProp(['colors', 'grayscale', 'white'], 'lightgray')};
+    background: ${getThemeProp(['colors', 'grayscale', 'lt'], 'lightgray')};
     min-width: ${getThemeProp(['forms', 'smallFormWidth'], '300px')};
     max-width: ${getThemeProp(['forms', 'smallFormWidth'], '300px')};
     margin: 0 auto;

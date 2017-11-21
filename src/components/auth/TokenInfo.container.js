@@ -6,13 +6,12 @@ import {withApollo, compose} from 'react-apollo'
 
 import {withStatics} from '../common/helpers'
 import {GET_TOKEN_INFO} from './queries'
-import {userInfoFromToken, handleError} from './actions'
 import TokenInfo from './TokenInfo'
+import ducks from './ducks'
 
-const mapStateToProps = state => ({
-    token: path(['auth', 'parsed_token'], state)
-})
-
+const {selectors, creators: {userInfoFromToken, handleError}} = ducks
+const mapStateToProps = state => ({token: selectors.parsedToken(state)})
+const mapDispatchToProps = {userInfoFromToken, handleError}
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     ...ownProps,
     ...stateProps,
@@ -34,7 +33,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     }
 })
 
-const withReduxConnect = () => connect(mapStateToProps, {userInfoFromToken, handleError}, mergeProps)
+const withReduxConnect = () => connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
 export const withTokenInfo = (DecoratedComponent) => {
     const WithTokenInfo = ({token, tryGetTokenInfo, ...passThroughProps}) =>

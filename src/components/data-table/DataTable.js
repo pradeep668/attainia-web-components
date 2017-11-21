@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {Table, Column, Cell} from 'fixed-data-table-2'
 import 'fixed-data-table-2/dist/fixed-data-table.css'
+import color from 'color'
 
 import ColumnType from './ColumnType'
 import Button from '../common/Button'
@@ -17,19 +18,37 @@ import NumberCell from './NumberCell'
 import InfoIconToolTipTextCell from './InfoIconToolTipTextCell'
 import ImageCell from './ImageCell'
 import IconLinkCell from './IconLinkCell'
+import {getThemeProp} from '../common/helpers'
 
 
 const StyledTable = styled(Table)`
     .fixedDataTableCellLayout_wrap1 {
         height: 100%;
     }
-    .fixedDataTableRowLayout_rowWrapper:hover .public_fixedDataTableCell_main {
-        background-color: #d4e1f7;
+    .fixedDataTableCellLayout_wrap1 span::selection {
+        background-color: ${getThemeProp(['colors', 'primary', 'lt'])};
+        color: white;
+    }
+    .public_fixedDataTable_bodyRow:hover .public_fixedDataTableCell_main {
+        background-color: ${props =>
+            color(
+                getThemeProp(['colors', 'grayscale', 'lt'])(props)
+            ).mix(
+                color(getThemeProp(['colors', 'grayscale', 'md'])(props)), 0.1
+            ).hex()
+        };
+    }
+    .public_fixedDataTableRow_highlighted {
+        background-color: ${getThemeProp(['colors', 'grayscale', 'lt'])};
     }
 `
 
 const TableHeader = styled.div`
-    border: 1px solid #d3d3d3;
+    border: 1px solid ${props =>
+        color(
+            getThemeProp(['colors', 'grayscale', 'lt'])(props)
+        ).darken(0.1).hex()
+    };
     border-bottom-style: none;
     padding: 8px;
 
@@ -39,7 +58,11 @@ const TableHeader = styled.div`
 `
 
 const TableFooter = styled.div`
-    border: 1px solid #d3d3d3;
+    border: 1px solid ${props =>
+        color(
+            getThemeProp(['colors', 'grayscale', 'lt'])(props)
+        ).darken(0.1).hex()
+    };
     border-top-style: none;
     padding: 8px;
     align-items: center;
@@ -52,12 +75,11 @@ const LoadMoreButton = styled(Button)`
     margin-left: auto;
     margin-right: auto;
     padding: 10px 0;
-    background-color: #2F81B7;
+    background-color: ${getThemeProp(['colors', 'secondary', 'default'])};
 
     &:disabled {
-        background: #A0B0BA;
+        background: #C1CDD7;
         cursor: not-allowed;
-        opacity: 0.5;
     }
 `
 
@@ -216,7 +238,7 @@ const DataTable = ({
         <TableFooter>
             <LoadMoreButton
                 onClick={() => handleNextPage(data.pageData, getNextPage)}
-                disabled={data.pageData.pages === data.pageData.page}
+                disabled={data.pageData.totalPages === data.pageData.page}
             >
                 Load More
             </LoadMoreButton>
