@@ -3,6 +3,8 @@ import AuthErrorContainer from './AuthError.container'
 import AuthError from './AuthError'
 import AuthStatus from './AuthStatus'
 import AuthStatusContainer from './AuthStatus.container'
+import JwtDecode from './JwtDecode'
+import JwtDecodeContainer from './JwtDecode.container'
 import LoginContainer from './Login.container'
 import Login from './Login'
 import LogoutContainer from './Logout.container'
@@ -27,9 +29,7 @@ import WriteTokenToStorageContainer from './WriteTokenToStorage.container'
 export * from './enhancers'
 export * from './decorators'
 export * from './helpers'
-export {default as reducer} from './reducer'
-export {default as initialState} from './initialState'
-export {default as types} from './types'
+export {default as ducks} from './ducks'
 
 export {
     AuthProvider,
@@ -37,6 +37,8 @@ export {
     AuthError,
     AuthStatus,
     AuthStatusContainer,
+    JwtDecode,
+    JwtDecodeContainer,
     LoginContainer,
     Login,
     LogoutContainer,

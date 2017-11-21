@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import {getThemeProp} from '../common/helpers'
 
 const Footer = styled.footer`
-    background-color: ${getThemeProp(['colors', 'grayscale', 'md'], 'slategrey')};
+    background-color: ${getThemeProp(['colors', 'grayscale', 'dk'], 'darkgray')};
     color: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
     padding: 10px 20px;
     text-align: center;
