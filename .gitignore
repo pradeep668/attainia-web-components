@@ -8,3 +8,7 @@ package-lock.json
 
 # Mac files
 .DS_Store
+
+.out/
+.storybook-build/
+.vscode/

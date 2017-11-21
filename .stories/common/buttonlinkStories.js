@@ -13,8 +13,8 @@ import ButtonLink from '../../src/components/common/ButtonLink'
 
 
 const CenterDiv = styled.div`
-margin-left: auto;
-margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 `
 
 const fontLabel = 'Font Size';
