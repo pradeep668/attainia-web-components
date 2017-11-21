@@ -12,8 +12,8 @@ import theme from '../../src/theme'
 import Button from '../../src/components/common/Button'
 
 const CenterDiv = styled.div`
-margin-left: auto;
-margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 `
 const Spaced = styled.div`
     display: grid;
