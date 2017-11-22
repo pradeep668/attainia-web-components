@@ -2,27 +2,29 @@ import React from 'react'
 import {compose} from 'ramda'
 import {storiesOf} from '@storybook/react'
 import {withKnobs, text, boolean, number, array, select, color, object} from '@storybook/addon-knobs'
-import {withNotes} from '@storybook/addon-notes'
+import {withNotes} from '@storybook/addon-notes';
 import {action} from '@storybook/addon-actions'
 import {withInfo} from '@storybook/addon-info'
 import {ThemeProvider} from 'styled-components'
 import styled from 'styled-components'
 
 import theme from '../../src/theme'
-import ButtonLink from '../../src/components/common/ButtonLink'
-
+import CheckboxLabel from '../../src/components/common/CheckboxLabel'
+import ErrorMessage from '../../src/components/common/ErrorMessage'
 
 const CenterDiv = styled.div`
     margin-left: auto;
     margin-right: auto;
 `
-
+const Spaced = styled.div`
+    display: grid;
+    grid-column-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+`
 const fontLabel = 'Font Size';
 const fontDefault = '12px';
 
-
-
-storiesOf('Button Links', module)
+storiesOf('Error Message', module)
 .addDecorator(StoryComponent => (
     <ThemeProvider theme={theme}>
         <CenterDiv>
@@ -32,13 +34,16 @@ storiesOf('Button Links', module)
     ))
 .addDecorator(withKnobs)
 
-.add('Button Links',
+.add('Error Message',
     compose(
-    withInfo('A basic button link, royal blue, underlined with the basic link following rules.'),
-    withNotes('A basic button link.  Use the knobs to change the label or the font size to see different variations.')
-        )(() => ([
+    withInfo('A styled error message that can be displayed on screen.'),
+    withNotes('A styled error message that can be displayed on screen.')
+    )(() =>
         <div>
-            <ButtonLink onClick={action('Link clicked!')} styles={{fontSize: text(fontLabel, fontDefault)}} >           
-            {text('Label', 'Button Link Example')}
-            </ButtonLink>
-        </div>])))
+            <ErrorMessage styles={{fontSize: text(fontLabel, fontDefault)}}>
+            {text('Message', 'This is a sample error message indicating an error.')}
+            </ErrorMessage>
+        </div>
+    ));
+
+ 
