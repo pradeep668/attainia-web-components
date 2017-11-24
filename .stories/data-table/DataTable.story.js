@@ -1,13 +1,13 @@
+/* eslint "max-len": "off" */
 import React from 'react'
 import {storiesOf} from '@storybook/react'
 import {action} from '@storybook/addon-actions'
 import {withInfo} from '@storybook/addon-info'
 import {ThemeProvider} from 'styled-components'
-import styled from 'styled-components'
 
-import theme from '../../src/theme'
-import DataTable from '../../src/components/data-table/DataTable'
-import ColumnType from '../../src/components/data-table/ColumnType'
+import theme from '@theme'
+import DataTable from '@awc/data-table/DataTable'
+import ContentCentered from '@awc/layout/ContentCentered'
 import {
     getMockDataNoneSelected,
     getMockDataFirstSelected,
@@ -20,17 +20,12 @@ import {
     getSortDataThirdDesc
 } from './dataTableMockData'
 
-const CenterDiv = styled.div`
-    margin-left: auto;
-    margin-right: auto;
-`
-
 storiesOf('DataTable', module)
     .addDecorator(StoryComponent => (
         <ThemeProvider theme={theme}>
-            <CenterDiv>
+            <ContentCentered>
                 <StoryComponent />
-            </CenterDiv>
+            </ContentCentered>
         </ThemeProvider>
     ))
     .add('Without check column, no sort',
@@ -88,7 +83,7 @@ storiesOf('DataTable', module)
                 tableWidth={1253}
                 tableHeight={500}
                 headerHeight={50}
-                hasCheckColumn={true}
+                hasCheckColumn
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
@@ -112,7 +107,7 @@ storiesOf('DataTable', module)
                 tableWidth={1253}
                 tableHeight={500}
                 headerHeight={50}
-                hasCheckColumn={true}
+                hasCheckColumn
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
@@ -136,7 +131,7 @@ storiesOf('DataTable', module)
                 tableWidth={1253}
                 tableHeight={500}
                 headerHeight={50}
-                hasCheckColumn={true}
+                hasCheckColumn
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
@@ -160,7 +155,7 @@ storiesOf('DataTable', module)
                 tableWidth={1253}
                 tableHeight={500}
                 headerHeight={50}
-                hasCheckColumn={true}
+                hasCheckColumn
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
@@ -184,7 +179,7 @@ storiesOf('DataTable', module)
                 tableWidth={1253}
                 tableHeight={500}
                 headerHeight={50}
-                hasCheckColumn={true}
+                hasCheckColumn
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
@@ -208,7 +203,7 @@ storiesOf('DataTable', module)
                 tableWidth={1253}
                 tableHeight={500}
                 headerHeight={50}
-                hasCheckColumn={true}
+                hasCheckColumn
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
@@ -232,7 +227,7 @@ storiesOf('DataTable', module)
                 tableWidth={1253}
                 tableHeight={500}
                 headerHeight={50}
-                hasCheckColumn={true}
+                hasCheckColumn
                 getNextPage={action('nextPage')}
                 rowSelected={action('selectRow')}
                 getSortedData={action('sortData')}
@@ -256,7 +251,7 @@ storiesOf('DataTable', module)
             tableWidth={1253}
             tableHeight={500}
             headerHeight={50}
-            hasCheckColumn={true}
+            hasCheckColumn
             getNextPage={action('nextPage')}
             rowSelected={action('selectRow')}
             getSortedData={action('sortData')}
