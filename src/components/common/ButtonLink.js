@@ -9,9 +9,9 @@ export default styled.button`
     cursor: pointer;
     padding: 0;
     font-size: ${
-        props => getThemeProp(['fonts', 'fontSize', '12px'])(props) ||
+    props => getThemeProp(['fonts', 'fontSize', '12px'])(props) ||
         props.styles.fontSize
-        };
+};
     } 
     &:focus {
         outline: none;

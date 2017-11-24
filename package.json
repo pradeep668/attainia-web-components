@@ -8,7 +8,8 @@
   },
   "scripts": {
     "storybook": "NODE_PATH=src start-storybook -p 9001 -c .storybook",
-    "storybook-build": "NODE_PATH=src build-storybook -c .storybook -o .storybook-build",
+    "build-storybook": "NODE_PATH=src build-storybook -c .storybook -o .storybook-build",
+    "build-dev": "react-scripts build",
     "prebuild": "npm run clean",
     "build": "BABEL_ENV=production babel src/components --out-dir dist --ignore node_modules/ --copy-files",
     "clean": "node_modules/.bin/rimraf build dist",
@@ -16,7 +17,6 @@
     "predist": "npm run build && npm run copy-manifest",
     "dist": "cd dist && npm publish",
     "precommit-validate": "hooks/lint_js || (echo 'Please fix any of the above-mentioned linting errors before finalizing this commit.' && exit 1)",
-    "build-dev": "react-scripts build",
     "eject": "react-scripts eject",
     "lint": "node_modules/.bin/eslint \"src/**/*.js\"",
     "start": "react-scripts start",

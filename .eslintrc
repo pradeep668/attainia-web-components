@@ -50,7 +50,17 @@
         ]
       }
     },
-    "indent": "off",
+    "indent": [
+      "error",
+      4,
+      {
+        "SwitchCase": 1,
+        "ignoredNodes": [
+          "JSXAttribute",
+          "JSXSpreadAttribute"
+        ]
+      }
+    ],
     "jsx-quotes": [
       "warn",
       "prefer-double"
@@ -97,7 +107,7 @@
     ],
     "react/jsx-indent-props": [
       "error",
-      4
+      2
     ],
     "react/no-set-state": "error",
     "react/jsx-closing-bracket-location": "error",

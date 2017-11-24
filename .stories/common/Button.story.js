@@ -18,68 +18,68 @@ const Spaced = styled.div`
 `
 
 storiesOf('Buttons', module)
-.addDecorator(withKnobs)
-.addDecorator(StoryComponent => (
-    <ThemeProvider theme={theme}>
-        <ContentCentered>
-            <StoryComponent />
-        </ContentCentered>
-    </ThemeProvider>
-))
-.add('Attainia Buttons',
-    compose(
-    withInfo('The basic Attainia buttons with primary and secondary colors.'),
-    withNotes('These are the basic Attainia buttons with both primary and secondary colors.')
-    )(() => ([
-        <Spaced>
-            <Button styles={{backgroundColor: '#E10600'}}>
+    .addDecorator(withKnobs)
+    .addDecorator(StoryComponent => (
+        <ThemeProvider theme={theme}>
+            <ContentCentered>
+                <StoryComponent />
+            </ContentCentered>
+        </ThemeProvider>
+    ))
+    .add('Attainia Buttons',
+        compose(
+            withInfo('The basic Attainia buttons with primary and secondary colors.'),
+            withNotes('These are the basic Attainia buttons with both primary and secondary colors.')
+        )(() => ([
+            <Spaced>
+                <Button styles={{backgroundColor: '#E10600'}}>
                 Primary Default
-            </Button>
+                </Button>
 
-            <Button styles={{backgroundColor: '#F0887D'}}>
+                <Button styles={{backgroundColor: '#F0887D'}}>
                 Primary Light
-            </Button>
+                </Button>
 
-            <Button styles={{backgroundColor: '#E10600'}}>
+                <Button styles={{backgroundColor: '#E10600'}}>
                 Primary Medium
-            </Button>
+                </Button>
 
-            <Button styles={{backgroundColor: '#FF0700'}}>
+                <Button styles={{backgroundColor: '#FF0700'}}>
                 Primary Dark
-            </Button>
-        </Spaced>,
-        <br />,
-        <br />,
-        <Spaced>
-            <Button styles={{backgroundColor: '#1b6595'}}>
+                </Button>
+            </Spaced>,
+            <br />,
+            <br />,
+            <Spaced>
+                <Button styles={{backgroundColor: '#1b6595'}}>
                 Secondary Default
-            </Button>
-            <Button styles={{backgroundColor: '#227fbb'}}>
+                </Button>
+                <Button styles={{backgroundColor: '#227fbb'}}>
                 Secondary Light
-            </Button>
-            <Button styles={{backgroundColor: '#1b6595'}}>
+                </Button>
+                <Button styles={{backgroundColor: '#1b6595'}}>
                 Secondary Medium
-            </Button>
-            <Button styles={{backgroundColor: '#1F74B2'}}>
+                </Button>
+                <Button styles={{backgroundColor: '#1F74B2'}}>
                 Secondary Dark
-            </Button>
-        </Spaced>
-    ]))
-)
-.add('Button Playground',
-    compose(
-    withInfo('This is the basic button with some knobs playground stuff.'),
-    withNotes('This is a basic Attainia button with some knobs to provide user feedback.')
-    )(() =>
-        <div>
-            <Button
-                onClick={action('Button clicked')}
-                disabled={boolean('Disabled', false)}
-                status={select('Button Style', ['none', 'warning', 'ok', 'error'])}
-                styles={{padding: '18px 5px'}}
-            >
-                {text('Label', 'Attainia Button')}
-            </Button>
-        </div>
+                </Button>
+            </Spaced>
+        ]))
     )
-)
+    .add('Button Playground',
+        compose(
+            withInfo('This is the basic button with some knobs playground stuff.'),
+            withNotes('This is a basic Attainia button with some knobs to provide user feedback.')
+        )(() =>
+            <div>
+                <Button
+                  onClick={action('Button clicked')}
+                  disabled={boolean('Disabled', false)}
+                  status={select('Button Style', ['none', 'warning', 'ok', 'error'])}
+                  styles={{padding: '18px 5px'}}
+                >
+                    {text('Label', 'Attainia Button')}
+                </Button>
+            </div>
+        )
+    )

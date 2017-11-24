@@ -1,3 +1,4 @@
+/* eslint "max-len": "off" */
 import React from 'react'
 import {compose} from 'ramda'
 import {storiesOf} from '@storybook/react'
@@ -16,23 +17,23 @@ const fontDefault = '12px'
 
 
 storiesOf('Button Links', module)
-.addDecorator(withKnobs)
-.addDecorator(StoryComponent => (
-    <ThemeProvider theme={theme}>
-        <ContentCentered>
-            <StoryComponent />
-        </ContentCentered>
-    </ThemeProvider>
-))
-.add('Button Links',
-    compose(
-    withInfo('A basic button link, royal blue, underlined with the basic link following rules.'),
-    withNotes('A basic button link.  Use the knobs to change the label or the font size to see different variations.')
-    )(() => ([
-        <div>
-            <ButtonLink onClick={action('Link clicked!')} styles={{fontSize: text(fontLabel, fontDefault)}} >
-                {text('Label', 'Button Link Example')}
-            </ButtonLink>
-        </div>
-    ]))
-)
+    .addDecorator(withKnobs)
+    .addDecorator(StoryComponent => (
+        <ThemeProvider theme={theme}>
+            <ContentCentered>
+                <StoryComponent />
+            </ContentCentered>
+        </ThemeProvider>
+    ))
+    .add('Button Links',
+        compose(
+            withInfo('A basic button link, royal blue, underlined with the basic link following rules.'),
+            withNotes('A basic button link.  Use the knobs to change the label or the font size to see different variations.')
+        )(() => ([
+            <div>
+                <ButtonLink onClick={action('Link clicked!')} styles={{fontSize: text(fontLabel, fontDefault)}} >
+                    {text('Label', 'Button Link Example')}
+                </ButtonLink>
+            </div>
+        ]))
+    )

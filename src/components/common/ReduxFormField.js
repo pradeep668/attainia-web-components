@@ -5,9 +5,9 @@ import FormField from './FormField'
 
 const ReduxFormField = props =>
     <Field
-        name={props.name}
-        component={FormField}
-        {...props}
+      name={props.name}
+      component={FormField}
+      {...props}
     />
 
 ReduxFormField.propTypes = {

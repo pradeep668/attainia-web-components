@@ -17,16 +17,16 @@ const TwoColorSvgIcon = ({
         <g>
             {primaryPaths.map(d =>
                 <path
-                    key={uuid()}
-                    fill={primaryColor || getThemeProp(['colors', 'primary', 'default'], 'crimson')(restProps)}
-                    d={d}
+                  key={uuid()}
+                  fill={primaryColor || getThemeProp(['colors', 'primary', 'default'], 'crimson')(restProps)}
+                  d={d}
                 />
             )}
             {secondaryPaths.map(d =>
                 <path
-                    key={uuid()}
-                    fill={secondaryColor || getThemeProp(['colors', 'secondary', 'default'], 'transparent')(restProps)}
-                    d={d}
+                  key={uuid()}
+                  fill={secondaryColor || getThemeProp(['colors', 'secondary', 'default'], 'transparent')(restProps)}
+                  d={d}
                 />
             )}
         </g>

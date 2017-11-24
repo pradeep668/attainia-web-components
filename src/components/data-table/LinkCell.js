@@ -13,10 +13,10 @@ const StyledAnchor = styled.a`
     }
     &:hover {
         color: ${props =>
-            color(
-                getThemeProp(['colors', 'secondary', 'lt'])(props)
-            ).lighten(0.1).hex()
-        };
+        color(
+            getThemeProp(['colors', 'secondary', 'lt'])(props)
+        ).lighten(0.1).hex()
+};
     }
     &:visited {
         color: ${getThemeProp(['colors', 'secondary', 'dk'])};

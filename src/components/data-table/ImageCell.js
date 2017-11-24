@@ -10,9 +10,9 @@ export default class ImageCell extends React.PureComponent {
         return (
             <Cell {...props}>
                 <img
-                    src={imageSource}
-                    alt={altText}
-                    title={altText}
+                  src={imageSource}
+                  alt={altText}
+                  title={altText}
                 />
             </Cell>
         )
