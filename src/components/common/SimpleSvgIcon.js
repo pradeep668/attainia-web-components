@@ -17,20 +17,20 @@ const SimpleSvgIcon = props => {
     return (
         <Conditional condition={isNotNil(paths) && isNotEmpty(paths)}>
             <Svg
-                width={width || iconProps.width}
-                height={height || iconProps.height}
-                {...pickBy(isNotNil, {
-                    viewBox: viewBox || iconProps.viewBox
-                })}
-                {...svgProps}
+              width={width || iconProps.width}
+              height={height || iconProps.height}
+              {...pickBy(isNotNil, {
+                  viewBox: viewBox || iconProps.viewBox
+              })}
+              {...svgProps}
             >
                 <g
-                    {...pickBy(isNotNil, {
-                        transform,
-                        fill: props.fill
+                  {...pickBy(isNotNil, {
+                      transform,
+                      fill: props.fill
                             || iconProps.fill
                             || getThemeProp(['colors', 'primary', 'default'], 'crimson')(props)
-                    })}
+                  })}
                 >
                     {paths.map(d => <path key={uuid()} d={d} />)}
                 </g>

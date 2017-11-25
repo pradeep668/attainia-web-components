@@ -13,53 +13,46 @@ const getBaseMockData = size =>
         prop_2: Number(getRandomArbitrary(0, 1000).toFixed(2)),
         prop_3: {label: 'Google', link: 'http://www.google.com'},
         prop_4: {iconName: 'edit', altText: 'Edit', link: 'http://www.google.com'},
-        prop_5: {imageSource: 'https://www.omnicheer.com/images/header-social/icon-grey-instagram.png', altText: 'Visible'},
+        prop_5: {
+            imageSource: 'https://www.omnicheer.com/images/header-social/icon-grey-instagram.png',
+            altText: 'Visible'
+        },
         prop_6: {toolTip: 'This is a tooltip for the property.', text: 'Tool Tip Text', altText: 'Tooltip'}
     }))
 
 export const getMockDataNoneSelected = size => getBaseMockData(size)
 
 export const getMockDataFirstSelected = size =>
-    getBaseMockData(size).map((_, index) => {
-        _.selected = (index === 0) ? true : false
-
-        return _
-    })
+    getBaseMockData(size).map((data, index) => ({
+        ...data,
+        selected: index === 0
+    }))
 
 export const getMockDataAllSelected = size =>
-    getBaseMockData(size).map(_ => {
-        _.selected = true
+    getBaseMockData(size).map(data => ({
+        ...data,
+        selected: true
+    }))
 
-        return _
-    })
+export const getSortDataFirstDesc = () => ({
+    columnKey: 'name',
+    sortDirection: 'desc'
+})
 
-export const getSortDataFirstDesc = () => {
-    return {
-        columnKey: 'name',
-        sortDirection: 'desc'
-    }
-}
+export const getSortDataFirstAsc = () => ({
+    columnKey: 'name',
+    sortDirection: 'asc'
+})
 
-export const getSortDataFirstAsc = () => {
-    return {
-        columnKey: 'name',
-        sortDirection: 'asc'
-    }
-}
+export const getSortDataThirdDesc = () => ({
+    columnKey: 'prop_2',
+    sortDirection: 'desc'
+})
 
-export const getSortDataThirdDesc = () => {
-    return {
-        columnKey: 'prop_2',
-        sortDirection: 'desc'
-    }
-}
-
-export const getSortDataThirdAsc = () => {
-    return {
-        columnKey: 'prop_2',
-        sortDirection: 'asc'
-    }
-}
+export const getSortDataThirdAsc = () => ({
+    columnKey: 'prop_2',
+    sortDirection: 'asc'
+})
 
 export const getMockHeadersFirstFixed = () => ([
     {
@@ -121,8 +114,7 @@ export const getMockHeadersFirstFixed = () => ([
 ])
 
 export const getMockHeadersNoneFixed = () =>
-    getMockHeadersFirstFixed().map((_, index) => {
-        _.fixed = false
-
-        return _
-    })
+    getMockHeadersFirstFixed().map(data => ({
+        ...data,
+        fixed: false
+    }))

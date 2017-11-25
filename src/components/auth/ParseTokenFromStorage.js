@@ -8,7 +8,7 @@ class ParseTokenFromStorage extends Component {
         if (this.props.isValidToken(token)) {
             this.props.parsedToken(token)
         } else if (this.props.removeToken) {
-             this.props.removeToken(token)
+            this.props.removeToken(token)
         }
     }
 

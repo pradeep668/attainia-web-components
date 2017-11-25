@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import {Cell} from 'fixed-data-table-2'
 
 import {SimpleSvgIcon} from '../common'
+import {getThemeProp} from '../common/helpers'
 
 const FlexDiv = styled.div`
     display: flex;
@@ -33,6 +34,7 @@ const HeaderLink = styled.a`
 `
 
 const SortIcon = styled(SimpleSvgIcon)`
+    fill: ${getThemeProp(['colors', 'secondary', 'default'])};
 `
 
 const flip = ({sortDirection = 'asc'} = {}, needIconName = false) => {
@@ -54,7 +56,7 @@ export default class TooltipHeaderCell extends React.PureComponent {
                         <HeaderLink onClick={() => sortCallback(key, flip(sortData))}>{name}</HeaderLink>
                     </LeftFlexSpan>
                     <RightFlexSpan>
-                        {sortData.columnKey === key ? <SortIcon icon={flip(sortData, true)} fill="#2F81B7" /> : null}
+                        {sortData.columnKey === key ? <SortIcon icon={flip(sortData, true)} /> : null}
                     </RightFlexSpan>
                 </FlexDiv>
             </Cell>
@@ -64,13 +66,13 @@ export default class TooltipHeaderCell extends React.PureComponent {
 
 TooltipHeaderCell.propTypes = {
     headerData: PropTypes.shape({
-            name: PropTypes.string,
-            toolTip: PropTypes.string,
-            key: PropTypes.string,
-            width: PropTypes.number,
-            fixed: PropTypes.bool,
-            columnType: PropTypes.symbol
-        }
+        name: PropTypes.string,
+        toolTip: PropTypes.string,
+        key: PropTypes.string,
+        width: PropTypes.number,
+        fixed: PropTypes.bool,
+        columnType: PropTypes.symbol
+    }
     ).isRequired,
     sortData: PropTypes.shape({
         columnKey: PropTypes.string,

@@ -30,7 +30,7 @@ const ListHeader = styled.ul`
     list-style: none;
     margin: 0;
     padding: 12px;
-    background: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
+    background: ${getThemeProp(['colors', 'grayscale', 'lt'], 'lightgray')};
 
     @supports not (display: grid) {
         & > * {
@@ -42,12 +42,12 @@ const ListHeader = styled.ul`
     @supports (display: grid) {
         display: grid;
         grid-template-columns: 1fr${
-            props => Boolean(props.numOfIconButtons) && ` repeat(${props.numOfIconButtons}, 50px)`
-        }${props => props.hasAddButton && ' minmax(auto,140px)'};
+    props => Boolean(props.numOfIconButtons) && ` repeat(${props.numOfIconButtons}, 50px)`
+}${props => props.hasAddButton && ' minmax(auto,140px)'};
         grid-template-rows: 50px;
         grid-template-areas: "title${
-            props => Array(Number(props.numOfIconButtons)).fill(' icon')
-        }${props => props.hasAddButton && ' button'}";
+    props => Array(Number(props.numOfIconButtons)).fill(' icon')
+}${props => props.hasAddButton && ' button'}";
         ${props => (Boolean(props.numOfIconButtons) || props.hasAddButton) && 'grid-column-gap: 3px;'}
 
         .titleAndSubtitle {
@@ -59,7 +59,7 @@ const ListHeader = styled.ul`
                 padding-right: 10px; 
             }
             .subtitle {
-                color: ${getThemeProp(['colors', 'grayscale', 'lt'], 'mediumgray')}
+                color: ${getThemeProp(['colors', 'grayscale', 'md'], 'mediumgray')}
             }
         }
     }
@@ -76,13 +76,13 @@ const ContentHeader = ({
     alignTitle, className, resourceTitle, resourceSubtitle, iconsButtons, hasAddButton, ...additionalProps
 }) =>
     <ListHeader
-        {...pickBy(isNotNil, {
-            className,
-            alignTitle,
-            hasAddButton,
-            hasSubtitle: isNotNil(resourceSubtitle)
-        })}
-        numOfIconButtons={iconsButtons.length}
+      {...pickBy(isNotNil, {
+          className,
+          alignTitle,
+          hasAddButton,
+          hasSubtitle: isNotNil(resourceSubtitle)
+      })}
+      numOfIconButtons={iconsButtons.length}
     >
         <Li className="titleAndSubtitle">
             <h1 className="title">{formatResourceName(resourceTitle)}</h1>
@@ -91,8 +91,8 @@ const ContentHeader = ({
         {iconsButtons.map(iconButton =>
             <Li key={uuid()}>
                 <SimpleSvgIcon
-                    {...pick(['icon', 'onClick'], iconButton)}
-                    fill={getThemeProp(['colors', 'secondary', 'default'])(additionalProps)}
+                  {...pick(['icon', 'onClick'], iconButton)}
+                  fill={getThemeProp(['colors', 'secondary', 'default'])(additionalProps)}
                 />
             </Li>
         )}
@@ -102,7 +102,7 @@ const ContentHeader = ({
                     <Link to={`/${formatRoutePath(resourceTitle)}/new`}>{formatButtonText(resourceTitle)}</Link>
                 </LinkButton>
             </Li>
-        : null}
+            : null}
     </ListHeader>
 
 ContentHeader.propTypes = {
