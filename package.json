@@ -7,8 +7,9 @@
     "node": ">= 8.0.0"
   },
   "scripts": {
-    "storybook": "start-storybook -p 9001 -c .storybook",
-    "storybook-build": "build-storybook -c .storybook -o .storybook-build",
+    "storybook": "NODE_PATH=src start-storybook -p 9001 -c .storybook",
+    "build-storybook": "NODE_PATH=src build-storybook -c .storybook -o .storybook-build",
+    "build-dev": "react-scripts build",
     "prebuild": "npm run clean",
     "build": "BABEL_ENV=production babel src/components --out-dir dist --ignore node_modules/ --copy-files",
     "clean": "node_modules/.bin/rimraf build dist",
@@ -16,7 +17,6 @@
     "predist": "npm run build && npm run copy-manifest",
     "dist": "cd dist && npm publish",
     "precommit-validate": "hooks/lint_js || (echo 'Please fix any of the above-mentioned linting errors before finalizing this commit.' && exit 1)",
-    "build-dev": "react-scripts build",
     "eject": "react-scripts eject",
     "lint": "node_modules/.bin/eslint \"src/**/*.js\"",
     "start": "react-scripts start",
@@ -43,6 +43,7 @@
     "Alex <alex.maskovyak@attainia.com>",
     "Ana <ana.tomboulian@attainia.com>",
     "Jason <jason.rego@attainia.com>",
+    "Jono <jono.mercier@attainia.com>",
     "Glenn <glenn.siegman@attainia.com>",
     "Tim <tim.graf@attainia.com>"
   ],
@@ -81,17 +82,18 @@
     "uuid": "3.1.0"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^3.2.15",
-    "@storybook/addon-info": "^3.2.13",
-    "@storybook/addon-knobs": "^3.2.15",
-    "@storybook/addon-links": "^3.2.15",
-    "@storybook/addon-notes": "^3.2.15",
-    "@storybook/addon-storyshots": "^3.2.15",
-    "@storybook/react": "^3.2.13",
+    "@storybook/addon-actions": "3.2.15",
+    "@storybook/addon-info": "3.2.13",
+    "@storybook/addon-knobs": "3.2.15",
+    "@storybook/addon-links": "3.2.15",
+    "@storybook/addon-notes": "3.2.15",
+    "@storybook/addon-storyshots": "3.2.15",
+    "@storybook/react": "3.2.13",
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
     "babel-plugin-add-module-exports": "0.2.1",
     "babel-plugin-external-helpers": "6.22.0",
+    "babel-plugin-module-resolver": "3.0.0",
     "babel-plugin-ramda": "1.4.3",
     "babel-plugin-syntax-async-functions": "6.13.0",
     "babel-plugin-transform-object-rest-spread": "6.23.0",
@@ -101,9 +103,11 @@
     "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
     "copyfiles": "1.2.0",
-    "eslint": "4.5.0",
+    "eslint": "4.11.0",
     "eslint-config-airbnb": "15.1.0",
     "eslint-config-prettier": "2.6.0",
+    "eslint-import-resolver-babel-alias": "1.5.1",
+    "eslint-import-resolver-node": "0.3.1",
     "eslint-plugin-flowtype": "2.35.0",
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
@@ -114,25 +118,6 @@
     "prettier-eslint-cli": "4.3.2",
     "rimraf": "2.6.1"
   },
-  "babel": {
-    "presets": [
-      "env",
-      "react"
-    ],
-    "plugins": [
-      "add-module-exports",
-      "ramda",
-      "syntax-async-functions",
-      "transform-object-rest-spread",
-      "transform-react-remove-prop-types",
-      [
-        "transform-runtime",
-        {
-          "polyfill": false
-        }
-      ]
-    ]
-  },
   "prettier": {
     "bracketSpacing": false,
     "parser": "babylon",
@@ -142,116 +127,5 @@
     "tabWidth": 4,
     "trailingComma": "none",
     "useTabs": false
-  },
-  "eslintConfig": {
-    "globals": {
-      "document": true,
-      "window": true
-    },
-    "env": {
-      "browser": true,
-      "es6": true,
-      "jest": true,
-      "node": true
-    },
-    "extends": "airbnb",
-    "plugins": [
-      "react"
-    ],
-    "rules": {
-      "arrow-parens": "off",
-      "eol-last": "off",
-      "eqeqeq": [
-        "error",
-        "allow-null"
-      ],
-      "camelcase": "off",
-      "comma-dangle": [
-        "error",
-        "never"
-      ],
-      "indent": "off",
-      "jsx-quotes": [
-        "warn",
-        "prefer-double"
-      ],
-      "linebreak-style": [
-        "error",
-        "unix"
-      ],
-      "max-len": [
-        "error",
-        120,
-        {
-          "ignoreComments": true
-        }
-      ],
-      "new-cap": "error",
-      "newline-before-return": "off",
-      "no-console": "error",
-      "no-eval": "error",
-      "no-trailing-spaces": [
-        "error",
-        {
-          "skipBlankLines": true
-        }
-      ],
-      "no-mixed-spaces-and-tabs": "error",
-      "no-undef": "error",
-      "no-underscore-dangle": "off",
-      "no-unused-vars": "error",
-      "object-curly-spacing": "off",
-      "object-shorthand": [
-        "error",
-        "properties"
-      ],
-      "one-var": "off",
-      "quotes": [
-        "error",
-        "single"
-      ],
-      "react/jsx-filename-extension": "off",
-      "react/jsx-indent": [
-        "error",
-        4
-      ],
-      "react/jsx-indent-props": [
-        "error",
-        4
-      ],
-      "react/no-set-state": "error",
-      "react/jsx-closing-bracket-location": "error",
-      "react/jsx-closing-tag-location": "error",
-      "react/jsx-equals-spacing": [
-        "error",
-        "never"
-      ],
-      "react/jsx-first-prop-new-line": [
-        "error",
-        "multiline"
-      ],
-      "react/jsx-no-duplicate-props": "error",
-      "react/jsx-pascal-case": "error",
-      "react/jsx-wrap-multilines": "off",
-      "react/require-default-props": "off",
-      "semi-spacing": "error",
-      "semi": [
-        "error",
-        "never"
-      ],
-      "space-before-function-paren": [
-        "error",
-        {
-          "anonymous": "never",
-          "named": "never",
-          "asyncArrow": "always"
-        }
-      ],
-      "space-before-blocks": [
-        "error",
-        "always"
-      ],
-      "space-infix-ops": "error"
-    }
   }
 }

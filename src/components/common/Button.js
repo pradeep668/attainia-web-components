@@ -4,22 +4,22 @@ import {getThemeProp, getProp} from './helpers'
 
 const Button = styled.button`
     background-color: ${
-        props => getThemeProp(['colors', 'status', props.status])(props) ||
+    props => getThemeProp(['colors', 'status', props.status])(props) ||
         props.styles.backgroundColor ||
         getThemeProp(['colors', 'primary', 'default'], 'crimson')(props)
-    };
+};
     color: ${
-        props => props.styles.color ||
+    props => props.styles.color ||
         getThemeProp(['colors', 'grayscale', 'white'], 'white')(props)
-    };
+};
     ${props => props.disabled && 'background-color: grey;'}
     cursor: pointer;
     border: none;
     border-radius: 5px;
     font-family: ${getThemeProp(['fonts', 'fontFamily'], 'Arial')};
     font-size: ${
-        props => props.styles.fontSize || '15px'
-    };
+    props => props.styles.fontSize || '15px'
+};
     font-weight: 700;
     padding: ${getProp(['styles', 'padding'], '18px 0')};
     text-align: center;

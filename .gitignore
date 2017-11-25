@@ -5,10 +5,4 @@ package-lock.json
 *.log
 /build/
 /dist/
-
-# Mac files
-.DS_Store
-
-.out/
 .storybook-build/
-.vscode/

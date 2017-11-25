@@ -1,6 +1,6 @@
-import '../src/globals'
+import '@globals'
 
 // Import stories for individual components
-import './common/buttonStories'
-import './common/buttonlinkStories'
-import './data-table/dataTableStories'
+import './common/Button.story'
+import './common/ButtonLink.story'
+import './data-table/DataTable.story'

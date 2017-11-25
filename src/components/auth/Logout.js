@@ -4,7 +4,7 @@ import {Button, ButtonLink} from '../common'
 
 const Logout = ({tryLogout, asLink}) => (
     asLink ? <ButtonLink onClick={tryLogout}>Logout</ButtonLink>
-    : <Button onClick={tryLogout} type="button">Logout</Button>
+        : <Button onClick={tryLogout} type="button">Logout</Button>
 )
 
 Logout.propTypes = {
