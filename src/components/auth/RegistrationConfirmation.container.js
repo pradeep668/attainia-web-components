@@ -2,29 +2,29 @@ import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import {graphql} from 'react-apollo'
 
-import Registration from './Registration'
+import RegistrationConfirmation from './RegistrationConfirmation'
 import validators from './validators'
-import {REGISTER_USER} from './mutations'
+import {CONFIRM_USER_REGISTRATION} from './mutations'
 import ducks from './ducks'
 
-const {userRegistration: {validate}} = validators
+const {userRegistrationConfirmation: {validate}} = validators
 const {creators: {handleError, register}} = ducks
 
 const FormedRegistration = reduxForm({
     validate,
-    fields: ['email', 'name'],
-    form: 'RegistrationForm'
-})(Registration)
+    fields: ['password', 'confirm'],
+    form: 'ConfirmUserRegistrationForm'
+})(RegistrationConfirmation)
 
-const RegistrationWithData = graphql(REGISTER_USER, {
+const RegistrationWithData = graphql(CONFIRM_USER_REGISTRATION, {
     props: ({ownProps, mutate}) => ({
-        async tryRegister(user) {
+        async tryConfirmRegistration(user) {
             try {
-                const {data: {error, registerUser}} = await mutate({variables: user})
+                const {data: {error, confirmUserRegistration}} = await mutate({variables: user})
                 if (error) {
                     throw new Error(error)
                 }
-                if (registerUser) ownProps.register(user)
+                if (confirmUserRegistration) ownProps.confirmRegistration(user)
             } catch (err) {
                 ownProps.handleError(err)
             }

@@ -17,6 +17,8 @@ import Refresher from './Refresher'
 import RefresherContainer from './Refresher.container'
 import RegistrationContainer from './Registration.container'
 import Registration from './Registration'
+import RegistrationConfirmationContainer from './RegistrationConfirmation.container'
+import RegistrationConfirmation from './RegistrationConfirmation'
 import RegisterApplicationContainer from './RegisterApplication.container'
 import RegisterApplication from './RegisterApplication'
 import TokenInfo from './TokenInfo'
@@ -51,6 +53,8 @@ export {
     RefresherContainer,
     RegistrationContainer,
     Registration,
+    RegistrationConfirmation,
+    RegistrationConfirmationContainer,
     RegisterApplicationContainer,
     RegisterApplication,
     TokenInfo,

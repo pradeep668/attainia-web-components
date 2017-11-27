@@ -51,7 +51,12 @@ export const REGISTER_APP = gql`
     }
 `
 export const REGISTER_USER = gql`
-    mutation registerUser($email: String!, $password: String!, $name: String!) {
-        registerUser(email: $email, password: $password, name: $name)
+    mutation registerUser($email: String!, $name: String!) {
+        registerUser(email: $email, name: $name)
+    }
+`
+export const CONFIRM_USER_REGISTRATION = gql`
+    mutation confirmUserRegistration($email: String!, $name: String!) {
+        confirmUserRegistration(email: $email, name: $name)
     }
 `
