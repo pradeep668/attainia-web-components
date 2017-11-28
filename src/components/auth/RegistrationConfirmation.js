@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import Link from 'react-router-dom/Link'
-import {Button, LinkButton, Form, SimpleSvgIcon, ReduxFormField} from '../common'
+import {Button, Form, SimpleSvgIcon, ReduxFormField} from '../common'
 import {getThemeProp} from '../common/helpers'
 
 const StyledForm = styled(Form)`
@@ -23,8 +22,8 @@ const StyledForm = styled(Form)`
         .registrationButton,
         .attainiaLogo,
         .instructions,
-        .name,
-        .email,
+        .password,
+        .confirm,
         .cancelButton {
             max-width: 50em;
             margin: 0 auto;
@@ -35,22 +34,22 @@ const StyledForm = styled(Form)`
         @media ${getThemeProp(['breakpoints', 'tablet'], 'screen and (min-width: 768px)')} {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            grid-template-areas: 'header header' 'instructions instructions' 'name name' 'email email' 'save cancel';
+            grid-template-areas: 'header header' 'inst inst' 'pass pass' 'confirm confirm' 'save save';
 
             & .attainiaLogo {
                 grid-area: header;
             }
 
             & .instructions {
-                grid-area: instructions;
+                grid-area: inst;
             }
 
-            & .name {
-                grid-area: name;
+            & .password {
+                grid-area: pass;
             }
 
-            & .email {
-                grid-area: email;
+            & .confirm {
+                grid-area: confirm;
             }
 
             & .registrationButton {
@@ -63,26 +62,25 @@ const StyledForm = styled(Form)`
         }
     }
 `
-const Registration = ({handleSubmit, tryRegister, formCaption, registerLabel}) =>
-    <StyledForm onSubmit={handleSubmit(tryRegister)}>
+const RegistrationConfirmation = ({handleSubmit, tryConfirmRegistration, formCaption, registerLabel}) =>
+    <StyledForm onSubmit={handleSubmit(tryConfirmRegistration)}>
         <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="primary" />
         <p className="instructions">{formCaption}</p>
-        <ReduxFormField className="name" placeholder="name" name="name" />
-        <ReduxFormField className="email" placeholder="email" name="email" type="email" />
+        <ReduxFormField className="password" placeholder="password" type="password" name="password" />
+        <ReduxFormField className="confirm" placeholder="confirm password" type="password" name="confirm" />
         <Button className="registrationButton" type="submit">{registerLabel}</Button>
-        <LinkButton className="cancelButton"><Link to="/">Cancel</Link></LinkButton>
     </StyledForm>
 
-Registration.propTypes = {
+RegistrationConfirmation.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    tryRegister: PropTypes.func.isRequired,
+    tryConfirmRegistration: PropTypes.func.isRequired,
     registerLabel: PropTypes.string.isRequired,
     formCaption: PropTypes.string
 }
 
-Registration.defaultProps = {
+RegistrationConfirmation.defaultProps = {
     registerLabel: 'Register',
-    formCaption: 'New User Registration'
+    formCaption: 'Registration Confirmation'
 }
 
-export default Registration
+export default RegistrationConfirmation
