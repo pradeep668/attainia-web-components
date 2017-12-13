@@ -10,5 +10,5 @@ export default styled.div`
     }
 
     align-items: center;
-    min-height: 100vh;
+    height: 100%;
 `

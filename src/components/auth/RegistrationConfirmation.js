@@ -55,10 +55,6 @@ const StyledForm = styled(Form)`
             & .registrationButton {
                 grid-area: save;
             }
-
-            & .cancelButton {
-                grid-area: cancel;
-            }
         }
     }
 `
@@ -66,8 +62,20 @@ const RegistrationConfirmation = ({handleSubmit, tryConfirmRegistration, formCap
     <StyledForm onSubmit={handleSubmit(tryConfirmRegistration)}>
         <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="primary" />
         <p className="instructions">{formCaption}</p>
-        <ReduxFormField className="password" placeholder="password" type="password" name="password" />
-        <ReduxFormField className="confirm" placeholder="confirm password" type="password" name="confirm" />
+        <ReduxFormField
+          id="RegistrationConfirmationForm-password"
+          className="password"
+          placeholder="password"
+          type="password"
+          name="password"
+        />
+        <ReduxFormField
+          id="RegistrationConfirmationForm-confirm"
+          className="confirm"
+          placeholder="confirm password"
+          type="password"
+          name="confirm"
+        />
         <Button className="registrationButton" type="submit">{registerLabel}</Button>
     </StyledForm>
 

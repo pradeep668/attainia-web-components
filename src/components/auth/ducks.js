@@ -138,7 +138,8 @@ export default new Duck({
                     ...state,
                     user: {
                         ...state.user,
-                        ...(action.jwt || {})
+                        ...(action.jwt || {}),
+                        id: path(['jwt', 'sub'], action) || state.user.id
                     }
                 }
             case types.LOADING_FINISHED:

@@ -67,8 +67,19 @@ const Registration = ({handleSubmit, tryRegister, formCaption, registerLabel}) =
     <StyledForm onSubmit={handleSubmit(tryRegister)}>
         <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="primary" />
         <p className="instructions">{formCaption}</p>
-        <ReduxFormField className="name" placeholder="name" name="name" />
-        <ReduxFormField className="email" placeholder="email" name="email" type="email" />
+        <ReduxFormField
+          id="RegistrationForm-name"
+          className="name"
+          placeholder="name"
+          name="name"
+        />
+        <ReduxFormField
+          id="RegistrationForm-email"
+          className="email"
+          placeholder="email"
+          name="email"
+          type="email"
+        />
         <Button className="registrationButton" type="submit">{registerLabel}</Button>
         <LinkButton className="cancelButton"><Link to="/">Cancel</Link></LinkButton>
     </StyledForm>

@@ -1,7 +1,3 @@
-/* Not sure when eslint-plugin-react will fix their issue https://github.com/yannickcr/eslint/eslint-plugin-react/issues/1187 */
-/* eslint "react/jsx-indent-props": "off" */
-
-import uuid from 'uuid/v4'
 import {pickBy} from 'ramda'
 import {isNotNil} from 'ramda-adjunct'
 
@@ -27,7 +23,7 @@ const FormField = ({
         {isNotNil(label) && !isCheck(type) && <label htmlFor={id}>{label}</label>}
         <InputField {...pickBy(isNotNil, {id, value, checked, type, placeholder, name, ...input, ...handlers})} />
         {isNotNil(label) && isCheck(type) &&
-            <CheckboxLabel htmlFor={id} onClick={handlers.onChange}>{label}</CheckboxLabel>
+            <CheckboxLabel onClick={handlers.onChange}>{label}</CheckboxLabel>
         }
         {touched && error && <FieldError>{error}</FieldError>}
     </FieldWrapper>
@@ -59,7 +55,7 @@ FormField.propTypes = {
     ]),
     label: PropTypes.string,
     name: PropTypes.string,
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     checked: PropTypes.bool,
     placeholder: PropTypes.string,
     type: PropTypes.string,
@@ -74,7 +70,6 @@ FormField.defaultProps = {
     meta: {},
     handlers: {},
     input: {},
-    id: uuid(),
     className: ''
 }
 
