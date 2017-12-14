@@ -1,4 +1,19 @@
 import uuid from 'uuid/v4'
+import {
+    both,
+    complement,
+    compose,
+    curry,
+    defaultTo,
+    equals,
+    inc,
+    isEmpty,
+    is,
+    length,
+    not,
+    path,
+    prop
+} from 'ramda'
 
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
@@ -10,6 +25,7 @@ import color from 'color'
 
 import ColumnType from './ColumnType'
 import Button from '../common/Button'
+import {Conditional} from '../common/Conditional'
 import TooltipHeaderCell from './TooltipHeaderCell'
 import NumberTooltipHeaderCell from './NumberTooltipHeaderCell'
 import TextCell from './TextCell'
@@ -20,6 +36,17 @@ import ImageCell from './ImageCell'
 import IconLinkCell from './IconLinkCell'
 import {getThemeProp} from '../common/helpers'
 
+
+const isNotEmpty = complement(isEmpty)
+const countThe = curry((propPath, data) =>
+    compose(length, defaultTo([]), path(propPath))(data)
+)
+const countRows = countThe(['rows'])
+const hasRows = compose(Boolean, countRows)
+const isDisabled = both(
+    compose(is(Number), prop('page')),
+    equals(countThe(['pageData', 'totalPages']), prop('page'))
+)
 
 const StyledTable = styled(Table)`
     .fixedDataTableCellLayout_wrap1 {
@@ -83,17 +110,24 @@ const LoadMoreButton = styled(Button)`
     }
 `
 
-const RenderColumns = (headers, data, sortData, getSortedData) => (
-    headers.map((header) => {
-        switch (header.columnType) {
+const RenderColumns = (headers, data, getSortedData) =>
+    headers.map((header = {}) => {
+        const {columnType, key, width, fixed} = header
+        switch (columnType) {
             case ColumnType.TEXT: {
                 return <Column
                   key={uuid()}
-                  header={<TooltipHeaderCell headerData={header} sortData={sortData} sortCallback={getSortedData} />}
-                  columnKey={header.key}
-                  cell={({rowIndex, columnKey}) => (<TextCell cellData={data.rows[rowIndex][columnKey]} />)}
-                  width={header.width}
-                  fixed={header.fixed}
+                  header={
+                      <TooltipHeaderCell
+                        headerData={header}
+                        sortData={data.sortData}
+                        sortCallback={getSortedData}
+                      />
+                  }
+                  columnKey={key}
+                  cell={({rowIndex, columnKey}) => (<TextCell cellData={path(['rows', rowIndex, columnKey], data)} />)}
+                  width={width}
+                  fixed={fixed}
                 />
             }
             case ColumnType.NUMBER: {
@@ -102,58 +136,84 @@ const RenderColumns = (headers, data, sortData, getSortedData) => (
                   header={
                       <NumberTooltipHeaderCell
                         headerData={header}
-                        sortData={sortData}
+                        sortData={data.sortData}
                         sortCallback={getSortedData}
                       />
                   }
-                  columnKey={header.key}
-                  cell={({rowIndex, columnKey}) => (<NumberCell cellData={data.rows[rowIndex][columnKey]} />)}
-                  width={header.width}
-                  fixed={header.fixed}
+                  columnKey={key}
+                  cell={({rowIndex, columnKey}) => <NumberCell cellData={path(['rows', rowIndex, columnKey], data)} />}
+                  width={width}
+                  fixed={fixed}
                 />
             }
             case ColumnType.LINK: {
                 return <Column
                   key={uuid()}
-                  header={<TooltipHeaderCell headerData={header} sortData={sortData} sortCallback={getSortedData} />}
-                  columnKey={header.key}
-                  cell={({rowIndex, columnKey}) => (<LinkCell cellData={data.rows[rowIndex][columnKey]} />)}
-                  width={header.width}
-                  fixed={header.fixed}
+                  header={
+                      <TooltipHeaderCell
+                        headerData={header}
+                        sortData={data.sortData}
+                        sortCallback={getSortedData}
+                      />
+                  }
+                  columnKey={key}
+                  cell={({rowIndex, columnKey}) => (<LinkCell cellData={path(['rows', rowIndex, columnKey], data)} />)}
+                  width={width}
+                  fixed={fixed}
                 />
             }
             case ColumnType.IMAGE: {
                 return <Column
                   key={uuid()}
-                  header={<TooltipHeaderCell headerData={header} sortData={sortData} sortCallback={getSortedData} />}
-                  columnKey={header.key}
-                  cell={({rowIndex, columnKey}) => (<ImageCell cellData={data.rows[rowIndex][columnKey]} />)}
-                  width={header.width}
-                  fixed={header.fixed}
+                  header={
+                      <TooltipHeaderCell
+                        headerData={header}
+                        sortData={data.sortData}
+                        sortCallback={getSortedData}
+                      />
+                  }
+                  columnKey={key}
+                  cell={({rowIndex, columnKey}) => (<ImageCell cellData={path(['rows', rowIndex, columnKey], data)} />)}
+                  width={width}
+                  fixed={fixed}
                 />
             }
             case ColumnType.ICON_LINK: {
                 return <Column
                   key={uuid()}
-                  header={<TooltipHeaderCell headerData={header} sortData={sortData} sortCallback={getSortedData} />}
-                  columnKey={header.key}
-                  cell={({rowIndex, columnKey}) => (<IconLinkCell cellData={data.rows[rowIndex][columnKey]} />)}
-                  width={header.width}
-                  fixed={header.fixed}
+                  header={
+                      <TooltipHeaderCell
+                        headerData={header}
+                        sortData={data.sortData}
+                        sortCallback={getSortedData}
+                      />
+                  }
+                  columnKey={key}
+                  cell={({rowIndex, columnKey}) =>
+                      <IconLinkCell cellData={path(['rows', rowIndex, columnKey], data)} />
+                  }
+                  width={width}
+                  fixed={fixed}
                 />
             }
             case ColumnType.INFO_TEXT: {
                 return <Column
                   key={uuid()}
-                  header={<TooltipHeaderCell headerData={header} sortData={sortData} sortCallback={getSortedData} />}
-                  columnKey={header.key}
+                  header={
+                      <TooltipHeaderCell
+                        headerData={header}
+                        sortData={data.sortData}
+                        sortCallback={getSortedData}
+                      />
+                  }
+                  columnKey={key}
                   cell={({rowIndex, columnKey}) => (
                       <InfoIconToolTipTextCell
-                        cellData={data.rows[rowIndex][columnKey]}
+                        cellData={path(['rows', rowIndex, columnKey], data)}
                       />
                   )}
-                  width={header.width}
-                  fixed={header.fixed}
+                  width={width}
+                  fixed={fixed}
                 />
             }
             // no default
@@ -161,53 +221,22 @@ const RenderColumns = (headers, data, sortData, getSortedData) => (
 
         return <Column
           key={uuid()}
-          header={<TooltipHeaderCell data={header} sortData={sortData} sortCallback={getSortedData} />}
-          columnKey={header.key}
+          header={
+              <TooltipHeaderCell
+                data={header}
+                sortData={data.sortData}
+                sortCallback={getSortedData}
+              />
+          }
+          columnKey={key}
           cell={<TextCell data={data} />}
-          width={header.width}
-          fixed={header.fixed}
+          width={width}
+          fixed={fixed}
         />
     })
-)
-
-const RenderCheckColumn = (hasCheckColumn, rowSelected, data) => {
-    let checkColumn
-
-    const handleCheck = (index) => {
-        const selected = (typeof data === 'undefined') ? false : !data.rows[index].selected
-        rowSelected(index, selected)
-    }
-
-    const isChecked = (index) => {
-        const checked = (typeof data === 'undefined') ? false : data.rows[index].selected
-        return checked
-    }
-
-    if (hasCheckColumn) {
-        checkColumn = (
-            <Column
-              header={<Cell />}
-              cell={({rowIndex}) => (
-                  <Cell>
-                      <input
-                        type="checkbox"
-                        onChange={() => handleCheck(rowIndex)}
-                        checked={isChecked(rowIndex)}
-                      />
-                  </Cell>
-              )}
-              width={35}
-              fixed
-            />
-        )
-    }
-
-    return checkColumn
-}
-
-const handleNextPage = (pageData, pageCallBack) => {
-    pageCallBack(pageData.page + 1)
-}
+const isChecked = index => compose(Boolean, path([index, 'selected']))
+const getSelectedValue = index => compose(not, defaultTo(true), path([index, 'selected']))
+const incrementPage = compose(inc, Number, path(['pageData', 'page']))
 
 const DataTable = ({
     rowHeight,
@@ -221,29 +250,44 @@ const DataTable = ({
     headers,
     data
 }) =>
-    <div>
-        <TableHeader>{data.rows.length} total</TableHeader>
+    <Conditional condition={isNotEmpty(data) && hasRows(data)}>
+        <TableHeader>{countRows(data)} total</TableHeader>
         <StyledTable
-          rowsCount={data.rows.length}
+          rowsCount={countRows(data)}
           rowHeight={rowHeight}
           width={tableWidth}
           height={tableHeight}
           headerHeight={headerHeight}
         >
-            {RenderCheckColumn(hasCheckColumn, rowSelected, data)}
-            {RenderColumns(headers, data, data.sortData, getSortedData)}
+            {hasCheckColumn ?
+                <Column
+                  header={<Cell />}
+                  cell={({rowIndex}) => (
+                      <Cell>
+                          <input
+                            type="checkbox"
+                            onChange={() => rowSelected(rowIndex, getSelectedValue(rowIndex)(data.rows))}
+                            checked={isChecked(rowIndex)(data.rows)}
+                          />
+                      </Cell>
+                  )}
+                  width={35}
+                  fixed
+                /> : null
+            }
+            {isNotEmpty(headers) ? RenderColumns(headers, data, getSortedData) : null}
         </StyledTable>
         <ReactTooltip place="top" id="header-tooltip" effect="solid" />
         <ReactTooltip place="top" id="cell-tooltip" effect="solid" />
         <TableFooter>
             <LoadMoreButton
-              onClick={() => handleNextPage(data.pageData, getNextPage)}
-              disabled={data.pageData.totalPages === data.pageData.page}
+              onClick={() => getNextPage(incrementPage(data))}
+              disabled={isDisabled(data)}
             >
                 Load More
             </LoadMoreButton>
         </TableFooter>
-    </div>
+    </Conditional>
 
 DataTable.displayName = 'DataTable'
 DataTable.propTypes = {

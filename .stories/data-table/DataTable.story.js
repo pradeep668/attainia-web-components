@@ -268,3 +268,20 @@ storiesOf('DataTable', module)
             />
         )
     )
+    .add('Gracefully handles empty data sets',
+        withInfo('A DataTable without rows, sortData or pageData.')(() =>
+            <DataTable
+              rowHeight={50}
+              tableWidth={1253}
+              tableHeight={500}
+              headerHeight={50}
+              hasCheckColumn={false}
+              getNextPage={action('nextPage')}
+              rowSelected={action('selectRow')}
+              getSortedData={action('sortData')}
+              headers={getMockHeadersFirstFixed()}
+              data={{}}
+            />
+        )
+    )
+
