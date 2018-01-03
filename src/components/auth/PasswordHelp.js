@@ -2,15 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import Button from '../common/Button'
-import Form from '../common/Form'
-import SimpleSvgIcon from '../common/SimpleSvgIcon'
-import ReduxFormField from '../common/ReduxFormField'
-import {breakpoints, forms} from '../common/constants'
+import Link from 'react-router-dom/Link'
+import {Button, LinkButton, Form, SimpleSvgIcon, ReduxFormField} from '../common'
+import {getThemeProp} from '../common/helpers'
 
 const StyledForm = styled(Form)`
     & > * {
-        margin: ${forms.formItemMargin}
+        margin: ${getThemeProp(['forms', 'formItemMargin'], '5px')};
     }
 
     & .attainiaLogo {
@@ -25,7 +23,7 @@ const StyledForm = styled(Form)`
     }
 
     @supports (display: grid) {
-        @media ${breakpoints.desktop} {
+        @media ${getThemeProp(['breakpoints', 'tablet'], 'screen and (min-width: 768px)')} {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-areas:
@@ -52,17 +50,23 @@ const StyledForm = styled(Form)`
         }
     }
 `
-const PasswordHelp = ({handleSubmit, tryPasswordHelp, email, cancel}) =>
+const PasswordHelp = ({handleSubmit, tryPasswordHelp, email}) =>
     <StyledForm className="passwordHelpForm" onSubmit={handleSubmit(tryPasswordHelp)}>
-        <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="attainia_logo" />
-        <ReduxFormField className="email" placeholder="email" name="email" type="email" value={email} />
+        <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="primary" />
+        <ReduxFormField
+          id="PasswordHelpForm-email"
+          className="email"
+          placeholder="email"
+          name="email"
+          type="email"
+          value={email}
+        />
         <Button className="passwordHelpButton" type="submit">Reset Password</Button>
-        <Button className="cancelButton" type="button" onClick={cancel}>Cancel</Button>
+        <LinkButton className="cancelButton"><Link to="/">Cancel</Link></LinkButton>
     </StyledForm>
 
 PasswordHelp.propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-    cancel: PropTypes.func.isRequired,
     tryPasswordHelp: PropTypes.func.isRequired,
     email: PropTypes.string
 }

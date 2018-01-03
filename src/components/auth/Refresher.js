@@ -2,19 +2,16 @@ import {Component} from 'react'
 import PropTypes from 'prop-types'
 
 class Refresher extends Component {
-    componentWillMount() {
-        const {tryRefresh, refreshInMs, token, refresh} = this.props
-        refresh(setTimeout(() => token && refreshInMs && tryRefresh(token), refreshInMs))
+    componentDidMount() {
+        if (this.props.token) {
+            this.props.queueNextRefresh(this.props)
+        }
     }
 
     componentWillUpdate(nextProps) {
-        const {tryRefresh, refresh} = this.props
-        const {refreshInMs, token} = nextProps
-        refresh(setTimeout(() => token && refreshInMs && tryRefresh(token), refreshInMs))
-    }
-
-    componentWillUnmount() {
-        this.props.clearRefresh()
+        if (nextProps.token && nextProps.token !== this.props.token) {
+            this.props.queueNextRefresh(nextProps)
+        }
     }
 
     render() {
@@ -24,15 +21,8 @@ class Refresher extends Component {
 
 Refresher.propTypes = {
     children: PropTypes.node,
-    clearRefresh: PropTypes.func,
-    refresh: PropTypes.func,
-    refreshInMs: PropTypes.number,
     token: PropTypes.string,
-    tryRefresh: PropTypes.func
-}
-
-Refresher.defaultProps = {
-    refreshInMs: 3600
+    queueNextRefresh: PropTypes.func.isRequired
 }
 
 export default Refresher

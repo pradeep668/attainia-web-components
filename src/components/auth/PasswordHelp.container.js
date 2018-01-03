@@ -1,37 +1,16 @@
-import {path} from 'ramda'
 import {connect} from 'react-redux'
 import {reduxForm} from 'redux-form'
 import {graphql} from 'react-apollo'
-import Validator from 'validatorjs'
 
 import PasswordHelp from './PasswordHelp'
-import {handleError, cancel, passwordHelp} from './actions'
-import constants from './constants'
+import validators from './validators'
 import {PASSWORD_RESET} from './mutations'
+import ducks from './ducks'
 
-const {passwordHelp: {rules, messages}} = constants
-
-const validate = (values) => {
-    const validator = new Validator(values, rules, messages)
-    validator.passes()
-    return validator.errors.all()
-}
-
-const mapStateToProps = store => ({
-    email: path(['auth', 'user', 'email'], store)
-})
-
-const mapDispatchToProps = dispatch => ({
-    cancel() {
-        return dispatch(cancel())
-    },
-    handleError(error) {
-        return dispatch(handleError(error))
-    },
-    passwordHelp(user) {
-        return dispatch(passwordHelp(user))
-    }
-})
+const {passwordHelp: {validate}} = validators
+const {selectors, creators: {handleError, passwordHelp}} = ducks
+const mapStateToProps = state => ({email: selectors.email(state)})
+const mapDispatchToProps = {handleError, passwordHelp}
 
 const FormedPasswordHelp = reduxForm({
     validate,
@@ -56,7 +35,4 @@ const PasswordHelpWithData = graphql(PASSWORD_RESET, {
     })
 })(FormedPasswordHelp)
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(PasswordHelpWithData)
+export default connect(mapStateToProps, mapDispatchToProps)(PasswordHelpWithData)

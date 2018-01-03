@@ -1,7 +1,7 @@
 import Button from './Button'
+import ButtonLink from './ButtonLink'
 import CheckboxLabel from './CheckboxLabel'
 import {renderConditional, Conditional} from './Conditional'
-import {DataTable, ColumnType} from './DataTable'
 import ErrorMessage from './ErrorMessage'
 import FieldError from './FieldError'
 import Form from './Form'
@@ -9,15 +9,18 @@ import FormField from './FormField'
 import InputField from './InputField'
 import Link from './Link'
 import LinkButton from './LinkButton'
-import SimpleSvgIcon from './SimpleSvgIcon'
 import ReduxFormField from './ReduxFormField'
+import SimpleSvgIcon from './SimpleSvgIcon'
+import SpinningButton from './SpinningButton'
+import TwoColorSvgIcon from './TwoColorSvgIcon'
 
-export default {
+export * from './helpers'
+
+export {
     Button,
+    ButtonLink,
     CheckboxLabel,
     Conditional,
-    ColumnType,
-    DataTable,
     ErrorMessage,
     FieldError,
     Form,
@@ -25,7 +28,9 @@ export default {
     InputField,
     Link,
     LinkButton,
-    SimpleSvgIcon,
     ReduxFormField,
+    SimpleSvgIcon,
+    SpinningButton,
+    TwoColorSvgIcon,
     renderConditional
 }

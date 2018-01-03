@@ -1,9 +1,10 @@
+/* eslint "jsx-a11y/label-has-for": "off" */
 import {pickBy} from 'ramda'
 import {isNotNil} from 'ramda-adjunct'
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import {colors} from './constants'
+import {getThemeProp} from './helpers'
 
 const Span = ({className, children}) =>
     <span className={className}>{children}</span>
@@ -16,15 +17,14 @@ Span.propTypes = {
     className: PropTypes.string.isRequired
 }
 
-const Label = ({className, children, htmlFor, onClick}) =>
-    <label htmlFor={htmlFor} className={className} {...pickBy(isNotNil, {onClick})}>
+const Label = ({className, children, onClick}) =>
+    <label className={className} {...pickBy(isNotNil, {onClick})}>
         <StyledSpan>{children}</StyledSpan>
     </label>
 
 Label.propTypes = {
     children: PropTypes.node,
     className: PropTypes.string.isRequired,
-    htmlFor: PropTypes.string.isRequired,
     onClick: PropTypes.func
 }
 
@@ -47,7 +47,7 @@ const CheckboxLabel = styled(Label)`
         position: absolute;
         top: 4px;
         left: 4px;
-        border: 3px solid ${colors.rossoCorsa};
+        border: 3px solid ${getThemeProp(['colors', 'primary', 'default'], 'crimson')};
         border-top: none;
         border-right: none;
         background: transparent;
@@ -59,10 +59,5 @@ const CheckboxLabel = styled(Label)`
         opacity: 0.4;
     }
 `
-
-CheckboxLabel.propTypes = {
-    children: PropTypes.node,
-    htmlFor: PropTypes.string.isRequired
-}
 
 export default CheckboxLabel

@@ -1,4 +1,3 @@
-import auth from './components/auth/initialState'
-import resources from './components/resources/initialState'
+import authDucks from './components/auth/ducks'
 
-export default {auth, resources}
+export default {auth: authDucks.initialState}

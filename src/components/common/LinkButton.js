@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 import Button from './Button'
+import {getThemeProp} from './helpers'
 
 export default styled(Button)`
     & > a {
         text-decoration: none;
-        color: white;
+        color: ${getThemeProp(['colors', 'grayscale', 'white'], 'white')};
+        font-size: ${getThemeProp(['fonts', 'fontSize'], '12px')};
     }
 `

@@ -1,34 +1,36 @@
-import {pickBy} from 'ramda'
+import {path, pickBy} from 'ramda'
 import {isNotEmpty, isNotNil} from 'ramda-adjunct'
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
+import styled, {withTheme} from 'styled-components'
 import uuid from 'uuid/v4'
-import {colors} from './constants'
 import {Conditional} from './Conditional'
-import icons from './icons.json'
+import {getThemeProp} from './helpers'
 
 const Svg = styled.svg`display: block;`
 
 const SimpleSvgIcon = props => {
     const {icon, width, height, viewBox, fill, ...svgProps} = props
-    const {paths, transform, ...iconProps} = icons[icon] || {paths: []}
-
+    const parsedIcon = getThemeProp(['icons', icon])(props)
+    const {paths, transform, ...iconProps} = parsedIcon || {paths: []}
+    
     return (
         <Conditional condition={isNotNil(paths) && isNotEmpty(paths)}>
             <Svg
-                width={width || iconProps.width}
-                height={height || iconProps.height}
-                {...pickBy(isNotNil, {
-                    viewBox: viewBox || iconProps.viewBox
-                })}
-                {...svgProps}
+              width={width || iconProps.width}
+              height={height || iconProps.height}
+              {...pickBy(isNotNil, {
+                  viewBox: viewBox || iconProps.viewBox
+              })}
+              {...svgProps}
             >
                 <g
-                    {...pickBy(isNotNil, {
-                        transform,
-                        fill: props.fill || iconProps.fill
-                    })}
+                  {...pickBy(isNotNil, {
+                      transform,
+                      fill: props.fill
+                            || iconProps.fill
+                            || getThemeProp(['colors', 'primary', 'default'], 'crimson')(props)
+                  })}
                 >
                     {paths.map(d => <path key={uuid()} d={d} />)}
                 </g>
@@ -42,12 +44,20 @@ SimpleSvgIcon.propTypes = {
     viewBox: PropTypes.string,
     icon: PropTypes.string.isRequired,
     height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    theme: PropTypes.shape({
+        icons: PropTypes.shape({
+            paths: PropTypes.arrayOf(PropTypes.string),
+            transform: PropTypes.string,
+            height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+            width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+            viewBox: PropTypes.string
+        })
+    })
 }
 
 SimpleSvgIcon.defaultProps = {
-    icon: '',
-    fill: colors.rossoCorsa
+    icon: ''
 }
 
-export default SimpleSvgIcon
+export default withTheme(SimpleSvgIcon)

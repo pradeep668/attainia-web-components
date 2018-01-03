@@ -1,4 +1,3 @@
-import auth from './components/auth/types'
-import resources from './components/resources/types'
+import authDucks from './components/auth/ducks'
 
-export default {auth, resources}
+export default {auth: authDucks.types}

@@ -1,17 +1,18 @@
-import {path} from 'ramda'
+import React from 'react'
+import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {withApollo} from 'react-apollo'
+import {withApollo, compose} from 'react-apollo'
 
+import {withStatics} from '../common/helpers'
 import AuthStatus from './AuthStatus'
-import {handleError, logout} from './actions'
 import IS_LOGGED_OUT from './subscriptions'
+import ducks from './ducks'
 
-const mapStateToProps = state => ({
-    token: path(['auth', 'user', 'token', 'access_token'], state)
-})
-
+const {selectors, creators: {handleError, logout}} = ducks
+const mapStateToProps = state => ({token: selectors.token(state)})
+const mapDispatchToProps = {handleError, logout}
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-    children: ownProps.children,
+    ...ownProps,
     startSubscription() {
         return ownProps.client.subscribe({
             query: IS_LOGGED_OUT,
@@ -28,10 +29,22 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
     }
 })
 
-const withReduxData = connect(
-    mapStateToProps,
-    {handleError, logout},
-    mergeProps
-)(AuthStatus)
+const withReduxConnect = () => connect(mapStateToProps, mapDispatchToProps, mergeProps)
 
-export default withApollo(withReduxData)
+export const withAuthStatusSubscription = (DecoratedComponent) => {
+    const WithAuthStatus = ({startSubscription, ...passThroughProps}) =>
+        <AuthStatus startSubscription={startSubscription}>
+            <DecoratedComponent {...passThroughProps} />
+        </AuthStatus>
+
+    WithAuthStatus.propTypes = {
+        startSubscription: PropTypes.func
+    }
+
+    return withStatics(
+        compose(withApollo, withReduxConnect())(WithAuthStatus),
+        DecoratedComponent
+    )
+}
+
+export default compose(withApollo, withReduxConnect())(AuthStatus)

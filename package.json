@@ -1,24 +1,24 @@
 {
   "name": "attainia-web-components",
-  "version": "0.1.28",
+  "version": "0.3.7",
   "description": "A collection of Attainia branded web components to be used in an Attainia React.js web application.",
   "main": "index.js",
   "engines": {
-    "node": ">=6"
+    "node": ">= 8.0.0"
   },
   "scripts": {
-    "babel": "BABEL_ENV=production babel src --out-dir ./ --ignore node_modules/ --copy-files",
+    "storybook": "NODE_PATH=src start-storybook -p 9001 -c .storybook",
+    "build-storybook": "NODE_PATH=src build-storybook -c .storybook -o .storybook-build",
+    "build-dev": "react-scripts build",
     "prebuild": "npm run clean",
+    "build": "BABEL_ENV=production babel src/components --out-dir dist --ignore node_modules/ --copy-files",
+    "clean": "node_modules/.bin/rimraf build dist",
+    "copy-manifest": "node_modules/.bin/copyfiles package.json .npmrc dist/",
+    "predist": "npm run build && npm run copy-manifest",
+    "dist": "cd dist && npm publish",
     "precommit-validate": "hooks/lint_js || (echo 'Please fix any of the above-mentioned linting errors before finalizing this commit.' && exit 1)",
-    "build": "npm run build:dev && npm run build:prod",
-    "build:dev": "react-scripts build",
-    "build:prod": "NODE_ENV=production node config/build.js",
-    "clean": "node_modules/.bin/rimraf auth common layout resources App.js build",
     "eject": "react-scripts eject",
-    "prepublish": "npm run build:prod",
-    "postpublish": "npm run clean",
     "lint": "node_modules/.bin/eslint \"src/**/*.js\"",
-    "prestart": "npm run clean",
     "start": "react-scripts start",
     "test": "react-scripts test --env=jsdom"
   },
@@ -43,15 +43,21 @@
     "Alex <alex.maskovyak@attainia.com>",
     "Ana <ana.tomboulian@attainia.com>",
     "Jason <jason.rego@attainia.com>",
+    "Jono <jono.mercier@attainia.com>",
     "Glenn <glenn.siegman@attainia.com>",
     "Tim <tim.graf@attainia.com>"
   ],
   "dependencies": {
     "axios": "0.16.2",
     "babel-polyfill": "6.26.0",
+    "color": "2.0.1",
+    "extensible-duck": "1.3.1",
     "fixed-data-table-2": "0.8.1",
     "history": "4.7.2",
-    "prop-types": "15.5.10",
+    "hoist-non-react-statics": "2.3.1",
+    "jwt-decode": "2.2.0",
+    "pluralize": "7.0.0",
+    "prop-types": "15.6.0",
     "ramda": "0.24.1",
     "ramda-adjunct": "1.15.0",
     "react": "16.0.0",
@@ -62,34 +68,46 @@
     "react-redux": "5.0.6",
     "react-router-dom": "4.1.2",
     "react-router-redux": "4.0.8",
-    "react-scripts": "1.0.13",
+    "react-scripts": "1.0.17",
+    "react-test-renderer": "^16.1.1",
     "react-tooltip": "3.3.1",
     "redux": "3.7.2",
+    "redux-auth-wrapper": "2.0.2",
     "redux-form": "7.0.4",
     "redux-logger": "3.0.6",
-    "redux-saga": "0.15.6",
     "regenerator-runtime": "0.11.0",
+    "revalidation": "0.12.1",
+    "spected": "0.6.0",
     "styled-components": "2.1.2",
     "subscriptions-transport-ws": "0.8.3",
-    "uuid": "3.1.0",
-    "validatorjs": "3.13.5"
+    "uuid": "3.1.0"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "3.2.15",
+    "@storybook/addon-info": "3.2.13",
+    "@storybook/addon-knobs": "3.2.15",
+    "@storybook/addon-links": "3.2.15",
+    "@storybook/addon-notes": "3.2.15",
+    "@storybook/addon-storyshots": "3.2.15",
+    "@storybook/react": "3.2.13",
     "babel-cli": "6.24.1",
     "babel-eslint": "7.2.3",
     "babel-plugin-add-module-exports": "0.2.1",
     "babel-plugin-external-helpers": "6.22.0",
+    "babel-plugin-module-resolver": "3.0.0",
+    "babel-plugin-ramda": "1.4.3",
     "babel-plugin-syntax-async-functions": "6.13.0",
     "babel-plugin-transform-object-rest-spread": "6.23.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.10",
     "babel-plugin-transform-runtime": "6.23.0",
     "babel-polyfill": "6.23.0",
     "babel-preset-env": "1.6.1",
-    "babel-preset-es2015-rollup": "3.0.0",
     "babel-preset-react": "6.24.1",
-    "eslint": "4.5.0",
+    "copyfiles": "1.2.0",
+    "eslint": "4.11.0",
     "eslint-config-airbnb": "15.1.0",
     "eslint-config-prettier": "2.6.0",
+    "eslint-import-resolver-node": "0.3.1",
     "eslint-plugin-flowtype": "2.35.0",
     "eslint-plugin-import": "2.7.0",
     "eslint-plugin-jsx-a11y": "5.1.1",
@@ -98,35 +116,7 @@
     "pre-commit": "1.2.2",
     "prettier": "1.7.0",
     "prettier-eslint-cli": "4.3.2",
-    "rimraf": "2.6.1",
-    "rollup": "0.49.2",
-    "rollup-plugin-async": "1.2.0",
-    "rollup-plugin-babel": "3.0.2",
-    "rollup-plugin-commonjs": "8.2.0",
-    "rollup-plugin-inject": "2.0.0",
-    "rollup-plugin-json": "2.3.0",
-    "rollup-plugin-node-resolve": "3.0.0",
-    "rollup-plugin-postcss": "0.5.5",
-    "rollup-plugin-replace": "2.0.0",
-    "rollup-plugin-svg": "1.0.1",
-    "rollup-plugin-visualizer": "0.3.1"
-  },
-  "babel": {
-    "presets": [
-      [
-        "env",
-        {
-          "modules": false,
-          "loose": true
-        }
-      ],
-      "react"
-    ],
-    "plugins": [
-      "add-module-exports",
-      "syntax-async-functions",
-      "transform-object-rest-spread"
-    ]
+    "rimraf": "2.6.1"
   },
   "prettier": {
     "bracketSpacing": false,
@@ -137,116 +127,5 @@
     "tabWidth": 4,
     "trailingComma": "none",
     "useTabs": false
-  },
-  "eslintConfig": {
-    "globals": {
-      "document": true,
-      "window": true
-    },
-    "env": {
-      "browser": true,
-      "es6": true,
-      "jest": true,
-      "node": true
-    },
-    "extends": "airbnb",
-    "plugins": [
-      "react"
-    ],
-    "rules": {
-      "arrow-parens": "off",
-      "eol-last": "off",
-      "eqeqeq": [
-        "error",
-        "allow-null"
-      ],
-      "camelcase": "off",
-      "comma-dangle": [
-        "error",
-        "never"
-      ],
-      "indent": "off",
-      "jsx-quotes": [
-        "warn",
-        "prefer-double"
-      ],
-      "linebreak-style": [
-        "error",
-        "unix"
-      ],
-      "max-len": [
-        "error",
-        120,
-        {
-          "ignoreComments": true
-        }
-      ],
-      "new-cap": "error",
-      "newline-before-return": "off",
-      "no-console": "error",
-      "no-eval": "error",
-      "no-trailing-spaces": [
-        "error",
-        {
-          "skipBlankLines": true
-        }
-      ],
-      "no-mixed-spaces-and-tabs": "error",
-      "no-undef": "error",
-      "no-underscore-dangle": "off",
-      "no-unused-vars": "error",
-      "object-curly-spacing": "off",
-      "object-shorthand": [
-        "error",
-        "properties"
-      ],
-      "one-var": "off",
-      "quotes": [
-        "error",
-        "single"
-      ],
-      "react/jsx-filename-extension": "off",
-      "react/jsx-indent": [
-        "error",
-        4
-      ],
-      "react/jsx-indent-props": [
-        "error",
-        4
-      ],
-      "react/no-set-state": "error",
-      "react/jsx-closing-bracket-location": "error",
-      "react/jsx-closing-tag-location": "error",
-      "react/jsx-equals-spacing": [
-        "error",
-        "never"
-      ],
-      "react/jsx-first-prop-new-line": [
-        "error",
-        "multiline"
-      ],
-      "react/jsx-no-duplicate-props": "error",
-      "react/jsx-pascal-case": "error",
-      "react/jsx-wrap-multilines": "off",
-      "react/require-default-props": "off",
-      "semi-spacing": "error",
-      "semi": [
-        "error",
-        "never"
-      ],
-      "space-before-function-paren": [
-        "error",
-        {
-          "anonymous": "never",
-          "named": "never",
-          "asyncArrow": "always"
-        }
-      ],
-      "space-before-blocks": [
-        "error",
-        "always"
-      ],
-      "space-infix-ops": "error"
-    }
   }
 }
