@@ -10,6 +10,8 @@ import styled from 'styled-components'
 
 import theme from '../../src/theme'
 import ButtonLink from '../../src/components/common/ButtonLink'
+import Button from '../../src/components/common/Button'
+import LinkButton from '../../src/components/common/LinkButton'
 
 
 const CenterDiv = styled.div`
@@ -41,4 +43,15 @@ storiesOf('Button Links', module)
             <ButtonLink onClick={action('Link clicked!')} styles={{fontSize: text(fontLabel, fontDefault)}} >           
             {text('Label', 'Button Link Example')}
             </ButtonLink>
+        </div>])))
+
+.add('Link Buttons',
+    compose(
+    withInfo('A basic link, royal blue, underlined with the basic link following rules.'),
+    withNotes('A basic link button.  Use the knobs to change the label or the font size to see different variations.')
+        )(() => ([
+        <div>
+            <LinkButton onClick={action('Link clicked!')} styles={{fontSize: text(fontLabel, fontDefault)}} >           
+            {text('Label', 'Link Button Example')}
+            </LinkButton>
         </div>])))

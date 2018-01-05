@@ -2,7 +2,7 @@
 
 exports[`Storyshots Buttons Attainia Buttons 1`] = `
 <div
-  className="sc-bwzfXH btDPDo"
+  className="sc-bwzfXH cKsKYL"
 >
   <div>
     <div
@@ -17,22 +17,22 @@ exports[`Storyshots Buttons Attainia Buttons 1`] = `
         className="sc-htpNat bxsguu"
       >
         <button
-          className="sc-bdVaJa eBhbPn"
+          className="sc-bdVaJa jxftiN"
         >
           Primary Default
         </button>
         <button
-          className="sc-bdVaJa gHfTdM"
+          className="sc-bdVaJa hNtcer"
         >
           Primary Light
         </button>
         <button
-          className="sc-bdVaJa eBhbPn"
+          className="sc-bdVaJa jxftiN"
         >
           Primary Medium
         </button>
         <button
-          className="sc-bdVaJa hFtiyr"
+          className="sc-bdVaJa jkSTQl"
         >
           Primary Dark
         </button>
@@ -43,22 +43,22 @@ exports[`Storyshots Buttons Attainia Buttons 1`] = `
         className="sc-htpNat bxsguu"
       >
         <button
-          className="sc-bdVaJa jXVSFL"
+          className="sc-bdVaJa bbzLau"
         >
           Secondary Default
         </button>
         <button
-          className="sc-bdVaJa ctKwqk"
+          className="sc-bdVaJa fuYAft"
         >
           Secondary Light
         </button>
         <button
-          className="sc-bdVaJa jXVSFL"
+          className="sc-bdVaJa bbzLau"
         >
           Secondary Medium
         </button>
         <button
-          className="sc-bdVaJa kDWATp"
+          className="sc-bdVaJa ifSEqA"
         >
           Secondary Dark
         </button>
@@ -1514,7 +1514,7 @@ exports[`Storyshots Buttons Attainia Buttons 1`] = `
 
 exports[`Storyshots Buttons Button Playground 1`] = `
 <div
-  className="sc-bwzfXH btDPDo"
+  className="sc-bwzfXH cKsKYL"
 >
   <div>
     <div
@@ -1527,7 +1527,7 @@ exports[`Storyshots Buttons Button Playground 1`] = `
     >
       <div>
         <button
-          className="sc-bdVaJa iheNBr"
+          className="sc-bdVaJa bmSidg"
           disabled={false}
           onClick={[Function]}
           onMouseDown={[Function]}

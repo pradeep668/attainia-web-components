@@ -63,6 +63,7 @@
     "react": "16.0.0",
     "react-apollo": "1.4.15",
     "react-dom": "16.0.0",
+    "react-dropdown-input": "^0.1.11",
     "react-fastclick": "3.0.2",
     "react-localization": "0.1.2",
     "react-redux": "5.0.6",
