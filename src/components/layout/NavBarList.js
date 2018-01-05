@@ -55,8 +55,8 @@ const NavBarList = ({items, theme}) => (
                 <NavLink to={link}>
                     {iconName &&
                         <SimpleSvgIcon
-                            icon={iconName}
-                            fill={getThemeProp(['colors', 'grayscale', 'white'], 'white')({theme})}
+                          icon={iconName}
+                          fill={getThemeProp(['colors', 'grayscale', 'white'], 'white')({theme})}
                         />
                     }
                     <span>{label}</span>

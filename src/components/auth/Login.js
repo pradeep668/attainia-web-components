@@ -93,26 +93,29 @@ class Login extends PureComponent {
                         {hasAuthError ? <AuthError /> : <SimpleSvgIcon width="161" height="39" icon="primary" />}
                     </header>
                     <ReduxFormField
-                        className="email"
-                        placeholder="email"
-                        name="email"
-                        type="email"
-                        value={email}
+                      id="LoginForm-email"
+                      className="email"
+                      placeholder="email"
+                      name="email"
+                      type="email"
+                      value={email}
                     />
                     <ReduxFormField
-                        className="password"
-                        placeholder="password"
-                        type="password"
-                        name="password"
+                      id="LoginForm-password"
+                      className="password"
+                      placeholder="password"
+                      type="password"
+                      name="password"
                     />
                     <FormField
-                        className="rememberMe"
-                        label={rememberMeLabel}
-                        type="checkbox"
-                        name="rememberMe"
-                        checked={rememberMe}
-                        value={rememberMe}
-                        handlers={{onChange: toggleRememberMe}}
+                      id="LoginForm-rememberMe"
+                      className="rememberMe"
+                      label={rememberMeLabel}
+                      type="checkbox"
+                      name="rememberMe"
+                      checked={rememberMe}
+                      value={rememberMe}
+                      handlers={{onChange: toggleRememberMe}}
                     />
                     {showPasswordHelp && <Link className="passwordHelp" to="password-help">{passwordHelpLabel}</Link>}
                     <SpinningButton inProgress={loading} className="loginButton" type="submit">

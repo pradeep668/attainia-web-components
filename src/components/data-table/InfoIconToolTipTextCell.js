@@ -21,10 +21,10 @@ export default class InfoIconToolTipTextCell extends React.PureComponent {
         return (
             <Cell {...props}>
                 <InlineImg
-                    icon="info"
-                    data-tip={toolTip}
-                    data-for={'cell-tooltip'}
-                    alt={altText}
+                  icon="info"
+                  data-tip={toolTip}
+                  data-for={'cell-tooltip'}
+                  alt={altText}
                 />
                 <span>{text}</span>
             </Cell>

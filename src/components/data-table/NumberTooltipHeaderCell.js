@@ -13,13 +13,13 @@ const NumberTooltipHeaderCell = styled(TooltipHeaderCell)`
 
 NumberTooltipHeaderCell.propTypes = {
     headerData: PropTypes.shape({
-            name: PropTypes.string,
-            toolTip: PropTypes.string,
-            key: PropTypes.string,
-            width: PropTypes.number,
-            fixed: PropTypes.bool,
-            columnType: PropTypes.symbol
-        }
+        name: PropTypes.string,
+        toolTip: PropTypes.string,
+        key: PropTypes.string,
+        width: PropTypes.number,
+        fixed: PropTypes.bool,
+        columnType: PropTypes.symbol
+    }
     ).isRequired,
     sortData: PropTypes.shape({
         columnKey: PropTypes.string,

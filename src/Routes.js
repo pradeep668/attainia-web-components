@@ -10,6 +10,7 @@ import {
     LoginContainer,
     PasswordHelpContainer,
     RegistrationContainer,
+    RegistrationConfirmationContainer,
     RegisterApplicationContainer
 } from './components/auth'
 
@@ -29,6 +30,7 @@ export default (
                         <Route exact path="/login" component={withLoginEnhancers(LoginContainer)} />
                         <Route exact path="/password-help" component={PasswordHelpContainer} />
                         <Route exact path="/register" component={RegistrationContainer} />
+                        <Route exact path="/confirm-registration" component={RegistrationConfirmationContainer} />
                         <Route exact path="/register-application" component={RegisterApplicationContainer} />
                         <Route component={NotFound} />
                     </Switch>

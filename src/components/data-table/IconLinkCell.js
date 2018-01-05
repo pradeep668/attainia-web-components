@@ -11,8 +11,8 @@ export default class IconLinkCell extends React.PureComponent {
             <Cell {...props}>
                 <a href={link}>
                     <SimpleSvgIcon
-                        icon={iconName}
-                        fill="#0072CE"
+                      icon={iconName}
+                      fill="#0072CE"
                     />
                 </a>
             </Cell>
