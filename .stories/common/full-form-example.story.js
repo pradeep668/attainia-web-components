@@ -14,7 +14,7 @@ import {FormField, Form} from '@awc/common'
 const Spaced = styled.div`
     display: grid;
     grid-column-gap: 10px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 `
 const paragraphStyles = {
     fontSize: '14px', textAlign: 'center'
@@ -28,7 +28,7 @@ storiesOf('Form Sample', module)
             </ContentCentered>
         </ThemeProvider>
     ))
-    .add('Sample Field',
+    .add('Sample Form',
         compose(
             withInfo('An input element type of text box.'),
             withNotes('An input element type of text box.')
