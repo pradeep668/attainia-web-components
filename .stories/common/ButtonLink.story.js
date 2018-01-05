@@ -10,6 +10,7 @@ import {ThemeProvider} from 'styled-components'
 
 import theme from '@theme'
 import ButtonLink from '@awc/common/ButtonLink'
+import LinkButton from '@awc/common/LinkButton'
 import ContentCentered from '@awc/layout/ContentCentered'
 
 const fontLabel = 'Font Size'
@@ -31,9 +32,22 @@ storiesOf('Button Links', module)
             withNotes('A basic button link.  Use the knobs to change the label or the font size to see different variations.')
         )(() => ([
             <div>
-                <ButtonLink onClick={action('Link clicked!')} styles={{fontSize: text(fontLabel, fontDefault)}} >
+                <ButtonLink onClick={action('Link clicked!')} styles={{fontSize: text(fontLabel, fontDefault)}}>
                     {text('Label', 'Button Link Example')}
                 </ButtonLink>
             </div>
         ]))
     )
+    .add('Link Buttons',
+        compose(
+            withInfo('A basic link, royal blue, underlined with the basic link following rules.'),
+            withNotes('A basic link button.  Use the knobs to change the label or the font size to see different variations.')
+        )(() => ([
+            <div>
+                <LinkButton onClick={action('Link clicked!')} styles={{fontSize: text(fontLabel, fontDefault)}}>
+                    {text('Label', 'Link Button Example')}
+                </LinkButton>
+            </div>
+        ]))
+    )
+
