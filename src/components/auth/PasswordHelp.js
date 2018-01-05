@@ -53,7 +53,14 @@ const StyledForm = styled(Form)`
 const PasswordHelp = ({handleSubmit, tryPasswordHelp, email}) =>
     <StyledForm className="passwordHelpForm" onSubmit={handleSubmit(tryPasswordHelp)}>
         <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="primary" />
-        <ReduxFormField className="email" placeholder="email" name="email" type="email" value={email} />
+        <ReduxFormField
+          id="PasswordHelpForm-email"
+          className="email"
+          placeholder="email"
+          name="email"
+          type="email"
+          value={email}
+        />
         <Button className="passwordHelpButton" type="submit">Reset Password</Button>
         <LinkButton className="cancelButton"><Link to="/">Cancel</Link></LinkButton>
     </StyledForm>

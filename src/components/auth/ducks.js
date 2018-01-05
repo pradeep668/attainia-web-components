@@ -22,6 +22,7 @@ export default new Duck({
         'CLEAR_LOGIN',
         'CLEAR_ERROR',
         'CLEAR_REFRESH',
+        'CONFIRM_USER_REGISTRATION',
         'DECODED_JWT',
         'ERROR',
         'GET_USER_NAV_MENU',
@@ -87,6 +88,7 @@ export default new Duck({
     creators: ({types}) => ({
         handleError: error => ({error, type: types.ERROR}),
         clearError: () => ({type: types.CLEAR_ERROR}),
+        confirmRegistration: () => ({type: types.CONFIRM_USER_REGISTRATION}),
         decodedJwt: jwt => ({jwt, type: types.DECODED_JWT}),
         getUserNavMenu: navigation => ({navigation, type: types.GET_USER_NAV_MENU}),
         passwordHelp: email => ({email, type: types.PASSWORD_HELP}),
@@ -136,7 +138,8 @@ export default new Duck({
                     ...state,
                     user: {
                         ...state.user,
-                        ...(action.jwt || {})
+                        ...(action.jwt || {}),
+                        id: path(['jwt', 'sub'], action) || state.user.id
                     }
                 }
             case types.LOADING_FINISHED:

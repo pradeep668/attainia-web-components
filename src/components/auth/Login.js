@@ -93,6 +93,7 @@ class Login extends PureComponent {
                         {hasAuthError ? <AuthError /> : <SimpleSvgIcon width="161" height="39" icon="primary" />}
                     </header>
                     <ReduxFormField
+                      id="LoginForm-email"
                       className="email"
                       placeholder="email"
                       name="email"
@@ -100,12 +101,14 @@ class Login extends PureComponent {
                       value={email}
                     />
                     <ReduxFormField
+                      id="LoginForm-password"
                       className="password"
                       placeholder="password"
                       type="password"
                       name="password"
                     />
                     <FormField
+                      id="LoginForm-rememberMe"
                       className="rememberMe"
                       label={rememberMeLabel}
                       type="checkbox"

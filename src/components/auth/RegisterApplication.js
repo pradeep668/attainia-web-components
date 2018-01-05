@@ -69,9 +69,25 @@ const RegisterApplication = ({handleSubmit, tryRegisterApp}) =>
     <StyledForm onSubmit={handleSubmit(tryRegisterApp)}>
         <SimpleSvgIcon className="attainiaLogo" width="161" height="39" icon="primary" />
         <p className="instructions">Register Your Application</p>
-        <ReduxFormField className="applicationName" placeholder="name" name="name" />
-        <ReduxFormField className="grantType" placeholder="grant type" name="grantType" />
-        <ReduxFormField className="redirect" placeholder="redirects to" name="redirect" type="url" />
+        <ReduxFormField
+          id="RegisterApplicationForm-name"
+          className="applicationName"
+          placeholder="name"
+          name="name"
+        />
+        <ReduxFormField
+          id="RegisterApplicationForm-grantType"
+          className="grantType"
+          placeholder="grant type"
+          name="grantType"
+        />
+        <ReduxFormField
+          id="RegisterApplicationForm-redirect"
+          className="redirect"
+          placeholder="redirects to"
+          name="redirect"
+          type="url"
+        />
         <Button className="registerApplicationButton" type="submit">Register</Button>
         <LinkButton className="cancelButton"><Link to="/">Cancel</Link></LinkButton>
     </StyledForm>

@@ -1,4 +1,5 @@
 import ContentCentered from './ContentCentered'
+import ContentCenteredMiddle from './ContentCenteredMiddle'
 import ContentFullSize from './ContentFullSize'
 import ContentHeader from './ContentHeader'
 import ContentWrapper from './ContentWrapper'
@@ -14,6 +15,7 @@ import Page from './Page'
 
 export {
     ContentCentered,
+    ContentCenteredMiddle,
     ContentFullSize,
     ContentHeader,
     ContentWrapper,
