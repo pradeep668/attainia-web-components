@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import Link from 'react-router-dom/Link'
 import {isNotNil} from 'ramda-adjunct'
 import styled, {withTheme} from 'styled-components'
-import {compose, pick, pickBy, replace, toUpper, toLower} from 'ramda'
+import {compose, pickBy, replace, toUpper, toLower} from 'ramda'
 import {getThemeProp, LinkButton, SimpleSvgIcon} from '../common'
 
 const capitalize = str => str.replace(/(?:^|\s)\S/g, toUpper)
@@ -91,7 +91,7 @@ const ContentHeader = ({
         {iconsButtons.map(iconButton =>
             <Li key={uuid()}>
                 <SimpleSvgIcon
-                  {...pick(['icon', 'onClick'], iconButton)}
+                  {...iconButton}
                   fill={getThemeProp(['colors', 'secondary', 'default'])(additionalProps)}
                 />
             </Li>
