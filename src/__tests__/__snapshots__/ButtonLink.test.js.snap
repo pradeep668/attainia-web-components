@@ -2,7 +2,7 @@
 
 exports[`Storyshots Button Links Button Links 1`] = `
 <div
-  className="sc-ifAKCX djUeNm"
+  className="sc-ifAKCX SCZfb"
 >
   <div>
     <div
@@ -15,7 +15,7 @@ exports[`Storyshots Button Links Button Links 1`] = `
     >
       <div>
         <button
-          className="sc-bxivhb iICdiB"
+          className="sc-bxivhb gUABmw"
           onClick={[Function]}
           onMouseDown={[Function]}
           onMouseMove={[Function]}
