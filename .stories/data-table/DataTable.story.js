@@ -28,22 +28,6 @@ storiesOf('DataTable', module)
             </ContentCentered>
         </ThemeProvider>
     ))
-    .add('With no data whatsoever passed in',
-        withInfo('A DataTable with no data to show and no paging and sort data')(() =>
-            <DataTable
-              rowHeight={50}
-              tableWidth={1253}
-              tableHeight={500}
-              headerHeight={50}
-              hasCheckColumn={false}
-              getNextPage={action('nextPage')}
-              rowSelected={action('selectRow')}
-              getSortedData={action('sortData')}
-              headers={getMockHeadersFirstFixed()}
-              data={{}}
-            />
-        )
-    )
     .add('With empty rows array',
         withInfo('A DataTable with no data to show')(() =>
             <DataTable
