@@ -28,6 +28,31 @@ storiesOf('DataTable', module)
             </ContentCentered>
         </ThemeProvider>
     ))
+    .add('With empty rows array',
+        withInfo('A DataTable with no data to show')(() =>
+            <DataTable
+              rowHeight={50}
+              tableWidth={1253}
+              tableHeight={500}
+              headerHeight={50}
+              hasCheckColumn={false}
+              getNextPage={action('nextPage')}
+              rowSelected={action('selectRow')}
+              getSortedData={action('sortData')}
+              headers={getMockHeadersFirstFixed()}
+              data={{
+                  sortData: {},
+                  pageData: {
+                      page: 1,
+                      totalPages: 1,
+                      perPage: 50,
+                      totalResults: 0
+                  },
+                  rows: []
+              }}
+            />
+        )
+    )
     .add('Without check column, no sort',
         withInfo('A DataTable without a checkbox column, no sorting data for any column, and the name column is fixed.')(() =>
             <DataTable
