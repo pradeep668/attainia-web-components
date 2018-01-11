@@ -1,5 +1,5 @@
 import Duck from 'extensible-duck'
-import {complement, omit, converge, memoize, last, init, path, trim, compose, is, toString} from 'ramda'
+import {complement, omit, converge, memoize, last, identity, init, path, trim, compose, is, toString} from 'ramda'
 
 import {isStringieThingie} from './validators'
 
@@ -54,13 +54,15 @@ export default new Duck({
         user: {}
     },
     selectors: {
-        root: state => state,
-        error: state => state.auth.error,
-        parsedToken: state => state.auth.parsed_token,
-        id: state => path(['auth', 'user', 'id'], state),
-        email: state => path(['auth', 'user', 'email'], state),
-        token: state => path(['auth', 'user', 'token', 'access_token'], state),
-        navigationItems: state => path(['auth', 'menu', 'navigation'], state),
+        root: identity,
+        error: path(['auth', 'error']),
+        id: path(['auth', 'user', 'id']),
+        name: path(['auth', 'user', 'name']),
+        role: path(['auth', 'user', 'role']),
+        email: path(['auth', 'user', 'email']),
+        parsedToken: path(['auth', 'parsed_token']),
+        token: path(['auth', 'user', 'token', 'access_token']),
+        navigationItems: path(['auth', 'menu', 'navigation']),
         storedToken: new Duck.Selector(selectors =>
             createSelector(
                 selectors.token,
@@ -68,10 +70,17 @@ export default new Duck({
                 (t, pt) => t || pt
             )
         ),
+        hasUser: new Duck.Selector(selectors =>
+            createSelector(
+                selectors.id,
+                selectors.name,
+                (...props) => props.every(isStringieThingie)
+            )
+        ),
         hasAuthError: new Duck.Selector(selectors => createSelector(selectors.error, Boolean)),
         isAuthenticated: new Duck.Selector(selectors => createSelector(selectors.id, isStringieThingie)),
         isNotAuthenticated: new Duck.Selector(selectors => createSelector(selectors.id, complement(isStringieThingie))),
-        expires_in: state => path(['auth', 'user', 'token', 'expires_in'], state),
+        expires_in: path(['auth', 'user', 'token', 'expires_in']),
         refreshInMs: new Duck.Selector(selectors =>
             createSelector(
                 selectors.expires_in,
