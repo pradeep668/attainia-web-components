@@ -25,11 +25,11 @@ const ONE_HOUR = 3600000
 export const isNotNil = complement(isNil)
 export const isNotBlankString = compose(not, test(/^\s*$/))
 export const isStringieThingie = allPass([isNotBlankString, either(is(Number), is(String)), isNotNil])
-export const isValidEmail = test(/^[^\\.\\s@:][^\\s@:]*(?!\\.)@[^\\.\\s@]+(?:\\.[^\\.\\s@]+)*$/)
+export const isValidEmail = test(/^[^.\s@:][^\s@:]*(?!\.)@[^.\s@]+(?:\.[^.\s@]+)*$/)
 export const isValidPassword = test(/^([A-Z]|[a-z])([a-z]|[0-9]|[!@#$%^&*()[\];:,.<>?*^+=_-]){6,50}$/)
 export const parseError = compose(
     trim,
-    find(isNotNil),
+    find(isStringieThingie),
     split(/error:/i),
     ifElse(is(String), identity, toString),
     ifElse(is(Object), prop('message'), identity)
