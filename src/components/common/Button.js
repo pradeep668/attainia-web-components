@@ -21,7 +21,7 @@ const Button = styled.button`
         getProp(['styles', 'fontSize'], '15px')(props)
 };
     font-weight: 700;
-    padding: ${getProp(['styles', 'padding'], '18px 0')};
+    padding: ${getProp(['styles', 'padding'], '15px')};
     text-align: center;
     text-decoration: none;
     &:focus {
