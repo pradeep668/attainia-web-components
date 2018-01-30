@@ -85,7 +85,7 @@ storiesOf('Form Components', module)
                       label="Text Input Field"
                       type="text"
                       name="text"
-                      placeholder="This text is the wrong color"
+                      placeholder="John Smith"
                     />
                     <br />
                     <FormField
@@ -93,7 +93,7 @@ storiesOf('Form Components', module)
                       label="Password Input Field"
                       type="password"
                       name="password"
-                      placeholder="This password is, too"
+                      placeholder=""
                     />
                 </div>
             </div>

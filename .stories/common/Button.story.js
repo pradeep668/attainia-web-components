@@ -31,6 +31,7 @@ const buttonHeader = {
     fontWeight: 'bold',
     textAlign: 'left'
 }
+
 storiesOf('Buttons', module)
     .addDecorator(withKnobs)
     .addDecorator(StoryComponent => (
