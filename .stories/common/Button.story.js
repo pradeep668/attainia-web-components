@@ -100,23 +100,23 @@ storiesOf('Buttons', module)
                 <div id="primary-buttons" style={buttonStyler}>
                     <Spaced>
                         <Button styles={rossoCorsa}>
-                Button
+                        Button
                         </Button>
 
                         <Button styles={tongue}>
-                Button Active
+                        Button Active
                         </Button>
 
                         <Button styles={rossoCorsaHover}>
-                Button Hover
+                        Button Hover
                         </Button>
 
                         <Button styles={rossoCorsaVisited}>
-                Button Visited
+                        Button Visited
                         </Button>
 
                         <Button styles={rossoCorsaDisabled}>
-                Button Disabled
+                        Button Disabled
                         </Button>
                     </Spaced>
                 </div>
@@ -128,19 +128,19 @@ storiesOf('Buttons', module)
                 <div id="secondary-buttons" style={buttonStyler}>
                     <Spaced>
                         <Button styles={trueBlue}>
-                Button
+                        Button
                         </Button>
                         <Button styles={trueBlueActive}>
-                Button Active
+                        Button Active
                         </Button>
                         <Button styles={trueBlueHover}>
-                Button Hover
+                        Button Hover
                         </Button>
                         <Button styles={trueBlueVisited}>
-                Button Visited
+                        Button Visited
                         </Button>
                         <Button styles={trueBlueDisabled}>
-                Button Disabled
+                        Button Disabled
                         </Button>
                     </Spaced>
                 </div>
