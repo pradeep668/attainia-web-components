@@ -32,6 +32,53 @@ const buttonHeader = {
     textAlign: 'left'
 }
 
+// Primary Button Colors
+const rossoCorsa = {
+    backgroundColor: '#E10600'
+}
+
+const tongue = {
+    backgroundColor: '#EF4B49'
+}
+
+const rossoCorsaHover = {
+    backgroundColor: '#F06967'
+}
+
+const rossoCorsaVisited = {
+    backgroundColor: '#B81814'
+}
+
+const rossoCorsaDisabled = {
+    backgroundColor: '#D8C4C3'
+}
+
+// Secondary Button Colors (with padding)
+const trueBlue = {
+    backgroundColor: '#0072CE',
+    padding: '10px'
+}
+
+const trueBlueActive = {
+    backgroundColor: '#328ED7',
+    padding: '10px'
+}
+
+const trueBlueHover = {
+    backgroundColor: '#4C9CDC',
+    padding: '10px'
+}
+
+const trueBlueVisited = {
+    backgroundColor: '#005BA4',
+    padding: '10px'
+}
+
+const trueBlueDisabled = {
+    backgroundColor: '#C1CDD7',
+    padding: '10px'
+}
+
 storiesOf('Buttons', module)
     .addDecorator(withKnobs)
     .addDecorator(StoryComponent => (
@@ -52,23 +99,23 @@ storiesOf('Buttons', module)
                 </div>
                 <div id="primary-buttons" style={buttonStyler}>
                     <Spaced>
-                        <Button styles={{backgroundColor: '#E10600'}}>
+                        <Button styles={rossoCorsa}>
                 Button
                         </Button>
 
-                        <Button styles={{backgroundColor: '#EF4B49'}}>
+                        <Button styles={tongue}>
                 Button Active
                         </Button>
 
-                        <Button styles={{backgroundColor: '#F06967'}}>
+                        <Button styles={rossoCorsaHover}>
                 Button Hover
                         </Button>
 
-                        <Button styles={{backgroundColor: '#B81814'}}>
+                        <Button styles={rossoCorsaVisited}>
                 Button Visited
                         </Button>
 
-                        <Button styles={{backgroundColor: '#D8C4C3'}}>
+                        <Button styles={rossoCorsaDisabled}>
                 Button Disabled
                         </Button>
                     </Spaced>
@@ -80,19 +127,19 @@ storiesOf('Buttons', module)
                 </div>
                 <div id="secondary-buttons" style={buttonStyler}>
                     <Spaced>
-                        <Button styles={{backgroundColor: '#0072CE', padding: '10px'}}>
+                        <Button styles={trueBlue}>
                 Button
                         </Button>
-                        <Button styles={{backgroundColor: '#328ED7', padding: '10px'}}>
+                        <Button styles={trueBlueActive}>
                 Button Active
                         </Button>
-                        <Button styles={{backgroundColor: '#4C9CDC', padding: '10px'}}>
+                        <Button styles={trueBlueHover}>
                 Button Hover
                         </Button>
-                        <Button styles={{backgroundColor: '#005BA4', padding: '10px'}}>
+                        <Button styles={trueBlueVisited}>
                 Button Visited
                         </Button>
-                        <Button styles={{backgroundColor: '#C1CDD7', padding: '10px'}}>
+                        <Button styles={trueBlueDisabled}>
                 Button Disabled
                         </Button>
                     </Spaced>
