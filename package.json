@@ -1,6 +1,6 @@
 {
   "name": "attainia-web-components",
-  "version": "0.3.12",
+  "version": "0.3.13",
   "description": "A collection of Attainia branded web components to be used in an Attainia React.js web application.",
   "main": "index.js",
   "engines": {
@@ -60,7 +60,6 @@
     "pluralize": "7.0.0",
     "prop-types": "15.6.0",
     "ramda": "0.25.0",
-    "ramda-adjunct": "1.15.0",
     "react": "16.0.0",
     "react-apollo": "1.4.15",
     "react-dom": "16.0.0",
@@ -69,7 +68,7 @@
     "react-redux": "5.0.6",
     "react-router-dom": "4.1.2",
     "react-router-redux": "4.0.8",
-    "react-scripts": "1.0.17",
+    "react-scripts": "1.1.0",
     "react-tooltip": "3.3.1",
     "redux": "3.7.2",
     "redux-auth-wrapper": "2.0.2",
