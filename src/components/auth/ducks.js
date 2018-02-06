@@ -30,7 +30,7 @@ export const isValidPassword = test(/^([A-Z]|[a-z])([a-z]|[0-9]|[!@#$%^&*()[\];:
 export const parseError = compose(
     trim,
     find(isStringieThingie),
-    split(/error:/i),
+    split(/(?:\S*\s*)?error:/i),
     ifElse(is(String), identity, toString),
     ifElse(is(Object), prop('message'), identity)
 )
