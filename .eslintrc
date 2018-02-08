@@ -13,6 +13,21 @@
   "plugins": [
     "react"
   ],
+  "settings": {
+    "import/resolver": {
+      "babel-module": {
+        "extensions": [".js", ".jsx"],
+        "paths": [
+          "./src",
+          "./src/components",
+          "./src/components/auth",
+          "./src/components/common",
+          "./src/components/data-table",
+          "./src/components/layout"
+        ]
+      }
+    }
+  },
   "rules": {
     "arrow-parens": "off",
     "eol-last": "off",
@@ -37,19 +52,6 @@
         "ignore": ["^@awc", "^@globals$", "^@theme$"]
       }
     ],
-    "import/resolver": {
-      "babel-module": {
-        "extensions": [".js", ".jsx"],
-        "paths": [
-          "./src",
-          "./src/components",
-          "./src/components/auth",
-          "./src/components/common",
-          "./src/components/data-table",
-          "./src/components/layout"
-        ]
-      }
-    },
     "indent": [
       "error",
       4,
