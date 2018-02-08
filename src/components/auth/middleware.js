@@ -20,7 +20,7 @@ import {
     toUpper,
     when
 } from 'ramda'
-import authDux from 'attainia-web-components/auth/ducks'
+import authDux from './ducks'
 
 const {types: {PARSED_TOKEN, LOGIN}} = authDux
 
