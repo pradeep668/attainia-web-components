@@ -18,7 +18,7 @@ const Li = styled.li`
     border-left-style: solid;
 
     &:hover {
-        border-color: ${getThemeProp(['colors', 'secondary', 'default'], 'royalblue')};
+        border-color: ${getThemeProp(['colors', 'primary', 'default'], 'crimson')};
         background: ${getThemeProp(['colors', 'grayscale', 'dk'], 'darkgray')};
     }
     & a {
@@ -37,7 +37,7 @@ const Li = styled.li`
     }
 
     & a.active {
-        background: ${getThemeProp(['colors', 'secondary', 'default'], 'royalblue')};
+        background: ${getThemeProp(['colors', 'primary', 'default'], 'crimson')};
     }
 `
 const Ul = styled.ul`
