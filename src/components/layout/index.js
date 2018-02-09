@@ -1,3 +1,4 @@
+import Chevron from './Chevron'
 import ContentCentered from './ContentCentered'
 import ContentCenteredMiddle from './ContentCenteredMiddle'
 import ContentFullSize from './ContentFullSize'
@@ -14,6 +15,7 @@ import NotFound from './NotFound'
 import Page from './Page'
 
 export {
+    Chevron,
     ContentCentered,
     ContentCenteredMiddle,
     ContentFullSize,
