@@ -103,7 +103,7 @@ export const serviceAuthMiddleware = service => () => next => action => {
  * Assume an apollo client with an apollo-http-link is passed in.
  * https://www.apollographql.com/docs/link/links/http.html
  *
- * In our lin composition, we create a middleware link and place it
+ * In our link composition, we create a middleware link and place it
  * before calling any other links. Eventually the last link typically makes
  * the network call.
  * https://www.apollographql.com/docs/link/overview.html
