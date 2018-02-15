@@ -20,6 +20,9 @@ import {
     toUpper,
     when
 } from 'ramda'
+
+import ApolloLink from 'apollo-link-core'
+
 import authDux from './ducks'
 
 const {types: {PARSED_TOKEN, LOGIN}} = authDux
@@ -84,12 +87,41 @@ const formatMeta = when(
  * @func
  * @sig a -> {k: v} -> ({k: v} -> {k: v}) -> {k: v} -> undefined
  */
-export default service => () => next => action => {
+export const serviceAuthMiddleware = service => () => next => action => {
     if ([PARSED_TOKEN, LOGIN].includes(action.type)) {
         service.setHeader('Authorization', `Bearer ${
             path(['user', 'token', 'access_token'], action) || prop('token', action)
         }`)
         service.addResponseTransform(formatMeta)
+    }
+    next(action)
+}
+
+/**
+ * Sets up the apollo client link with auth headers.
+ *
+ * Assume an apollo client with an apollo-http-link is passed in.
+ * https://www.apollographql.com/docs/link/links/http.html
+ *
+ * In our link composition, we create a middleware link and place it
+ * before calling any other links. Eventually the last link typically makes
+ * the network call.
+ * https://www.apollographql.com/docs/link/overview.html
+ *
+ * @func
+ * @sig a -> {k: v} -> ({k: v} -> {k: v}) -> {k: v} -> undefined
+ */
+export const apolloAuthMiddleWare = appolloClientLink => next => action => {
+    if ([PARSED_TOKEN, LOGIN].includes(action.type)) {
+        const middlewareLink = new ApolloLink((operation, forward) => {
+            operation.setContext({
+                headers: {Authorization: `Bearer ${
+                    path(['user', 'token', 'access_token'], action) || prop('token', action)}`}
+            })
+
+            return forward(operation)
+        })
+        middlewareLink.concat(appolloClientLink)
     }
     next(action)
 }
