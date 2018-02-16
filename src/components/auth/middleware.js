@@ -16,12 +16,11 @@ import {
     merge,
     path,
     prop,
+    propOr,
     toPairs,
     toUpper,
     when
 } from 'ramda'
-
-import ApolloLink from 'apollo-link-core'
 
 import authDux from './ducks'
 
@@ -111,17 +110,19 @@ export const serviceAuthMiddleware = service => () => next => action => {
  * @func
  * @sig a -> {k: v} -> ({k: v} -> {k: v}) -> {k: v} -> undefined
  */
-export const apolloAuthMiddleWare = appolloClientLink => next => action => {
+export const apolloAuthMiddleWare = apolloFetch => () => next => action => {
     if ([PARSED_TOKEN, LOGIN].includes(action.type)) {
-        const middlewareLink = new ApolloLink((operation, forward) => {
-            operation.setContext({
-                headers: {Authorization: `Bearer ${
-                    path(['user', 'token', 'access_token'], action) || prop('token', action)}`}
-            })
-
-            return forward(operation)
+        apolloFetch.use(({options}, fetchNext) => {
+            // eslint-disable-next-line no-param-reassign
+            options.headers = {
+                ...propOr({}, 'headers'),
+                authorization: `Bearer ${
+                    path(['user', 'token', 'access_token'], action) ||
+                    prop('token', action)
+                }`
+            }
+            fetchNext()
         })
-        middlewareLink.concat(appolloClientLink)
     }
     next(action)
 }
