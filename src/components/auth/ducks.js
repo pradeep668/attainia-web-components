@@ -45,7 +45,6 @@ export default createDuck({
         'CONFIRM_USER_REGISTRATION',
         'DECODED_JWT',
         'ERROR',
-        'GET_USER_NAV_MENU',
         'LOADING_FINISHED',
         'LOADING_STARTED',
         'LOGIN',
@@ -66,7 +65,6 @@ export default createDuck({
         error: '',
         loading: false,
         menu: {
-            navigation: [],
             profile: []
         },
         rememberMe: false,
@@ -81,7 +79,6 @@ export default createDuck({
         role: path(['auth', 'user', 'role']),
         email: path(['auth', 'user', 'email']),
         parsedToken: path(['auth', 'parsed_token']),
-        navigationItems: path(['auth', 'menu', 'navigation']),
         token: path(['auth', 'user', 'token', 'access_token']),
         expires_in: path(['auth', 'user', 'token', 'expires_in']),
         hasAuthError: createDuckSelector(selectors =>
@@ -125,7 +122,6 @@ export default createDuck({
         clearError: () => ({type: types.CLEAR_ERROR}),
         confirmRegistration: () => ({type: types.CONFIRM_USER_REGISTRATION}),
         decodedJwt: jwt => ({jwt, type: types.DECODED_JWT}),
-        getUserNavMenu: navigation => ({navigation, type: types.GET_USER_NAV_MENU}),
         passwordHelp: email => ({email, type: types.PASSWORD_HELP}),
         refresh: refreshTimeout => ({refreshTimeout, type: types.REFRESH}),
         clearRefresh: () => ({type: types.CLEAR_REFRESH}),
@@ -251,14 +247,6 @@ export default createDuck({
                     ...state,
                     error: parseError(action.error),
                     loading: false
-                }
-            case types.GET_USER_NAV_MENU:
-                return {
-                    ...state,
-                    menu: {
-                        ...state.menu,
-                        navigation: action.navigation.map(label => ({label}))
-                    }
                 }
             case types.DECODED_JWT:
                 return {

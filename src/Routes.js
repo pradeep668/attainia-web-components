@@ -4,7 +4,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import {ThemeProvider} from 'styled-components'
 
 import Stub from './components/homework/Stub'
-import {NotFound} from './components/layout'
+import NotFound from './components/layout/NotFound'
 
 import store from './store'
 import theme from './theme'
