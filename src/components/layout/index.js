@@ -7,9 +7,8 @@ import ContentWrapper from './ContentWrapper'
 import Footer from './Footer'
 import Header from './Header'
 import HeaderImage from './HeaderImage'
-import Layout, {withLayout} from './Layout'
+import Layout, {withLayout, withTheseNavItems} from './Layout'
 import Main from './Main'
-import NavBarListContainer from './NavBarList.container'
 import NavBarList from './NavBarList'
 import NotFound from './NotFound'
 import Page from './Page'
@@ -26,9 +25,9 @@ export {
     HeaderImage,
     Layout,
     Main,
-    NavBarListContainer,
     NavBarList,
     NotFound,
     Page,
-    withLayout
+    withLayout,
+    withTheseNavItems
 }
