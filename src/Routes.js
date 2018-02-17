@@ -4,7 +4,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import {ThemeProvider} from 'styled-components'
 
 import Home from './App'
-import {withLayout, NotFound} from './components/layout'
+import {withTheseNavItems, NotFound} from './components/layout'
 import {
     AuthProvider,
     LoginContainer,
@@ -19,6 +19,14 @@ import {withAuthentication} from './components/auth/decorators'
 
 import store from './store'
 import theme from './theme'
+
+const withLayout = withTheseNavItems([
+    {label: 'Bells', link: '/bells', iconName: 'notification'},
+    {label: 'Printers', link: '/printers', iconName: 'print'},
+    {label: 'Paper', link: '/paper', iconName: 'document'},
+    {label: 'Garbage Cans', link: '/wastebaskets', iconName: 'delete'},
+    {label: 'Pencils', link: '/pencils', iconName: 'edit'}
+])
 
 export default (
     <ThemeProvider theme={theme}>
