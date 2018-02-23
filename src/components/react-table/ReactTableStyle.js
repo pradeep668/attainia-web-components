@@ -7,6 +7,7 @@ const ReactTableStyle = styled.div`
         display: flex;
         flex-direction: column;
         border: 1px solid ${getThemeProp(['colors', 'misc', 'gray', 'lavenderGray'])};
+        background-color: ${getThemeProp(['colors', 'misc', 'gray', 'white'])};
     }
     .ReactTable * {
         box-sizing: border-box;
@@ -130,6 +131,7 @@ const ReactTableStyle = styled.div`
     }
     .ReactTable .rt-tbody .rt-td {
         font-size: 1.2em;
+        min-height: 3.2em;
         border-right: 1px solid ${getThemeProp(['colors', 'misc', 'gray', 'lavenderGray'])};
         padding: 1em;
         align-self: center;
@@ -215,7 +217,7 @@ const ReactTableStyle = styled.div`
         border-right: 0;
     }
     .ReactTable.-striped .rt-tr.-odd {
-        background-color: ${getThemeProp(['colors', 'misc', 'gray', 'white'])};
+        background-color: ${getThemeProp(['colors', 'grayscale', 'lt'])};
     }
     .ReactTable.-highlight .rt-tbody .rt-tr:not(.-padRow):hover {
         background: rgba(0, 0, 0, 0.05);
