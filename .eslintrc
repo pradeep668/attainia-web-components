@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "globals": {
     "document": true,
     "window": true
@@ -111,7 +112,7 @@
       "error",
       2
     ],
-    "react/no-set-state": "error",
+    "react/no-set-state": "off",
     "react/jsx-closing-bracket-location": "error",
     "react/jsx-closing-tag-location": "error",
     "react/jsx-equals-spacing": [
