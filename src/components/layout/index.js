@@ -8,6 +8,7 @@ import Header from './Header'
 import HeaderImage from './HeaderImage'
 import Layout, {withLayout} from './Layout'
 import Main from './Main'
+import Modal from './Modal'
 import NavBarListContainer from './NavBarList.container'
 import NavBarList from './NavBarList'
 import NotFound from './NotFound'
@@ -24,6 +25,7 @@ export {
     HeaderImage,
     Layout,
     Main,
+    Modal,
     NavBarListContainer,
     NavBarList,
     NotFound,

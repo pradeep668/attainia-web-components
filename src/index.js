@@ -1,17 +1,17 @@
 import {render} from 'react-dom'
-import Routes from './Routes'
+import AppRoutes from './routes/AppRoutes'
 import './globals'
 
 function renderApp(Component) {
-    render(Component, document.querySelector('#root'))
+    render(Component, document.querySelector('#app-root'))
 }
 
-renderApp(Routes)
+renderApp(AppRoutes)
 
 if (module && module.hot) {
-    module.hot.accept('./Routes', () => {
+    module.hot.accept('./routes/AppRoutes', () => {
         /* eslint "global-require": "off" */
-        const DevRoutes = require('./Routes').default
+        const DevRoutes = require('./routes/AppRoutes').default
         renderApp(DevRoutes)
     })
 }

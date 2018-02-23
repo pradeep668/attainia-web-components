@@ -3,8 +3,8 @@ import {Provider} from 'react-redux'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import {ThemeProvider} from 'styled-components'
 
-import Home from './App'
-import {withLayout, NotFound} from './components/layout'
+import Home from '../App'
+import {withLayout, NotFound} from '../components/layout'
 import {
     AuthProvider,
     LoginContainer,
@@ -12,13 +12,13 @@ import {
     RegistrationContainer,
     RegistrationConfirmationContainer,
     RegisterApplicationContainer
-} from './components/auth'
+} from '../components/auth'
 
-import {withLoginEnhancers} from './components/auth/enhancers'
-import {withAuthentication} from './components/auth/decorators'
+import {withLoginEnhancers} from '../components/auth/enhancers'
+import {withAuthentication} from '../components/auth/decorators'
 
-import store from './store'
-import theme from './theme'
+import store from '../store'
+import theme from '../theme'
 
 export default (
     <ThemeProvider theme={theme}>
