@@ -127,6 +127,12 @@
     "react/jsx-pascal-case": "error",
     "react/jsx-wrap-multilines": "off",
     "react/require-default-props": "off",
+    "react/default-props-match-prop-types": [
+      "error",
+      {
+        "allowRequiredDefaults": true
+      }
+    ],
     "semi-spacing": "error",
     "semi": [
       "error",
